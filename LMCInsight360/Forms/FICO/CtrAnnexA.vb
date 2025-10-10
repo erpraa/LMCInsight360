@@ -61,7 +61,7 @@ Public Class CtrAnnexA
 
     Private Sub Generate_IncomeStatement()
 
-        SplashScreenManager.ShowForm(GetType(WaitFrm))
+        SplashScreenManager.ShowForm(Me, GetType(WaitFrm), True, True, False)
 
         Dim sapSource As String
 
@@ -135,7 +135,7 @@ Public Class CtrAnnexA
         GC.Collect()
         GC.WaitForPendingFinalizers()
 
-        SplashScreenManager.CloseForm()
+        SplashScreenManager.CloseDefaultWaitForm()
     End Sub
 
     Private Sub FS_IncomeStatement(fiscalYear As Integer, fiscalMonth As Integer, sapSource As String, businessType As String, ReportType As String, wbook As Excel.Workbook, useFirstSheet As Boolean)
@@ -429,7 +429,7 @@ Public Class CtrAnnexA
 #Region "Balance Sheet Report"
     Private Sub Generate_BalanceSheet()
 
-        SplashScreenManager.ShowForm(GetType(WaitFrm))
+        SplashScreenManager.ShowForm(Me, GetType(WaitFrm), True, True, False)
 
         Dim sapSource As String
 
@@ -473,7 +473,7 @@ Public Class CtrAnnexA
         GC.Collect()
         GC.WaitForPendingFinalizers()
 
-        SplashScreenManager.CloseForm()
+        SplashScreenManager.CloseDefaultWaitForm()
 
     End Sub
 
@@ -680,7 +680,8 @@ Public Class CtrAnnexA
 #Region "Details Schedule Report"
     Private Sub Generate_DetailSchedule()
 
-        SplashScreenManager.ShowForm(GetType(WaitFrm))
+
+        SplashScreenManager.ShowForm(Me, GetType(WaitFrm), True, True, False)
 
         Dim sapSource As String
 
@@ -724,7 +725,7 @@ Public Class CtrAnnexA
         GC.Collect()
         GC.WaitForPendingFinalizers()
 
-        SplashScreenManager.CloseForm()
+        SplashScreenManager.CloseDefaultWaitForm()
 
     End Sub
 

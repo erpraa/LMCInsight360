@@ -136,6 +136,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Utilities\ClassFunction.vb" />
+    <Compile Include="Utilities\CryptoEngine.vb" />
     <Compile Include="Utilities\GlobalConnection.vb" />
     <Compile Include="Utilities\GlobalVariable.vb" />
     <Compile Include="Utilities\SubClass.vb" />
