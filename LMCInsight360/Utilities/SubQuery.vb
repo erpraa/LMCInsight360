@@ -37,8 +37,6 @@
         Return Gscript
     End Function
 
-
-
     Public Shared Function RptQueryBS(FiscalYear As String, PostingPeriod As String, TrxOrigin As String, FSItem As String, businessType As String) As String
         'test123 - 456 -789
         Dim GscriptBS As String
