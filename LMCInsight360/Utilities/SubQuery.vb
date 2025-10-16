@@ -38,11 +38,11 @@
     End Function
 
     Public Shared Function RptQueryBS(FiscalYear As String, PostingPeriod As String, TrxOrigin As String, FSItem As String, businessType As String) As String
-        'test123 - 456 -789
+
         Dim GscriptBS As String
         Dim pTrxOrigin As String = Nothing
         Dim pFSItem As String = Nothing
-        Dim pbusinessType As String = Nothing
+        Dim pbusUnit As String
 
         If TrxOrigin <> Nothing Then
             pTrxOrigin = $"and TrxOrigin='{TrxOrigin}'"
@@ -52,7 +52,14 @@
             pFSItem = $"and FSItem='{FSItem}'"
         End If
 
-        GscriptBS = $"select SUM(Amount) from vwFI_GLREPORT where FiscalYear IN ({FiscalYear}) and PostingPeriod IN ({PostingPeriod}) {pTrxOrigin} {pFSItem} {pbusinessType}"
+        If businessType = "FOODSTUFF" Then
+            pbusUnit = $"and BusType='Foodstuff Only'"
+        Else
+            pbusUnit = Nothing
+        End If
+
+
+        GscriptBS = $"select SUM(Amount) from vwFI_GLREPORT where FiscalYear IN ({FiscalYear}) and PostingPeriod IN ({PostingPeriod}) {pTrxOrigin} {pFSItem} {pbusUnit}"
 
         Return GscriptBS
     End Function

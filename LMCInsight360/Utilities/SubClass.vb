@@ -126,8 +126,6 @@ Public Class SubClass
         ' Formatting (must be applied on the cell, not on Borders)
         cell.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
         cell.Font.Bold = True
-        cell.Interior.Color = Color.LightGray
-
     End Sub
 
     Public Shared Sub SetBottomBorder(ws As Excel.Worksheet, row As Integer, col As Integer, uline As String)

@@ -14,6 +14,19 @@ Public Class CtrAnnexA
         BtnAnnexA = Gbl_FSAnnexA
         LastDateLoad()
         TxtYear.Text = Date.Now.Year.ToString()
+
+        PnlReportType.Show()
+
+        Select Case BtnAnnexA
+            Case 1
+                PnlReportType.Show()
+            Case 2
+                PnlReportType.Hide()
+            Case 3
+                PnlReportType.Hide()
+            Case 4
+                PnlReportType.Hide()
+        End Select
     End Sub
 
     Private Sub BtnGenerate_Click(sender As Object, e As EventArgs) Handles BtnGenerate.Click
@@ -48,15 +61,83 @@ Public Class CtrAnnexA
                     Generate_IncomeStatement()
                 Case 2
                     Generate_BalanceSheet()
+                    PnlReportType.Show()
                 Case 3
                     Generate_DetailSchedule()
                 Case 4
-                    FeatureUnavailable("Generate Annex A")
+                    Generate_AnnexA()
             End Select
 
         End If
 
     End Sub
+    Private Sub Generate_AnnexA()
+
+        SplashScreenManager.ShowForm(Me, GetType(WaitFrm), True, True, False)
+
+        Dim sapSource As String
+
+        If CbxSapSource.EditValue = "CAS" Then
+            sapSource = "L4P"
+        ElseIf CbxSapSource.EditValue = "Reserved" Then
+            sapSource = "LRP"
+        Else
+            sapSource = Nothing
+        End If
+
+        ' Create Excel only once
+        Dim excelApp As New Excel.Application()
+        Dim wbook As Excel.Workbook = excelApp.Workbooks.Add()
+
+        ' Delete extra sheets, keep only Sheet1
+        For i As Integer = wbook.Sheets.Count To 2 Step -1
+            wbook.Sheets(i).Delete()
+        Next
+
+
+        If CbxBusinessType.EditValue = "FOODSTUFF" Then
+            FS_IncomeStatement(TxtYear.EditValue, GetMonthNumber(CbxMonth.EditValue), sapSource, "FOODSTUFF", "Monthly", wbook, True)
+            FS_IncomeStatement(TxtYear.EditValue, GetMonthNumber(CbxMonth.EditValue), sapSource, "FOODSTUFF", "Accum", wbook, False)
+            FS_BalanceSheet(TxtYear.EditValue, GetMonthNumber(CbxMonth.EditValue), sapSource, "FOODSTUFF", wbook, False)
+            FS_DetailSchedule(TxtYear.EditValue, GetMonthNumber(CbxMonth.EditValue), sapSource, "FOODSTUFF", wbook, False)
+        ElseIf CbxBusinessType.EditValue = "OVERALL" Then
+            FS_IncomeStatement(TxtYear.EditValue, GetMonthNumber(CbxMonth.EditValue), sapSource, "OVERALL", "Monthly", wbook, True)
+            FS_IncomeStatement(TxtYear.EditValue, GetMonthNumber(CbxMonth.EditValue), sapSource, "OVERALL", "Accum", wbook, False)
+            FS_BalanceSheet(TxtYear.EditValue, GetMonthNumber(CbxMonth.EditValue), sapSource, "OVERALL", wbook, False)
+            FS_DetailSchedule(TxtYear.EditValue, GetMonthNumber(CbxMonth.EditValue), sapSource, "OVERALL", wbook, False)
+        Else
+
+            FS_IncomeStatement(TxtYear.EditValue, GetMonthNumber(CbxMonth.EditValue), sapSource, "FOODSTUFF", "Monthly", wbook, True)
+            FS_IncomeStatement(TxtYear.EditValue, GetMonthNumber(CbxMonth.EditValue), sapSource, "FOODSTUFF", "Accum", wbook, False)
+
+            FS_IncomeStatement(TxtYear.EditValue, GetMonthNumber(CbxMonth.EditValue), sapSource, "OVERALL", "Monthly", wbook, False)
+            FS_IncomeStatement(TxtYear.EditValue, GetMonthNumber(CbxMonth.EditValue), sapSource, "OVERALL", "Accum", wbook, False)
+
+            FS_BalanceSheet(TxtYear.EditValue, GetMonthNumber(CbxMonth.EditValue), sapSource, "FOODSTUFF", wbook, False)
+            FS_BalanceSheet(TxtYear.EditValue, GetMonthNumber(CbxMonth.EditValue), sapSource, "OVERALL", wbook, False)
+
+            FS_DetailSchedule(TxtYear.EditValue, GetMonthNumber(CbxMonth.EditValue), sapSource, "FOODSTUFF", wbook, False)
+            FS_DetailSchedule(TxtYear.EditValue, GetMonthNumber(CbxMonth.EditValue), sapSource, "OVERALL", wbook, False)
+
+        End If
+
+        wbook.Sheets(1).Activate()
+        excelApp.Visible = True
+
+        ' Cleanup COM
+        If wbook IsNot Nothing Then Marshal.ReleaseComObject(wbook)
+        If excelApp IsNot Nothing Then Marshal.ReleaseComObject(excelApp)
+
+        wbook = Nothing
+        excelApp = Nothing
+        GC.Collect()
+        GC.WaitForPendingFinalizers()
+
+        SplashScreenManager.CloseDefaultWaitForm()
+    End Sub
+
+
+
 
 #Region "Income Statement Report"
 
@@ -238,6 +319,7 @@ Public Class CtrAnnexA
                 For Each br In branches
                     .Cells(5, col) = br.Key
                     SetSquareBorder(wsheet, 5, col, Excel.XlBorderWeight.xlThin)
+                    SetBackFontColor(wsheet, 5, col, "", "169,169,169")
 
                     col += 1
 
@@ -245,6 +327,7 @@ Public Class CtrAnnexA
                         If br.Key = "Marshmallows" Then
                             .Cells(5, col).Value = "Total Foodstuff"
                             SetSquareBorder(wsheet, 5, col, Excel.XlBorderWeight.xlThin)
+                            SetBackFontColor(wsheet, 5, col, "", "169,169,169")
                             col += 1
                         End If
                     End If
@@ -254,14 +337,11 @@ Public Class CtrAnnexA
                 ' Insert GrandTotal
                 .Cells(5, col).Value = "Grand Total"
                 SetSquareBorder(wsheet, 5, col, Excel.XlBorderWeight.xlThin)
+                SetBackFontColor(wsheet, 5, col, "", "169,169,169")
 
                 'Title Design
                 For i As Integer = 1 To 4
-                    With .Range(.Cells(i, 1), .Cells(i, col))
-                        .Merge()
-                        .HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
-                        .Font.Bold = True
-                    End With
+                    ApplyTitleStyle(.Range(.Cells(i, 1), .Cells(i, col)), Nothing, Nothing)
                 Next
 
                 col = baseCol
@@ -343,14 +423,15 @@ Public Class CtrAnnexA
                                                 End Select
 
                                                 .Cells(row, col) = AdjustValue(Val(GetValue(fYear, fMonth, sapSource, br.Key, fsItem, includePurchases, businessType)), reader("DCFLG").ToString())
-                                                ApplyCellFormat(.Cells(row, col), wsheet, row, col, reader)
-
+                                                ApplyCellFormat(.Cells(row, col), reader)
+                                                SetBottomBorder(wsheet, row, col, reader("ULINE").ToString().Trim())
                                             End If
 
                                             ' Apply formulas
                                             If reader("FRMLA").ToString() <> "" Then
                                                 .Cells(row, col).Formula = GetExcelFormula(reader("FRMLA").ToString(), col)
-                                                ApplyCellFormat(.Cells(row, col), wsheet, row, col, reader)
+                                                ApplyCellFormat(.Cells(row, col), reader)
+                                                SetBottomBorder(wsheet, row, col, reader("ULINE").ToString().Trim())
                                             End If
 
                                             col += 1
@@ -362,14 +443,16 @@ Public Class CtrAnnexA
                                                     ' Insert TotalFoodstuff
                                                     If br.Key = "Marshmallows" Then
                                                         .Cells(row, col).Formula = $"=SUM(B{row}:{GetExcelColName(col - 1)}{row})"
-                                                        ApplyCellFormat(.Cells(row, col), wsheet, row, col, reader)
+                                                        ApplyCellFormat(.Cells(row, col), reader)
+                                                        SetBottomBorder(wsheet, row, col, reader("ULINE").ToString().Trim())
                                                         col += 1
                                                     End If
 
                                                     ' Insert Total only at the last branch - Foodstuff
                                                     If i = totalBranches Then
                                                         .Cells(row, col).Formula = $"=SUM({GetExcelColName(col - 2)}{row}:{GetExcelColName(col - 1)}{row})"
-                                                        ApplyCellFormat(.Cells(row, col), wsheet, row, col, reader)
+                                                        ApplyCellFormat(.Cells(row, col), reader)
+                                                        SetBottomBorder(wsheet, row, col, reader("ULINE").ToString().Trim())
                                                         col += 1
                                                     End If
 
@@ -377,7 +460,8 @@ Public Class CtrAnnexA
                                                     ' Insert Total only at the last branch - Overall
                                                     If i = totalBranches Then
                                                         .Cells(row, col).Formula = $"=SUM(B{row}:{GetExcelColName(col - 1)}{row})"
-                                                        ApplyCellFormat(.Cells(row, col), wsheet, row, col, reader)
+                                                        ApplyCellFormat(.Cells(row, col), reader)
+                                                        SetBottomBorder(wsheet, row, col, reader("ULINE").ToString().Trim())
                                                         col += 1
                                                     End If
 
@@ -411,21 +495,7 @@ Public Class CtrAnnexA
         End Try
 
     End Sub
-
-    Private Sub ApplyCellFormat(cell As Excel.Range, wsheet As Excel.Worksheet, row As Integer, col As Integer, reader As IDataReader)
-        cell.Font.Size = reader("VSIZE").ToString()
-        cell.Font.Bold = reader("VBLD").ToString()
-        cell.Font.Bold = reader("TBLD").ToString()
-        SetBackFontColor(wsheet, row, col, reader("FNTCLR").ToString(), reader("BCKCLR").ToString())
-        Dim rowHeightValue = reader("ROWH")
-        If IsNumeric(rowHeightValue) Then wsheet.Rows(row).RowHeight = CDbl(rowHeightValue)
-        cell.NumberFormat = NumericFormat
-        SetBottomBorder(wsheet, row, col, reader("ULINE").ToString().Trim())
-
-    End Sub
-
 #End Region
-
 
 #Region "Balance Sheet Report"
     Private Sub Generate_BalanceSheet()
@@ -451,7 +521,6 @@ Public Class CtrAnnexA
             wbook.Sheets(i).Delete()
         Next
 
-
         If CbxBusinessType.EditValue = "FOODSTUFF" Then
             FS_BalanceSheet(TxtYear.EditValue, GetMonthNumber(CbxMonth.EditValue), sapSource, "FOODSTUFF", wbook, True)
         ElseIf CbxBusinessType.EditValue = "OVERALL" Then
@@ -460,7 +529,6 @@ Public Class CtrAnnexA
             FS_BalanceSheet(TxtYear.EditValue, GetMonthNumber(CbxMonth.EditValue), sapSource, "FOODSTUFF", wbook, True)
             FS_BalanceSheet(TxtYear.EditValue, GetMonthNumber(CbxMonth.EditValue), sapSource, "OVERALL", wbook, False)
         End If
-
 
         wbook.Sheets(1).Activate()
         excelApp.Visible = True
@@ -492,7 +560,8 @@ Public Class CtrAnnexA
 
             ' Report Parameters
             Dim fsItem As String = Nothing
-            Dim fMonth As String = Nothing
+
+
 
             ' Column & Row tracking
             Dim col, row As Integer
@@ -515,7 +584,6 @@ Public Class CtrAnnexA
 
                 .Cells(3, 1).Value = "As of " & reportDate.ToString("MMMM dd, yyyy")
 
-
                 If sapSource = "L4P" Then
                     .Cells(4, 1).Value = "CAS"
                 ElseIf sapSource = "LRP" Then
@@ -530,16 +598,28 @@ Public Class CtrAnnexA
                 ' Load Month Names (header)
                 Dim HeaderName As New List(Of KeyValuePair(Of String, Integer))()
 
-                For m As Integer = 1 To CInt(fiscalMonth)
-                    HeaderName.Add(New KeyValuePair(Of String, Integer)(MonthName(m, False), m)) ' True = abbreviated, False = full
+                Dim prevMonth As Integer = 12
+                Dim prevYear As Integer = fiscalYear - 1
 
+                HeaderName.Add(New KeyValuePair(Of String, Integer)(MonthName(prevMonth, False) & " " & prevYear, prevMonth))
+
+                For m As Integer = 1 To CInt(fiscalMonth)
+                    HeaderName.Add(New KeyValuePair(Of String, Integer)(MonthName(m, False) & " " & fiscalYear, m))
                 Next
 
                 ' Print Month Name Headers
                 col = baseCol
                 For Each Mname In HeaderName
-                    .Cells(7, col) = "'" & Mname.Key & " " & fiscalYear
+                    .Cells(7, col) = "'" & Mname.Key
+                    .Cells(42, col) = "'" & Mname.Key
+                    .Cells(7, col).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
+                    .Cells(42, col).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
                     col += 1
+                Next
+
+                'Title Design
+                For i As Integer = 1 To 3
+                    ApplyTitleStyle(.Range(.Cells(i, 1), .Cells(i, col - 1)), "255,255,255", "31, 78, 120")
                 Next
 
                 With .Range(.Cells(5, 1), .Cells(5, col - 1))
@@ -551,34 +631,6 @@ Public Class CtrAnnexA
                     .Merge()
                     .HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
                 End With
-
-
-                'Format Month Header Row
-                Dim headerStart As Excel.Range = .Cells(7, baseCol)
-                Dim headerEnd As Excel.Range = .Cells(7, baseCol + HeaderName.Count - 1)
-                Dim headerRange As Excel.Range = .Range(headerStart, headerEnd)
-
-
-
-                With headerRange
-                    .Font.Bold = True
-                    .Font.Size = 11
-                    .HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
-                    .Interior.Color = RGB(155, 194, 230)
-                    .Font.Color = System.Drawing.Color.Black
-                    .Borders.LineStyle = Excel.XlLineStyle.xlContinuous
-                End With
-
-                'Title Design
-                For i As Integer = 1 To 3
-                    With .Range(.Cells(i, 1), .Cells(i, col - 1))
-                        .Merge()
-                        .Interior.Color = RGB(31, 78, 120)
-                        .Font.Color = System.Drawing.Color.White
-                        .HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
-                        .Font.Bold = True
-                    End With
-                Next
 
                 col = baseCol
                 row = baseRow
@@ -592,48 +644,47 @@ Public Class CtrAnnexA
                                 While reader.Read()
 
                                     .Cells(row, 1) = reader("RPTDISPLY").ToString()
-                                    .Cells(row, 1).Font.Size = reader("TSIZE").ToString()
-                                    .Cells(row, 1).Font.Bold = reader("VBLD").ToString()
-                                    .Cells(row, 1).Font.Bold = reader("TBLD").ToString()
-                                    SetBackFontColor(wsheet, row, col - 1, reader("FNTCLR").ToString(), reader("BCKCLR").ToString())
+                                    ApplyCellFormat(.Cells(row, 1), reader)
 
-                                    Dim rowHeightValue = reader("ROWH")
-                                    If IsNumeric(rowHeightValue) Then wsheet.Rows(row).RowHeight = CDbl(rowHeightValue)
+                                    If row <> 7 AndAlso row <> 42 Then
+                                        SetBackFontColor(wsheet, row, 1, reader("FNTCLR").ToString(), reader("BCKCLR").ToString())
+                                    End If
 
-                                    'SetBottomBorder(wsheet, row, 1, reader("ULINE").ToString().Trim())
+                                    If row = 37 OrElse row = 73 Then
+                                        SetBottomBorder(wsheet, row, 1, reader("ULINE").ToString().Trim())
+                                    End If
 
                                     Dim totalmonth As Integer = HeaderName.Count
                                     Dim i As Integer = 0
 
                                     For Each Mname In HeaderName
                                         i += 1
+                                        Dim fullName As String = Mname.Key
+                                        Dim parts() As String = fullName.Split(" "c)
+                                        Dim yearValue As Integer = CInt(parts(1))
+                                        Dim monthValue As Integer = Mname.Value
 
                                         If reader("RPTDISPLY").ToString() <> "" Then
 
                                             fsItem = reader("ERGSL").ToString()
+
                                             If fsItem <> "" Then
-
-                                                .Cells(row, col) = AdjustValue(Val(GetValueBS(fiscalYear, String.Join(",", Enumerable.Range(1, CInt(MonthNameToNum(Mname.Key)))), sapSource, fsItem, businessType)), reader("DCFLG").ToString())
-
-                                                ApplyCellFormat(.Cells(row, col), wsheet, row, col, reader)
-
-
-
+                                                .Cells(row, col) = AdjustValue(Val(GetValueBS(yearValue, String.Join(",", Enumerable.Range(1, CInt(monthValue))), sapSource, fsItem, businessType)), reader("DCFLG").ToString())
                                             End If
+
+                                            ApplyCellFormat(.Cells(row, col), reader)
+                                            SetBottomBorder(wsheet, row, col, reader("ULINE").ToString().Trim())
+                                            SetBackFontColor(wsheet, row, col, reader("FNTCLR").ToString(), reader("BCKCLR").ToString())
 
                                         End If
 
                                         ' Apply formulas
                                         If reader("FRMLA").ToString() <> "" Then
                                             .Cells(row, col).Formula = GetExcelFormula(reader("FRMLA").ToString(), col)
-                                            ApplyCellFormat(.Cells(row, col), wsheet, row, col, reader)
+                                            ApplyCellFormat(.Cells(row, col), reader)
                                         End If
-
                                         col += 1
-
-
                                     Next
-
                                     row += 1
                                     col = baseCol
                                 End While
@@ -641,7 +692,6 @@ Public Class CtrAnnexA
                         End Using
                     End Using
                 End Using
-
 
                 'Final Format
                 .Range("B4").Select()
@@ -652,7 +702,6 @@ Public Class CtrAnnexA
                 'Hide Previous Months (Show Only Latest)
                 Try
                     Dim lastMonthCol As Integer = baseCol + HeaderName.Count - 1
-
                     ' Hide previous months if there’s more than one
                     If HeaderName.Count > 1 Then
                         Dim firstMonthCol As Integer = baseCol
@@ -673,48 +722,10 @@ Public Class CtrAnnexA
 
     End Sub
 
-
-
 #End Region
 
 #Region "Details Schedule Report"
 
-    'Excel Formatting
-    Private Const NUM_FMT As String = "_(* #,##0.00_);_(* (#,##0.00);_(* ""-""??_);_(@_)"
-    Private ReadOnly HEADER_COLOR As Integer = RGB(198, 224, 180)
-    Private ReadOnly TOTAL_COLOR As Integer = RGB(91, 155, 213)
-
-    Private Sub ApplyTitleStyle(rng As Excel.Range)
-        With rng
-            .Merge()
-            .Interior.Color = HEADER_COLOR
-            .Font.Color = System.Drawing.Color.Black
-            .Font.Bold = True
-            .HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
-        End With
-    End Sub
-
-    Private Sub ApplySectionTotalStyle(rng As Excel.Range)
-        With rng
-            .Font.Bold = True
-            .Interior.Color = TOTAL_COLOR
-            .NumberFormat = NUM_FMT
-        End With
-    End Sub
-
-    Private Sub ApplyNumberFormat(rng As Excel.Range)
-        rng.NumberFormat = NUM_FMT
-    End Sub
-
-    Private Sub ApplyBorders(rng As Excel.Range, Optional isThick As Boolean = False)
-        With rng.Borders
-            .LineStyle = Excel.XlLineStyle.xlContinuous
-            .Weight = If(isThick, Excel.XlBorderWeight.xlMedium, Excel.XlBorderWeight.xlThin)
-            .ColorIndex = 0
-        End With
-    End Sub
-
-    'Main Entry
     Private Sub Generate_DetailSchedule()
         SplashScreenManager.ShowForm(Me, GetType(WaitFrm), True, True, False)
 
@@ -758,178 +769,246 @@ Public Class CtrAnnexA
         SplashScreenManager.CloseDefaultWaitForm()
     End Sub
 
-
-    Private Sub FS_DetailSchedule(fiscalYear As Integer, fiscalMonth As Integer, sapSource As String,
-                              businessType As String, wbook As Excel.Workbook, useFirstSheet As Boolean)
-
+    Private Sub FS_DetailSchedule(fiscalYear As Integer, fiscalMonth As Integer, sapSource As String, businessType As String, wbook As Excel.Workbook, useFirstSheet As Boolean)
         Dim wsheet As Excel.Worksheet =
-        If(useFirstSheet, CType(wbook.Sheets(1), Excel.Worksheet),
-                        CType(wbook.Sheets.Add(After:=wbook.Sheets(wbook.Sheets.Count)), Excel.Worksheet))
+            If(useFirstSheet, CType(wbook.Sheets(1), Excel.Worksheet),
+            CType(wbook.Sheets.Add(After:=wbook.Sheets(wbook.Sheets.Count)), Excel.Worksheet))
 
-        Dim baseCol As Integer = 2
-        Dim baseRow As Integer = 6
-        Dim row As Integer = baseRow
-        Dim reportDate As New Date(fiscalYear, fiscalMonth, Date.DaysInMonth(fiscalYear, fiscalMonth))
+        Dim bustypeList As String = Nothing
+        Dim trxorigin As String = Nothing
+        Dim TotalColor As String = "91, 155, 213"
+        Dim row, col As Integer
+        Dim baserow As Integer = 6
 
-        'Header 
-        With wsheet
-            .Cells(1, 1).Value = "LIWAYWAY MARKETING CORPORATION"
-            .Cells(2, 1).Value = If(businessType = "FOODSTUFF",
-            "ACCOUNT DETAILS SCHEDULE - FOODSTUFF ONLY", "ACCOUNT DETAILS SCHEDULE - OVERALL")
-            .Name = $"Detail Schedule {If(businessType = "FOODSTUFF", "Food", "Overall")}"
-            .Cells(3, 1).Value = "As of " & reportDate.ToString("MMMM dd, yyyy")
-            .Cells(4, 1).Value = If(sapSource = "L4P", "CAS", If(sapSource = "LRP", "RESERVED", ""))
+        Try
+            ' === HEADER ===
+            Dim repDate As New Date(fiscalYear, fiscalMonth, Date.DaysInMonth(fiscalYear, fiscalMonth))
+            With wsheet
+                .Name = $"DS {MonthName(fiscalMonth, True)} {fiscalYear} {If(businessType = "FOODSTUFF", "Food", "Overall")}"
+                .Cells(1, 1).Value = "LIWAYWAY MARKETING CORPORATION"
+                .Cells(2, 1).Value = If(businessType = "FOODSTUFF", "DETAILS SCHEDULE - FOODSTUFF ONLY", "DETAILS SCHEDULE - OVERALL")
+                .Cells(3, 1).Value = "As of " & repDate.ToString("MMMM dd, yyyy")
+                .Cells(4, 1).Value = If(sapSource = "L4P", "CAS", If(sapSource = "LRP", "RESERVED", ""))
 
-            .Range("A1:A4").Font.Size = 12
-            .Cells(1, 1).Font.Size = 14
-            .Cells(2, 1).Font.Size = 13
-
-            'Merge and style title rows
-            For i As Integer = 1 To 3
-                ApplyTitleStyle(.Range(.Cells(i, 1), .Cells(i, baseCol + fiscalMonth)))
-            Next
-
-            'Year header
-            Dim col As Integer = baseCol + fiscalMonth - 1
-            .Range(.Cells(5, baseCol), .Cells(5, col + 1)).Merge()
-            .Cells(5, baseCol).Value = "Year " & fiscalYear
-            .Cells(5, baseCol).Font.Bold = True
-            .Cells(5, baseCol).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
-
-            'Month headers
-            For m As Integer = 1 To fiscalMonth
-                .Cells(6, baseCol + m - 1).Value = MonthName(m, False)
-                .Cells(6, baseCol + m - 1).Font.Bold = True
-                .Cells(6, baseCol + m - 1).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
-            Next
-            .Cells(6, baseCol + fiscalMonth).Value = "TOTAL"
-            .Cells(6, baseCol + fiscalMonth).Font.Bold = True
-            .Cells(6, baseCol + fiscalMonth).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
-        End With
-
-        'SQL Section 
-        Dim totals(fiscalMonth - 1) As Decimal
-        Dim grandTotal As Decimal = 0D
-        Dim formatList As New List(Of Tuple(Of String, String))
-
-        Using conn As New SqlConnection(SqlConnect)
-            conn.Open()
-
-            'Load report formats
-            Using fmtCmd As New SqlCommand("SELECT RPTDISPLY, ERGSL FROM FI_RPTFORMAT WHERE RPTTYPE = 'DS'ORDER BY RPTSRT;", conn)
-                Using fmtReader = fmtCmd.ExecuteReader()
-                    While fmtReader.Read()
-                        formatList.Add(New Tuple(Of String, String)(
-                        If(fmtReader.IsDBNull(0), "", fmtReader.GetString(0)),
-                        If(fmtReader.IsDBNull(1), "", fmtReader.GetString(1))
-                    ))
-                    End While
-                End Using
-            End Using
-
-            'Loop each FS Item 
-            For Each fmt In formatList
-                Dim rptDisplay = fmt.Item1
-                Dim fsItem = fmt.Item2
-
-                If rptDisplay <> "" Then
-                    wsheet.Cells(row, 1).Value = rptDisplay
-                    wsheet.Cells(row, 1).Font.Bold = True
-                    row += 1
-                End If
-                If fsItem = "" Then Continue For
-
-                'Query data
-                Dim allData As New Dictionary(Of String, Decimal())()
-                Dim glOrder As New List(Of String)
-
-                Using cmdAll As New SqlCommand("
-                SELECT CONCAT(GLAccount,'',GLLngDesc) AS GLDesc, PostingPeriod, SUM(Amount) AS AMT
-                FROM vwFI_GLREPORT
-                WHERE FiscalYear=@FY AND PostingPeriod BETWEEN 1 AND @Max AND FSItem=@FSItem
-                GROUP BY GLAccount, GLLngDesc, PostingPeriod
-                ORDER BY GLAccount, PostingPeriod;", conn)
-
-                    cmdAll.Parameters.AddWithValue("@FY", fiscalYear)
-                    cmdAll.Parameters.AddWithValue("@Max", fiscalMonth)
-                    cmdAll.Parameters.AddWithValue("@FSItem", fsItem)
-
-                    Using rdr = cmdAll.ExecuteReader()
-                        While rdr.Read()
-                            Dim glDesc = rdr("GLDesc").ToString()
-                            Dim period = CInt(rdr("PostingPeriod"))
-                            Dim amt = CDec(rdr("AMT"))
-                            If Not allData.ContainsKey(glDesc) Then
-                                allData(glDesc) = New Decimal(fiscalMonth - 1) {}
-                                glOrder.Add(glDesc)
-                            End If
-                            allData(glDesc)(period - 1) = amt
-                        End While
-                    End Using
-                End Using
-
-                'Output Rows 
-                Dim sectionTotals(fiscalMonth - 1) As Decimal
-                Dim sectionGrand As Decimal = 0D
-
-                For Each gld In glOrder
-                    Dim vals = allData(gld)
-                    wsheet.Cells(row, 1).Value = gld
-                    Dim rowTotal As Decimal = 0D
-
-                    For m As Integer = 1 To fiscalMonth
-                        Dim v As Decimal = vals(m - 1)
-                        rowTotal += v
-                        wsheet.Cells(row, baseCol + m - 1).Value = v
-                        ApplyNumberFormat(wsheet.Cells(row, baseCol + m - 1))
-                        sectionTotals(m - 1) += v
-                    Next
-
-                    wsheet.Cells(row, baseCol + fiscalMonth).Value = rowTotal
-                    ApplyNumberFormat(wsheet.Cells(row, baseCol + fiscalMonth))
-                    sectionGrand += rowTotal
-                    row += 1
+                'Title Design
+                For i As Integer = 1 To 3
+                    ApplyTitleStyle(.Range(.Cells(i, 1), .Cells(i, fiscalMonth + 2)), Nothing, "198, 224, 180")
                 Next
 
-                'Section Totals 
-                If glOrder.Count > 0 Then
-                    wsheet.Cells(row, 1).Value = "Total " & rptDisplay
-                    Dim secRng = wsheet.Range(wsheet.Cells(row, 1), wsheet.Cells(row, baseCol + fiscalMonth))
-                    ApplySectionTotalStyle(secRng)
-                    For m As Integer = 1 To fiscalMonth
-                        wsheet.Cells(row, baseCol + m - 1).Value = sectionTotals(m - 1)
-                        totals(m - 1) += sectionTotals(m - 1)
+                row = baserow
+                col = fiscalMonth
+
+                ' === FS ITEM LOOP ===
+                Dim fsItems As DataTable = GetData("SELECT RPTDISPLY, ERGSL FROM FI_RPTFORMAT WHERE RPTTYPE = 'DS' ORDER BY RPTSRT")
+
+                For Each itemRow As DataRow In fsItems.Rows
+                    Dim rptDisplay As String = itemRow("RPTDISPLY").ToString()
+                    Dim fsItem As String = itemRow("ERGSL").ToString()
+
+                    .Cells(row, 1).Value = rptDisplay
+                    DSApplyCellFormat(wsheet, row, 1, True)
+
+                    For m = 1 To col
+                        .Cells(row, m + 1).Value = MonthName(m, False)
+                        .Cells(row, m + 1).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
+                        DSApplyCellFormat(wsheet, row, m + 1, True)
                     Next
-                    wsheet.Cells(row, baseCol + fiscalMonth).Value = sectionGrand
-                    grandTotal += sectionGrand
+                    .Cells(row, col + 2).Value = "Total"
+                    .Cells(row, col + 2).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
+                    DSApplyCellFormat(wsheet, row, col + 2, True)
+
+                    row += 1
+
+                    If businessType = "FOODSTUFF" Then
+                        bustypeList = "AND BusType='Foodstuff Only'"
+                    End If
+
+                    If sapSource <> Nothing Then
+                        trxorigin = $"AND TrxOrigin='{sapSource}'"
+                    End If
+
+                    Dim query As String = $"SELECT CONCAT(GLAccount, ' ', GLLngDesc) AS GLDesc, PostingPeriod, SUM(Amount) AS AMT FROM vwFI_GLREPORT
+                                            WHERE FiscalYear = @FY 
+                                            AND PostingPeriod BETWEEN 1 AND @FM
+                                            AND FSItem = @FSItem 
+                                            {bustypeList} {trxorigin}
+                                            GROUP BY GLAccount, GLLngDesc, PostingPeriod
+                                            ORDER BY GLAccount, PostingPeriod"
+
+                    Dim params As SqlParameter() = {
+                    New SqlParameter("@FY", fiscalYear),
+                    New SqlParameter("@FM", fiscalMonth),
+                    New SqlParameter("@FSItem", fsItem)
+                }
+                    Dim glData As DataTable = GetData(query, params)
+
+                    ' --- Write to Excel ---
+                    Dim grouped = glData.AsEnumerable().GroupBy(Function(r) r("GLDesc").ToString())
+
+                    Dim monthlyTotals As New Dictionary(Of Integer, Double)
+
+                    For Each g In grouped
+
+                        ' --- Process GL Data ---
+                        If fsItem <> "41" Then
+                            ' --- Normal GL Breakdown ---
+
+                            ' Write GL description
+                            .Cells(row, 1).Value = g.Key
+                                DSApplyCellFormat(wsheet, row, 1, False)
+
+                            Dim total As Double = 0
+
+                            ' Loop through posting periods (months)
+                            For Each record In g
+                                  Dim m As Integer = CInt(record("PostingPeriod"))
+                                Dim amt As Double = If(IsDBNull(record("AMT")), 0, Convert.ToDouble(record("AMT")))
+
+                                ' Write value per month
+                                .Cells(row, m + 1).Value = amt
+                                    .Cells(row, m + 1).NumberFormat = DSNumericFormat
+                                    DSApplyCellFormat(wsheet, row, m + 1, False)
+
+                                    ' Update monthly totals
+                                    If Not monthlyTotals.ContainsKey(m) Then monthlyTotals(m) = 0
+                                    monthlyTotals(m) += amt
+
+                                    ' Accumulate row total
+                                    total += amt
+                                Next
+
+                                ' Write total at end of row
+                                .Cells(row, col + 2).Value = total
+                                .Cells(row, col + 2).NumberFormat = DSNumericFormat
+                                DSApplyCellFormat(wsheet, row, col + 2, False)
+
+                                ' Move to next row
+                                row += 1
+
+                        Else
+                            ' --- FSItem = 41: Totals Only (No GL Breakdown) ---
+                            For Each record In g
+
+                                Dim m As Integer = CInt(record("PostingPeriod"))
+                                Dim amt As Double = If(IsDBNull(record("AMT")), 0, Convert.ToDouble(record("AMT")))
+
+                                ' Update monthly totals only
+                                If Not monthlyTotals.ContainsKey(m) Then monthlyTotals(m) = 0
+                                monthlyTotals(m) += amt
+                            Next
+                        End If
+
+                    Next
+                    ' --- TOTAL ROW ---
+                    .Cells(row, 1).Value = "Total / " & rptDisplay
+                    DSApplyCellFormat(wsheet, row, 1, True, TotalColor)
+                    DSApplyCellFormat(wsheet, row, col + 2, True, TotalColor)
+
+                    Dim grandTotal As Double = 0
+
+                    ' Write total per month and compute overall total
+                    For m As Integer = 1 To fiscalMonth
+                        Dim val As Double = If(monthlyTotals.ContainsKey(m), monthlyTotals(m), 0)
+                        grandTotal += val
+                        .Cells(row, m + 1).Value = val
+                        .Cells(row, m + 1).NumberFormat = DSNumericFormat
+
+                        DSApplyCellFormat(wsheet, row, m + 1, True, TotalColor)
+
+                    Next
+
+                    ' Write grand total in last column
+                    .Cells(row, col + 2).Value = grandTotal
+                    .Cells(row, col + 2).NumberFormat = DSNumericFormat
+                    DSApplyCellFormat(wsheet, row, col + 2, True)
+
                     row += 2
-                End If
-            Next
+                Next
+
+                ' === FINAL FORMATTING ===
+                .Columns.AutoFit()
+                .Range("A1").Select()
+
+            End With
+
+        Catch ex As Exception
+            MsgBox("Error: " & ex.Message)
+        End Try
+    End Sub
+
+    ' === SQL HELPER ===
+    Private Function GetData(sql As String, Optional params As SqlParameter() = Nothing) As DataTable
+        Dim dt As New DataTable()
+        Using conn As New SqlConnection(SqlConnect)
+            Using cmd As New SqlCommand(sql, conn)
+                If params IsNot Nothing Then cmd.Parameters.AddRange(params)
+                conn.Open()
+                Using reader As SqlDataReader = cmd.ExecuteReader()
+                    dt.Load(reader)
+                End Using
+            End Using
         End Using
+        Return dt
+    End Function
 
-        'Grand Total 
-        wsheet.Cells(row, 1).Value = "TOTAL RETAINED EARNINGS"
-        Dim grandRng = wsheet.Range(wsheet.Cells(row, 1), wsheet.Cells(row, baseCol + fiscalMonth))
-        ApplySectionTotalStyle(grandRng)
-        For m As Integer = 1 To fiscalMonth
-            wsheet.Cells(row, baseCol + m - 1).Value = totals(m - 1)
-        Next
-        wsheet.Cells(row, baseCol + fiscalMonth).Value = grandTotal
+    Private Shared Sub DSApplyCellFormat(ws As Excel.Worksheet, row As Integer, col As Integer, bold As Boolean, Optional bckcolor As String = Nothing)
+        Dim cell As Excel.Range = ws.Cells(row, col)
 
-        'Borders & Freeze 
-        Dim lastCol = baseCol + fiscalMonth
-        ApplyBorders(wsheet.Range(wsheet.Cells(baseRow, 1), wsheet.Cells(row, lastCol)))
-        ApplyBorders(grandRng, True)
-
-        With wsheet
-            .UsedRange.Font.Name = "Calibri"
-            .UsedRange.Columns.AutoFit()
-            .Range("B6").Select()
-            .Application.ActiveWindow.FreezePanes = True
+        ' === Border ===
+        With cell.Borders
+            .LineStyle = Excel.XlLineStyle.xlContinuous
+            .Weight = Excel.XlBorderWeight.xlThin
+            .ColorIndex = Excel.Constants.xlAutomatic
         End With
 
+        ' === Font and Fill ===
+        With cell
+            .Font.Bold = bold
+
+            If Not String.IsNullOrEmpty(bckcolor) Then
+                Dim bParts() As String = bckcolor.Split(","c)
+                .Interior.Color = RGB(CInt(bParts(0)), CInt(bParts(1)), CInt(bParts(2)))
+            End If
+
+        End With
     End Sub
+
+
 #End Region
+
+
+    Private Sub ApplyTitleStyle(rng As Excel.Range, Optional fntcolor As String = Nothing, Optional bckcolor As String = Nothing)
+        With rng
+            .Merge()
+            .HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
+            .Font.Bold = True
+
+            If Not String.IsNullOrEmpty(fntcolor) Then
+                Dim fParts() As String = fntcolor.Split(","c)
+                .Font.Color = RGB(CInt(fParts(0)), CInt(fParts(1)), CInt(fParts(2)))
+            End If
+
+            If Not String.IsNullOrEmpty(bckcolor) Then
+                Dim bParts() As String = bckcolor.Split(","c)
+                .Interior.Color = RGB(CInt(bParts(0)), CInt(bParts(1)), CInt(bParts(2)))
+            End If
+
+        End With
+    End Sub
+
+    Private Sub ApplyCellFormat(cell As Excel.Range, reader As IDataReader)
+        cell.Font.Size = CDbl(reader("TSIZE"))
+        cell.Font.Size = CDbl(reader("VSIZE"))
+        cell.Font.Bold = reader("TBLD").ToString()
+        cell.Font.Bold = reader("VBLD").ToString()
+        cell.NumberFormat = NumericFormat
+
+        Dim rowHeightValue As String = reader("ROWH").ToString()
+        If IsNumeric(rowHeightValue) Then
+            cell.RowHeight = CDbl(rowHeightValue)
+        End If
+    End Sub
+
 
 
 #Region "Last Load Data"

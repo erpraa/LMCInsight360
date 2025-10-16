@@ -74,7 +74,6 @@ Partial Class WaitFrm
         Me.DoubleBuffered = True
         Me.Margin = New System.Windows.Forms.Padding(4)
         Me.Name = "WaitFrm"
-        Me.ShowOnTopMode = DevExpress.XtraWaitForm.ShowFormOnTopMode.AboveAll
         Me.Text = "Form1"
         Me.tableLayoutPanel1.ResumeLayout(False)
         Me.ResumeLayout(False)

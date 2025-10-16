@@ -106,6 +106,65 @@ Public Class ClassFunction
         Return rtnAmt
     End Function
 
+    Public Shared Function GetQuery(ByVal query As String) As String
+        Dim result As String = Nothing
+
+        Try
+            Using connection As New SqlConnection(SqlConnect)
+                connection.Open()
+
+                Using command As New SqlCommand(query, connection)
+                    command.CommandType = CommandType.Text
+                    command.CommandTimeout = 0
+
+                    Using reader As SqlDataReader = command.ExecuteReader()
+                        If reader.Read() Then
+                            result = If(Not reader.IsDBNull(0), reader.GetValue(0).ToString(), String.Empty)
+                        End If
+                    End Using
+                End Using
+            End Using
+        Catch ex As Exception
+            ' Log the exception instead of using MsgBox in production
+            Console.WriteLine($"An error occurred: {ex.Message}")
+        End Try
+
+        Return result
+    End Function
+
+    Public Shared Function PopulateDataSQL(strSql As String) As DataView
+        Dim dvcv As New DataView
+        Dim adapterCv As New SqlDataAdapter
+        Dim dsConn As New DataSet
+
+        Using connection As New SqlConnection(SqlConnect)
+            connection.Open()
+            Using command As New SqlCommand(strSql, connection)
+                command.CommandTimeout = 0
+                Try
+                    With adapterCv
+                        .SelectCommand = command
+                        .Fill(dsConn)
+                        .Dispose()
+                    End With
+
+                    dvcv = dsConn.Tables(0).DefaultView
+
+                Catch ex As Exception
+                    MsgBox(ex.Message)
+                End Try
+            End Using
+
+            If connection.State = ConnectionState.Open Then
+                connection.Close()
+            End If
+
+        End Using
+
+        Return dvcv
+    End Function
+
+
 
 #Region "Report Function"
 
@@ -195,14 +254,7 @@ Public Class ClassFunction
     End Function
 #End Region
 
-
-
 #End Region
-
-
-
-
-
 
 
 End Class

@@ -26,10 +26,14 @@ Partial Class CtrDataInitializeFI
         Me.GridView1 = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.BtnClosedPeriod = New LMCInsight360.RoundedButton()
         Me.BtnOpenPeriod = New LMCInsight360.RoundedButton()
+        Me.GridControl2 = New DevExpress.XtraGrid.GridControl()
+        Me.GridView2 = New DevExpress.XtraGrid.Views.Grid.GridView()
         CType(Me.TxtYear.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.CbxMonth.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GridControl2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GridView2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'BtnLoadData
@@ -38,7 +42,7 @@ Partial Class CtrDataInitializeFI
         Me.BtnLoadData.FlatAppearance.BorderSize = 0
         Me.BtnLoadData.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BtnLoadData.ForeColor = System.Drawing.Color.White
-        Me.BtnLoadData.Location = New System.Drawing.Point(320, 446)
+        Me.BtnLoadData.Location = New System.Drawing.Point(323, 32)
         Me.BtnLoadData.Name = "BtnLoadData"
         Me.BtnLoadData.Size = New System.Drawing.Size(140, 30)
         Me.BtnLoadData.TabIndex = 45
@@ -104,7 +108,7 @@ Partial Class CtrDataInitializeFI
         Me.BtnClosedPeriod.FlatAppearance.BorderSize = 0
         Me.BtnClosedPeriod.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BtnClosedPeriod.ForeColor = System.Drawing.Color.White
-        Me.BtnClosedPeriod.Location = New System.Drawing.Point(478, 446)
+        Me.BtnClosedPeriod.Location = New System.Drawing.Point(481, 32)
         Me.BtnClosedPeriod.Name = "BtnClosedPeriod"
         Me.BtnClosedPeriod.Size = New System.Drawing.Size(140, 30)
         Me.BtnClosedPeriod.TabIndex = 47
@@ -117,12 +121,26 @@ Partial Class CtrDataInitializeFI
         Me.BtnOpenPeriod.FlatAppearance.BorderSize = 0
         Me.BtnOpenPeriod.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BtnOpenPeriod.ForeColor = System.Drawing.Color.White
-        Me.BtnOpenPeriod.Location = New System.Drawing.Point(639, 446)
+        Me.BtnOpenPeriod.Location = New System.Drawing.Point(642, 32)
         Me.BtnOpenPeriod.Name = "BtnOpenPeriod"
         Me.BtnOpenPeriod.Size = New System.Drawing.Size(140, 30)
         Me.BtnOpenPeriod.TabIndex = 48
         Me.BtnOpenPeriod.Text = "Open Period"
         Me.BtnOpenPeriod.UseVisualStyleBackColor = False
+        '
+        'GridControl2
+        '
+        Me.GridControl2.Location = New System.Drawing.Point(30, 439)
+        Me.GridControl2.MainView = Me.GridView2
+        Me.GridControl2.Name = "GridControl2"
+        Me.GridControl2.Size = New System.Drawing.Size(752, 228)
+        Me.GridControl2.TabIndex = 49
+        Me.GridControl2.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GridView2})
+        '
+        'GridView2
+        '
+        Me.GridView2.GridControl = Me.GridControl2
+        Me.GridView2.Name = "GridView2"
         '
         'CtrDataInitializeFI
         '
@@ -130,6 +148,7 @@ Partial Class CtrDataInitializeFI
         Me.Appearance.Options.UseBackColor = True
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 17.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.GridControl2)
         Me.Controls.Add(Me.BtnOpenPeriod)
         Me.Controls.Add(Me.BtnClosedPeriod)
         Me.Controls.Add(Me.GridControl1)
@@ -137,11 +156,13 @@ Partial Class CtrDataInitializeFI
         Me.Controls.Add(Me.TxtYear)
         Me.Controls.Add(Me.CbxMonth)
         Me.Name = "CtrDataInitializeFI"
-        Me.Size = New System.Drawing.Size(1040, 670)
+        Me.Size = New System.Drawing.Size(1040, 722)
         CType(Me.TxtYear.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.CbxMonth.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridControl1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GridControl2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GridView2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -153,4 +174,6 @@ Partial Class CtrDataInitializeFI
     Friend WithEvents GridView1 As DevExpress.XtraGrid.Views.Grid.GridView
     Friend WithEvents BtnClosedPeriod As RoundedButton
     Friend WithEvents BtnOpenPeriod As RoundedButton
+    Friend WithEvents GridControl2 As DevExpress.XtraGrid.GridControl
+    Friend WithEvents GridView2 As DevExpress.XtraGrid.Views.Grid.GridView
 End Class

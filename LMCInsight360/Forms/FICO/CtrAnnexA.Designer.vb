@@ -34,11 +34,13 @@ Partial Class CtrAnnexA
         Me.RbtnMonthly = New System.Windows.Forms.RadioButton()
         Me.LabelControl6 = New DevExpress.XtraEditors.LabelControl()
         Me.BtnGenerate = New LMCInsight360.RoundedButton()
+        Me.PnlReportType = New System.Windows.Forms.Panel()
         CType(Me.CbxSapSource.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.CbxBusinessType.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PnlFooter.SuspendLayout()
         CType(Me.TxtYear.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.CbxMonth.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.PnlReportType.SuspendLayout()
         Me.SuspendLayout()
         '
         'LabelControl3
@@ -194,7 +196,7 @@ Partial Class CtrAnnexA
         '
         Me.RbtnBoth.AutoSize = True
         Me.RbtnBoth.Font = New System.Drawing.Font("Segoe UI", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.RbtnBoth.Location = New System.Drawing.Point(269, 151)
+        Me.RbtnBoth.Location = New System.Drawing.Point(248, 43)
         Me.RbtnBoth.Name = "RbtnBoth"
         Me.RbtnBoth.Size = New System.Drawing.Size(67, 27)
         Me.RbtnBoth.TabIndex = 36
@@ -205,7 +207,7 @@ Partial Class CtrAnnexA
         '
         Me.RbtnAccum.AutoSize = True
         Me.RbtnAccum.Font = New System.Drawing.Font("Segoe UI", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.RbtnAccum.Location = New System.Drawing.Point(132, 151)
+        Me.RbtnAccum.Location = New System.Drawing.Point(111, 43)
         Me.RbtnAccum.Name = "RbtnAccum"
         Me.RbtnAccum.Size = New System.Drawing.Size(131, 27)
         Me.RbtnAccum.TabIndex = 35
@@ -217,7 +219,7 @@ Partial Class CtrAnnexA
         Me.RbtnMonthly.AutoSize = True
         Me.RbtnMonthly.Checked = True
         Me.RbtnMonthly.Font = New System.Drawing.Font("Segoe UI", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.RbtnMonthly.Location = New System.Drawing.Point(32, 151)
+        Me.RbtnMonthly.Location = New System.Drawing.Point(11, 43)
         Me.RbtnMonthly.Name = "RbtnMonthly"
         Me.RbtnMonthly.Size = New System.Drawing.Size(94, 27)
         Me.RbtnMonthly.TabIndex = 34
@@ -231,7 +233,7 @@ Partial Class CtrAnnexA
         Me.LabelControl6.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.LabelControl6.Appearance.Options.UseFont = True
         Me.LabelControl6.Appearance.Options.UseForeColor = True
-        Me.LabelControl6.Location = New System.Drawing.Point(32, 122)
+        Me.LabelControl6.Location = New System.Drawing.Point(11, 11)
         Me.LabelControl6.Name = "LabelControl6"
         Me.LabelControl6.Size = New System.Drawing.Size(94, 23)
         Me.LabelControl6.TabIndex = 39
@@ -250,6 +252,17 @@ Partial Class CtrAnnexA
         Me.BtnGenerate.Text = "📥 Generate Report"
         Me.BtnGenerate.UseVisualStyleBackColor = False
         '
+        'PnlReportType
+        '
+        Me.PnlReportType.Controls.Add(Me.RbtnBoth)
+        Me.PnlReportType.Controls.Add(Me.RbtnMonthly)
+        Me.PnlReportType.Controls.Add(Me.RbtnAccum)
+        Me.PnlReportType.Controls.Add(Me.LabelControl6)
+        Me.PnlReportType.Location = New System.Drawing.Point(32, 113)
+        Me.PnlReportType.Name = "PnlReportType"
+        Me.PnlReportType.Size = New System.Drawing.Size(350, 82)
+        Me.PnlReportType.TabIndex = 43
+        '
         'CtrAnnexA
         '
         Me.AccessibleRole = System.Windows.Forms.AccessibleRole.None
@@ -257,17 +270,14 @@ Partial Class CtrAnnexA
         Me.Appearance.Options.UseBackColor = True
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 17.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.PnlReportType)
         Me.Controls.Add(Me.BtnGenerate)
         Me.Controls.Add(Me.LabelControl4)
         Me.Controls.Add(Me.PnlFooter)
-        Me.Controls.Add(Me.RbtnBoth)
         Me.Controls.Add(Me.CbxBusinessType)
         Me.Controls.Add(Me.TxtYear)
         Me.Controls.Add(Me.LabelControl3)
-        Me.Controls.Add(Me.RbtnAccum)
-        Me.Controls.Add(Me.RbtnMonthly)
         Me.Controls.Add(Me.CbxSapSource)
-        Me.Controls.Add(Me.LabelControl6)
         Me.Controls.Add(Me.LabelControl1)
         Me.Controls.Add(Me.CbxMonth)
         Me.Name = "CtrAnnexA"
@@ -277,6 +287,8 @@ Partial Class CtrAnnexA
         Me.PnlFooter.ResumeLayout(False)
         CType(Me.TxtYear.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.CbxMonth.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.PnlReportType.ResumeLayout(False)
+        Me.PnlReportType.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -296,4 +308,5 @@ Partial Class CtrAnnexA
     Friend WithEvents LblStatus As DevExpress.XtraEditors.LabelControl
     Friend WithEvents LblLoadDate As DevExpress.XtraEditors.LabelControl
     Friend WithEvents BtnGenerate As RoundedButton
+    Friend WithEvents PnlReportType As Panel
 End Class
