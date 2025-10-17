@@ -48,7 +48,8 @@ Partial Class FrmMain
         Me.BtnAnnxA_BS = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.BtnAnnxA_DS = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.BtnAnnxA_Gen = New DevExpress.XtraBars.Navigation.AccordionControlElement()
-        Me.AccordionControlElement5 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
+        Me.AccordionControlElement3 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
+        Me.BtnAnnxB_IScomp = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.AccordionControlElement6 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.AccordionControlElement2 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.BtnDataInitializedFI = New DevExpress.XtraBars.Navigation.AccordionControlElement()
@@ -378,7 +379,7 @@ Partial Class FrmMain
         '
         'AccordionControlElement1
         '
-        Me.AccordionControlElement1.Elements.AddRange(New DevExpress.XtraBars.Navigation.AccordionControlElement() {Me.AccordionControlElement4, Me.AccordionControlElement5, Me.AccordionControlElement6})
+        Me.AccordionControlElement1.Elements.AddRange(New DevExpress.XtraBars.Navigation.AccordionControlElement() {Me.AccordionControlElement4, Me.AccordionControlElement3, Me.AccordionControlElement6})
         Me.AccordionControlElement1.Expanded = True
         Me.AccordionControlElement1.Name = "AccordionControlElement1"
         Me.AccordionControlElement1.Text = "📋  FS Annex Report"
@@ -414,10 +415,18 @@ Partial Class FrmMain
         Me.BtnAnnxA_Gen.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item
         Me.BtnAnnxA_Gen.Text = "Consolidated Annex A"
         '
-        'AccordionControlElement5
+        'AccordionControlElement3
         '
-        Me.AccordionControlElement5.Name = "AccordionControlElement5"
-        Me.AccordionControlElement5.Text = "📑 Annex B Report"
+        Me.AccordionControlElement3.Elements.AddRange(New DevExpress.XtraBars.Navigation.AccordionControlElement() {Me.BtnAnnxB_IScomp})
+        Me.AccordionControlElement3.Expanded = True
+        Me.AccordionControlElement3.Name = "AccordionControlElement3"
+        Me.AccordionControlElement3.Text = "📑 Annex B Report"
+        '
+        'BtnAnnxB_IScomp
+        '
+        Me.BtnAnnxB_IScomp.Name = "BtnAnnxB_IScomp"
+        Me.BtnAnnxB_IScomp.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item
+        Me.BtnAnnxB_IScomp.Text = "IS Comparative"
         '
         'AccordionControlElement6
         '
@@ -639,7 +648,6 @@ Partial Class FrmMain
     Friend WithEvents AccordionControlElement1 As DevExpress.XtraBars.Navigation.AccordionControlElement
     Friend WithEvents AccordionControlElement2 As DevExpress.XtraBars.Navigation.AccordionControlElement
     Friend WithEvents AccordionControlElement4 As DevExpress.XtraBars.Navigation.AccordionControlElement
-    Friend WithEvents AccordionControlElement5 As DevExpress.XtraBars.Navigation.AccordionControlElement
     Friend WithEvents AccordionControlElement6 As DevExpress.XtraBars.Navigation.AccordionControlElement
     Friend WithEvents BtnAnnxA_IS As DevExpress.XtraBars.Navigation.AccordionControlElement
     Friend WithEvents BtnAnnxA_BS As DevExpress.XtraBars.Navigation.AccordionControlElement
@@ -667,4 +675,6 @@ Partial Class FrmMain
     Friend WithEvents PnlTopHeader As DevExpress.XtraEditors.SidePanel
     Friend WithEvents Lbluser As Label
     Friend WithEvents BtnDataInitializedFI As DevExpress.XtraBars.Navigation.AccordionControlElement
+    Friend WithEvents AccordionControlElement3 As DevExpress.XtraBars.Navigation.AccordionControlElement
+    Friend WithEvents BtnAnnxB_IScomp As DevExpress.XtraBars.Navigation.AccordionControlElement
 End Class

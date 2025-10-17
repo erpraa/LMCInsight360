@@ -11,7 +11,7 @@ Public Class CtrAnnexA
     Dim BtnAnnexA As Integer
 
     Private Sub CtrFtr_AnnexA_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        BtnAnnexA = Gbl_FSAnnexA
+        BtnAnnexA = Gbl_ReportTag
         LastDateLoad()
         TxtYear.Text = Date.Now.Year.ToString()
 
@@ -236,6 +236,7 @@ Public Class CtrAnnexA
             Dim fMonth As String = Nothing
             Dim fYear As String = fiscalYear
             Dim includePurchases As Boolean = False
+            Dim saptitle As String = Nothing
 
             ' Column & Row tracking
             Dim col, row As Integer
@@ -247,11 +248,17 @@ Public Class CtrAnnexA
                 Dim reportDate = New Date(CInt(fiscalYear), fiscalMonth, Date.DaysInMonth(CInt(fiscalYear), fiscalMonth))
 
                 'Report Title
+                If sapSource = "L4P" Then
+                    saptitle = " (CAS)"
+                ElseIf sapSource = "LRP" Then
+                    saptitle = " (Reserved)"
+                End If
+
                 .Cells(1, 1).Value = "LIWAYWAY MARKETING CORPORATION"
                 If businessType = "FOODSTUFF" Then
-                    .Cells(2, 1).Value = "FOODSTUFF INCOME STATEMENT"
+                    .Cells(2, 1).Value = $"FOODSTUFF INCOME STATEMENT{saptitle}"
                 Else
-                    .Cells(2, 1).Value = "CONSOLIDATED INCOME STATEMENT"
+                    .Cells(2, 1).Value = $"CONSOLIDATED INCOME STATEMENT{saptitle}"
                 End If
 
                 If ReportType = "Monthly" Then
@@ -276,16 +283,9 @@ Public Class CtrAnnexA
 
                 End If
 
-                If sapSource = "L4P" Then
-                    .Cells(4, 1).Value = "CAS"
-                ElseIf sapSource = "LRP" Then
-                    .Cells(4, 1).Value = "RESERVED"
-                End If
-
                 .Cells(1, 1).Font.Size = 14
                 .Cells(2, 1).Font.Size = 14
                 .Cells(3, 1).Font.Size = 10
-                .Cells(4, 1).Font.Size = 12
 
                 ' Load Branches (header)
                 Dim branches As New List(Of KeyValuePair(Of String, Integer))()
@@ -340,7 +340,7 @@ Public Class CtrAnnexA
                 SetBackFontColor(wsheet, 5, col, "", "169,169,169")
 
                 'Title Design
-                For i As Integer = 1 To 4
+                For i As Integer = 1 To 3
                     ApplyTitleStyle(.Range(.Cells(i, 1), .Cells(i, col)), Nothing, Nothing)
                 Next
 
@@ -560,8 +560,7 @@ Public Class CtrAnnexA
 
             ' Report Parameters
             Dim fsItem As String = Nothing
-
-
+            Dim saptitle As String = Nothing
 
             ' Column & Row tracking
             Dim col, row As Integer
@@ -573,27 +572,26 @@ Public Class CtrAnnexA
                 Dim reportDate = New Date(CInt(fiscalYear), fiscalMonth, Date.DaysInMonth(CInt(fiscalYear), fiscalMonth))
 
                 'Report Title
+                If sapSource = "L4P" Then
+                    saptitle = " (CAS)"
+                ElseIf sapSource = "LRP" Then
+                    saptitle = " (Reserved)"
+                End If
+
                 .Cells(1, 1).Value = "LIWAYWAY MARKETING CORPORATION"
                 If businessType = "FOODSTUFF" Then
-                    .Cells(2, 1).Value = "BALANCE SHEET - FOODSTUFF ONLY"
+                    .Cells(2, 1).Value = $"BALANCE SHEET - FOODSTUFF ONLY{saptitle}"
                     .Name = $"BS {MonthName(fiscalMonth, True)} {fiscalYear} Food"
                 Else
-                    .Cells(2, 1).Value = "BALANCE SHEET - OVERALL"
+                    .Cells(2, 1).Value = $"BALANCE SHEET - OVERALL{saptitle}"
                     .Name = $"BS {MonthName(fiscalMonth, True)} {fiscalYear} Overall"
                 End If
 
                 .Cells(3, 1).Value = "As of " & reportDate.ToString("MMMM dd, yyyy")
 
-                If sapSource = "L4P" Then
-                    .Cells(4, 1).Value = "CAS"
-                ElseIf sapSource = "LRP" Then
-                    .Cells(4, 1).Value = "RESERVED"
-                End If
-
                 .Cells(1, 1).Font.Size = 14
                 .Cells(2, 1).Font.Size = 13
                 .Cells(3, 1).Font.Size = 12
-                .Cells(4, 1).Font.Size = 12
 
                 ' Load Month Names (header)
                 Dim HeaderName As New List(Of KeyValuePair(Of String, Integer))()
@@ -669,7 +667,15 @@ Public Class CtrAnnexA
                                             fsItem = reader("ERGSL").ToString()
 
                                             If fsItem <> "" Then
+
+                                                If businessType <> "FOODSTUFF" Then
+                                                    If fsItem = "29" OrElse fsItem = "34" Then
+                                                        GoTo Skip
+                                                    End If
+                                                End If
                                                 .Cells(row, col) = AdjustValue(Val(GetValueBS(yearValue, String.Join(",", Enumerable.Range(1, CInt(monthValue))), sapSource, fsItem, businessType)), reader("DCFLG").ToString())
+Skip:
+
                                             End If
 
                                             ApplyCellFormat(.Cells(row, col), reader)
@@ -699,19 +705,13 @@ Public Class CtrAnnexA
                 .UsedRange.Font.Name = "Tahoma"
                 .UsedRange.Columns.AutoFit()
 
-                'Hide Previous Months (Show Only Latest)
-                Try
-                    Dim lastMonthCol As Integer = baseCol + HeaderName.Count - 1
-                    ' Hide previous months if there’s more than one
-                    If HeaderName.Count > 1 Then
-                        Dim firstMonthCol As Integer = baseCol
-                        Dim hideRange As Excel.Range = .Range(.Cells(7, firstMonthCol), .Cells(7, lastMonthCol - 1))
+                ' Hide previous months if there’s more than one
+                Dim lastMonthCol As Integer = baseCol + HeaderName.Count - 1
+                If HeaderName.Count > 1 Then
+                    Dim firstMonthCol As Integer = baseCol + 1
+                    Dim hideRange As Excel.Range = .Range(.Cells(7, firstMonthCol), .Cells(7, lastMonthCol - 1))
                         hideRange.EntireColumn.Hidden = True
                     End If
-
-                Catch ex As Exception
-                    MsgBox("Error hiding previous months: " & ex.Message)
-                End Try
 
             End With
 
@@ -820,28 +820,28 @@ Public Class CtrAnnexA
         Dim reportDate As New Date(fiscalYear, fiscalMonth, Date.DaysInMonth(fiscalYear, fiscalMonth))
 
         'Header 
+        Dim saptitle As String = Nothing
+        If sapSource = "L4P" Then
+            saptitle = " (CAS)"
+        ElseIf sapSource = "LRP" Then
+            saptitle = " (Reserved)"
+        End If
+
         With wsheet
             .Cells(1, 1).Value = "LIWAYWAY MARKETING CORPORATION"
             If businessType = "FOODSTUFF" Then
-                .Cells(2, 1).Value = "DETAILS SCHEDULE - FOODSTUFF ONLY"
+                .Cells(2, 1).Value = $"DETAILS SCHEDULE - FOODSTUFF ONLY{saptitle}"
                 .Name = $"DS {MonthName(fiscalMonth, True)} {fiscalYear} Food"
             Else
-                .Cells(2, 1).Value = "DETAILS SCHEDULE - OVERALL"
+                .Cells(2, 1).Value = $"DETAILS SCHEDULE - OVERALL{saptitle}"
                 .Name = $"DS {MonthName(fiscalMonth, True)} {fiscalYear} Overall"
             End If
 
             .Cells(3, 1).Value = "As of " & reportDate.ToString("MMMM dd, yyyy")
 
-            If sapSource = "L4P" Then
-                .Cells(4, 1).Value = "CAS"
-            ElseIf sapSource = "LRP" Then
-                .Cells(4, 1).Value = "RESERVED"
-            End If
-
             .Cells(1, 1).Font.Size = 14
             .Cells(2, 1).Font.Size = 13
             .Cells(3, 1).Font.Size = 12
-            .Cells(4, 1).Font.Size = 12
 
             'Merge and style title rows
             For i As Integer = 1 To 3
@@ -1106,6 +1106,9 @@ Public Class CtrAnnexA
     Private Sub TxtYear_EditValueChanged(sender As Object, e As EventArgs) Handles TxtYear.EditValueChanged
         LastDateLoad()
     End Sub
+
+
+
 
 #End Region
 

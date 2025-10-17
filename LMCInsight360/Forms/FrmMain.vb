@@ -145,15 +145,11 @@ Public Class FrmMain
         ShowUserInfo()
     End Sub
 
-    Sub ShowUserInfo()
-        Dim popup As New FrmAdminInfo()
-
-        ' First, set size (so Width is known)
-        popup.Size = New Size(309, 245)
-
-        ' Get screen coordinates aligned to right
+    Private Sub ShowUserInfo()
+        Dim popup As New FrmAdminInfo With {
+            .Size = New Size(309, 245)
+        }
         Dim pt As Point = Me.PointToScreen(New Point(PnlBRight.Right - popup.Width, PnlTopHeader.Bottom))
-
         popup.StartPosition = FormStartPosition.Manual
         popup.Location = pt
 
@@ -175,27 +171,31 @@ Public Class FrmMain
 #Region "Finacial Statement"
 
     Private Sub BtnAnnxA_IS_Click(sender As Object, e As EventArgs) Handles BtnAnnxA_IS.Click
-        Gbl_FSAnnexA = 1
+        Gbl_ReportTag = 1
         TabMenu(Me, New CtrAnnexA, "Income Statement")
     End Sub
 
     Private Sub BtnAnnxA_BS_Click(sender As Object, e As EventArgs) Handles BtnAnnxA_BS.Click
-        Gbl_FSAnnexA = 2
+        Gbl_ReportTag = 2
         TabMenu(Me, New CtrAnnexA, "Balance Sheet")
     End Sub
 
     Private Sub BtnAnnxA_DS_Click(sender As Object, e As EventArgs) Handles BtnAnnxA_DS.Click
-        Gbl_FSAnnexA = 3
+        Gbl_ReportTag = 3
         TabMenu(Me, New CtrAnnexA, "Details Schedule")
     End Sub
 
     Private Sub BtnAnnxA_Gen_Click(sender As Object, e As EventArgs) Handles BtnAnnxA_Gen.Click
-        Gbl_FSAnnexA = 4
+        Gbl_ReportTag = 4
         TabMenu(Me, New CtrAnnexA, "Generate Annex A")
     End Sub
 
     Private Sub BtnDataInitializedFI_Click(sender As Object, e As EventArgs) Handles BtnDataInitializedFI.Click
         TabMenu(Me, New CtrDataInitializeFI, "Data Initialization-FI")
+    End Sub
+
+    Private Sub BtnAnnxB_IScomp_Click(sender As Object, e As EventArgs) Handles BtnAnnxB_IScomp.Click
+        TabMenu(Me, New CtrAnnexB, "IS Comparative")
     End Sub
 
 

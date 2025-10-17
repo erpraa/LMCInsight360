@@ -9,6 +9,6 @@
     Public Const DSNumericFormat As String = "_(* #,##0.00_);_(* (#,##0.00);_(* ""-""??_);_(@_)"
 
 
-    Public Gbl_FSAnnexA As Integer = Nothing
+    Public Gbl_ReportTag As Integer = Nothing
 
 End Module
