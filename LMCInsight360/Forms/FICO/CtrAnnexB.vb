@@ -1,10 +1,25 @@
 ﻿Public Class CtrAnnexB
 
-    '  Dim BtnAnnexB As Integer
+    Dim BtnAnnexB As Integer
 
     Private Sub CtrlAnnexB_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         PnlReportType.Enabled = False
+
+        BtnAnnexB = Gbl_ReportTag
+
+        Select Case BtnAnnexB
+            Case 1
+                CbxStatementType.Enabled = True
+            Case 2
+                CbxStatementType.Enabled = False
+        End Select
+
     End Sub
+
+    Private Sub BtnGenerate_Click(sender As Object, e As EventArgs) Handles BtnGenerate.Click
+
+    End Sub
+
 
     Private Sub CbxStatementType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CbxStatementType.SelectedIndexChanged
         FilterLogic()
@@ -46,4 +61,6 @@
     Private Sub TxtCompYear_EditValueChanged(sender As Object, e As EventArgs) Handles TxtCompYear.EditValueChanged
         FilterLogic()
     End Sub
+
+
 End Class

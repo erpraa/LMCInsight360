@@ -1,10 +1,11 @@
 ﻿Imports LMCInsight360.ClassFunction
 Imports LMCInsight360.SubClass
+Imports LMCInsight360.SubQuery
+
 Imports Excel = Microsoft.Office.Interop.Excel
 Imports System.Data.SqlClient
 Imports DevExpress.XtraSplashScreen
 Imports System.Runtime.InteropServices
-
 
 Public Class CtrAnnexA
 
@@ -29,6 +30,8 @@ Public Class CtrAnnexA
         End Select
     End Sub
 
+#Region "Generate Annex A Report"
+
     Private Sub BtnGenerate_Click(sender As Object, e As EventArgs) Handles BtnGenerate.Click
 
         If String.IsNullOrWhiteSpace(CbxMonth.Text) Then
@@ -52,23 +55,27 @@ Public Class CtrAnnexA
             Exit Sub
         End If
 
+        If GetValue($"Select count(*) from FI_TRXDATA where RYEAR={TxtYear.Text} and POPER={GetMonthNumber(CbxMonth.EditValue)}") = 0 Then
+            Exit Sub
+        End If
+
         Dim result As DialogResult
-        result = MessageBox.Show("This report may take several minutes to generate. Do you want to continue?", "Run Report", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
+        result = MessageBox.Show("This report may take several minutes to generate. Do you want to continue?", SystemTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
         If result = DialogResult.Yes Then
 
             Select Case BtnAnnexA
-                Case 1
-                    Generate_IncomeStatement()
-                Case 2
-                    Generate_BalanceSheet()
-                    PnlReportType.Show()
-                Case 3
-                    Generate_DetailSchedule()
-                Case 4
-                    Generate_AnnexA()
-            End Select
+                    Case 1
+                        Generate_IncomeStatement()
+                    Case 2
+                        Generate_BalanceSheet()
+                        PnlReportType.Show()
+                    Case 3
+                        Generate_DetailSchedule()
+                    Case 4
+                        Generate_AnnexA()
+                End Select
 
-        End If
+            End If
 
     End Sub
     Private Sub Generate_AnnexA()
@@ -136,8 +143,7 @@ Public Class CtrAnnexA
         SplashScreenManager.CloseDefaultWaitForm()
     End Sub
 
-
-
+#End Region
 
 #Region "Income Statement Report"
 
@@ -422,7 +428,8 @@ Public Class CtrAnnexA
 
                                                 End Select
 
-                                                .Cells(row, col) = AdjustValue(Val(GetValue(fYear, fMonth, sapSource, br.Key, fsItem, includePurchases, businessType)), reader("DCFLG").ToString())
+                                                .Cells(row, col) = AdjustValue(Val(GetAmount(RptQueryIS(fYear, fMonth, sapSource, br.Key, fsItem, includePurchases, businessType))), reader("DCFLG").ToString())
+
                                                 ApplyCellFormat(.Cells(row, col), reader)
                                                 SetBottomBorder(wsheet, row, col, reader("ULINE").ToString().Trim())
                                             End If
@@ -673,7 +680,7 @@ Public Class CtrAnnexA
                                                         GoTo Skip
                                                     End If
                                                 End If
-                                                .Cells(row, col) = AdjustValue(Val(GetValueBS(yearValue, String.Join(",", Enumerable.Range(1, CInt(monthValue))), sapSource, fsItem, businessType)), reader("DCFLG").ToString())
+                                                .Cells(row, col) = AdjustValue(Val(GetAmount(RptQueryBS(yearValue, String.Join(",", Enumerable.Range(1, CInt(monthValue))), sapSource, fsItem, businessType))), reader("DCFLG").ToString())
 Skip:
 
                                             End If
@@ -1037,6 +1044,7 @@ Skip:
 
 #End Region
 
+#Region "Annex A Function"
 
     Private Sub ApplyTitleStyle(rng As Excel.Range, Optional fntcolor As String = Nothing, Optional bckcolor As String = Nothing)
         With rng
@@ -1070,7 +1078,7 @@ Skip:
         End If
     End Sub
 
-
+#End Region
 
 #Region "Last Load Data"
 
@@ -1078,6 +1086,7 @@ Skip:
 
         LblLoadDate.Text = Nothing
         LblStatus.Text = Nothing
+        LblLoadDate.ForeColor = Color.FromArgb(64, 64, 64)
 
         If CbxMonth.EditValue <> "" And TxtYear.EditValue <> "" Then
 
@@ -1086,16 +1095,24 @@ Skip:
             For Each record In dataList
 
                 If record("PSTATS") = True Then
-                    LblStatus.Text = "Closed Period"
+                    LblStatus.Text = "  Closed Period"
                     LblStatus.ForeColor = Color.Green
                 Else
-                    LblStatus.Text = "Open Period"
+                    LblStatus.Text = "  Open Period"
                     LblStatus.ForeColor = Color.Red
                 End If
 
                 LblLoadDate.Text = "Last Load Date: " & record("LPDATE")
 
             Next
+
+            If GetValue($"Select count(*) from FI_TRXDATA where RYEAR={TxtYear.Text} and POPER={GetMonthNumber(CbxMonth.EditValue)}") = 0 Then
+                LblLoadDate.Text = "No data found. Please reload the data first in Data Management."
+                LblLoadDate.ForeColor = Color.Red
+                LblStatus.Text = Nothing
+            End If
+
+
         End If
     End Sub
 

@@ -195,7 +195,13 @@ Public Class FrmMain
     End Sub
 
     Private Sub BtnAnnxB_IScomp_Click(sender As Object, e As EventArgs) Handles BtnAnnxB_IScomp.Click
+        Gbl_ReportTag = 1
         TabMenu(Me, New CtrAnnexB, "IS Comparative")
+    End Sub
+
+    Private Sub BtnAnnxB_SEGAAE_Click(sender As Object, e As EventArgs) Handles BtnAnnxB_SEGAAE.Click
+        Gbl_ReportTag = 2
+        TabMenu(Me, New CtrAnnexB, "SE & GAAE")
     End Sub
 
 

@@ -1,7 +1,7 @@
 ﻿Public Class SubQuery
 
-
-    Public Shared Function RptQuery(FiscalYear As String, PostingPeriod As String, TrxOrigin As String, busUnit As String, FSItem As String, PurcH As Boolean, businessType As String) As String
+#Region "Annex A Report"
+    Public Shared Function RptQueryIS(FiscalYear As String, PostingPeriod As String, TrxOrigin As String, busUnit As String, FSItem As String, PurcH As Boolean, businessType As String) As String
 
         Dim Gscript As String
 
@@ -63,5 +63,79 @@
 
         Return GscriptBS
     End Function
+
+#End Region
+
+#Region "CtrDataInitializeFI Module"
+    Public NotInheritable Class Datainialized
+        Public Shared ReadOnly Property DelTrxDetails As String
+            Get
+                Return "DELETE FROM FI_TRXDETAILS WHERE POPER=@PostingPeriod AND RYEAR=@FiscalYear"
+            End Get
+        End Property
+
+        Public Shared ReadOnly Property DelTrxData As String
+            Get
+                Return "DELETE FROM FI_TRXDATA WHERE POPER=@PostingPeriod AND RYEAR=@FiscalYear"
+            End Get
+        End Property
+        Public Shared ReadOnly Property UpdateLoadDate As String
+            Get
+                Return "UPDATE FI_PSTNGPRD SET LDDATE=@loaddate, PSTBY=@postby WHERE POPER=@PostingPeriod AND RYEAR=@FiscalYear"
+            End Get
+        End Property
+
+        Public Shared ReadOnly Property UpdatePostDate As String
+            Get
+                Return "UPDATE FI_PSTNGPRD SET PSTDATE=@postdate, PSTBY=@postby, PSTATS=@poststat WHERE POPER=@PostingPeriod AND RYEAR=@FiscalYear"
+            End Get
+        End Property
+
+        Public Shared ReadOnly Property UpdatePostStatus As String
+            Get
+                Return "UPDATE FI_PSTNGPRD SET PSTDATE=@postdate, PSTBY=@postby, PSTATS=@poststat WHERE POPER=@PostingPeriod AND RYEAR=@FiscalYear"
+            End Get
+        End Property
+
+        Public Shared ReadOnly Property InsertNewPeriod As String
+            Get
+                Return "INSERT INTO FI_PSTNGPRD (POPER, RYEAR) VALUES (@PostingPeriod, @FiscalYear)"
+            End Get
+        End Property
+
+        Public Shared ReadOnly Property ViewPostingPeriod As String
+            Get
+                Return "Select DATENAME(MONTH, DATEFROMPARTS(2000, POPER, 1)) AS PostingPeriod,
+                         RYEAR AS FiscalYear,
+                         LDDATE AS LoadDate,
+                         PSTDATE AS CloseDate,
+                         PSTATS AS Status,
+                         PSTBY AS Account
+                         FROM FI_PSTNGPRD
+                         WHERE RYEAR IN (YEAR(GETDATE()) - 1, YEAR(GETDATE())) order by RYEAR,POPER;"
+            End Get
+        End Property
+
+         Public Shared ReadOnly Property SelectSKAT As String
+            Get
+                Return "Trim(LEADING '0' FROM SAKNR) AS SAKNR,KTOPL,SPRAS,TXT20,TXT50,MCOD1 From SAPHANADB.SKAT Where MANDT = '800' And KTOPL = '1000' AND SPRAS='E'"
+            End Get
+        End Property
+
+          Public Shared ReadOnly Property SelectSKB1 As String
+            Get
+                Return "Trim(LEADING '0' FROM SAKNR) AS SAKNR,BUKRS,TO_VARCHAR(TO_DATE(ERDAT, 'YYYYMMDD'), 'YYYY-MM-DD') AS ERDAT,ERNAM,FDLEV,FIPLS,FSTAG,HBKID,HKTID,MITKZ,MWSKZ,WAERS,XGKON,XINTB,XKRES,XOPVW,XSPEB,ZINRT,ZUAWA,XMWNO,XSALH From SAPHANADB.SKB1 Where MANDT = '800' And BUKRS = '2000'ORDER BY SAKNR;"
+            End Get
+        End Property
+
+       Public Shared ReadOnly Property SelecT004G As String
+            Get
+                Return "FSTAG,SPRAS,BUKRS,FSTTX From SAPHANADB.T004G  Where MANDT = '800' And BUKRS = '1000' AND SPRAS='E'"
+            End Get
+        End Property
+
+    End Class
+
+#End Region
 
 End Class

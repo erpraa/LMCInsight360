@@ -1,7 +1,6 @@
 ﻿
 Imports DevExpress.XtraBars.Docking2010.Views
 Imports System.Data.SqlClient
-Imports LMCInsight360.SubQuery
 Public Class ClassFunction
 
 #Region "FrmMain"
@@ -19,16 +18,14 @@ Public Class ClassFunction
     End Function
 #End Region
 
-
-#Region "General Function"
-
-    Public Shared Function GetMultiValues(ByVal strSql As String) As List(Of Dictionary(Of String, String))
+#Region "Get Function"
+    Public Shared Function GetMultiValues(ByVal query As String) As List(Of Dictionary(Of String, String))
         Dim result As New List(Of Dictionary(Of String, String))
 
         Try
-            Using cn As New SqlConnection(SqlConnect)
-                cn.Open()
-                Using cmd As New SqlCommand(strSql, cn)
+            Using conn As New SqlConnection(SqlConnect)
+                conn.Open()
+                Using cmd As New SqlCommand(query, conn)
                     cmd.CommandType = CommandType.Text
                     cmd.CommandTimeout = 0
 
@@ -43,8 +40,8 @@ Public Class ClassFunction
                     End Using
                 End Using
 
-                If cn.State = ConnectionState.Open Then
-                    cn.Close()
+                If conn.State = ConnectionState.Open Then
+                    conn.Close()
                 End If
 
             End Using
@@ -55,69 +52,18 @@ Public Class ClassFunction
         Return result
     End Function
 
-
-    Public Shared Function GetValue(FiscalYear As String, PostingPeriod As String, Optional TrxOrigin As String = Nothing, Optional busUnit As String = Nothing, Optional FSItem As String = Nothing, Optional PurcH As Boolean = False, Optional businessType As String = Nothing)
-
-        Dim rtnAmt As String = Nothing
-
-        Using strConn As New SqlConnection(SqlConnect)
-            strConn.Open()
-
-            Using command As New SqlCommand(RptQuery(FiscalYear, PostingPeriod, TrxOrigin, busUnit, FSItem, PurcH, businessType), strConn)
-                Using reader = command.ExecuteReader
-                    If reader.HasRows Then
-                        While reader.Read()
-                            If reader.IsDBNull(0) Or reader(0).ToString = "" Then
-                                rtnAmt = "0.00"
-                            Else
-                                rtnAmt = reader(0).ToString
-                            End If
-                        End While
-                    End If
-                End Using
-            End Using
-        End Using
-
-        Return rtnAmt
-    End Function
-
-    Public Shared Function GetValueBS(FiscalYear As String, PostingPeriod As String, Optional TrxOrigin As String = Nothing, Optional FSItem As String = Nothing, Optional businessType As String = Nothing)
-
-        Dim rtnAmt As String = Nothing
-
-        Using strConn As New SqlConnection(SqlConnect)
-            strConn.Open()
-
-            Using command As New SqlCommand(RptQueryBS(FiscalYear, PostingPeriod, TrxOrigin, FSItem, businessType), strConn)
-                Using reader = command.ExecuteReader
-                    If reader.HasRows Then
-                        While reader.Read()
-                            If reader.IsDBNull(0) Or reader(0).ToString = "" Then
-                                rtnAmt = "0.00"
-                            Else
-                                rtnAmt = reader(0).ToString
-                            End If
-                        End While
-                    End If
-                End Using
-            End Using
-        End Using
-
-        Return rtnAmt
-    End Function
-
-    Public Shared Function GetQuery(ByVal query As String) As String
+    Public Shared Function GetValue(ByVal query As String) As String
         Dim result As String = Nothing
 
         Try
-            Using connection As New SqlConnection(SqlConnect)
-                connection.Open()
+            Using conn As New SqlConnection(SqlConnect)
+                conn.Open()
 
-                Using command As New SqlCommand(query, connection)
-                    command.CommandType = CommandType.Text
-                    command.CommandTimeout = 0
+                Using cmd As New SqlCommand(query, conn)
+                    cmd.CommandType = CommandType.Text
+                    cmd.CommandTimeout = 0
 
-                    Using reader As SqlDataReader = command.ExecuteReader()
+                    Using reader As SqlDataReader = cmd.ExecuteReader()
                         If reader.Read() Then
                             result = If(Not reader.IsDBNull(0), reader.GetValue(0).ToString(), String.Empty)
                         End If
@@ -125,25 +71,48 @@ Public Class ClassFunction
                 End Using
             End Using
         Catch ex As Exception
-            ' Log the exception instead of using MsgBox in production
             Console.WriteLine($"An error occurred: {ex.Message}")
         End Try
 
         Return result
     End Function
 
-    Public Shared Function PopulateDataSQL(strSql As String) As DataView
+    Public Shared Function GetAmount(ByVal query As String) As String
+        Dim result As String = "0.00"
+
+        Try
+            Using conn As New SqlConnection(SqlConnect)
+                conn.Open()
+
+                Using cmd As New SqlCommand(query, conn)
+                    Dim obj = cmd.ExecuteScalar()
+
+                    If obj IsNot Nothing AndAlso Not Convert.IsDBNull(obj) Then
+                        Dim value = obj.ToString().Trim()
+                        If value <> "" Then result = value
+                    End If
+                End Using
+            End Using
+
+        Catch ex As Exception
+            Console.WriteLine($"An error occurred: {ex.Message}")
+        End Try
+
+        Return result
+    End Function
+
+    Public Shared Function PopulateDataSQL(query As String) As DataView
         Dim dvcv As New DataView
         Dim adapterCv As New SqlDataAdapter
         Dim dsConn As New DataSet
 
-        Using connection As New SqlConnection(SqlConnect)
-            connection.Open()
-            Using command As New SqlCommand(strSql, connection)
-                command.CommandTimeout = 0
+        Using conn As New SqlConnection(SqlConnect)
+            conn.Open()
+            Using cmd As New SqlCommand(query, conn)
+                cmd.CommandTimeout = 0
                 Try
                     With adapterCv
-                        .SelectCommand = command
+                        .SelectCommand = cmd
                         .Fill(dsConn)
                         .Dispose()
                     End With
@@ -155,8 +124,8 @@ Public Class ClassFunction
                 End Try
             End Using
 
-            If connection.State = ConnectionState.Open Then
-                connection.Close()
+            If conn.State = ConnectionState.Open Then
+                conn.Close()
             End If
 
         End Using
@@ -164,17 +133,149 @@ Public Class ClassFunction
         Return dvcv
     End Function
 
+    Public Shared Function GetServerDate() As DateTime
+        Dim serverDate As DateTime
 
+        Using conn As New SqlConnection(SqlConnect)
+            conn.Open()
+            Using cmd As New SqlCommand("SELECT GETDATE()", conn)
+                serverDate = Convert.ToDateTime(cmd.ExecuteScalar())
+            End Using
+        End Using
+
+        Return serverDate
+    End Function
+
+#End Region
+
+#Region "Submit Function"
+
+    ' INSERT FUNCTION (Return new ID)
+    Public Shared Function ExecuteInsert(ByVal query As String, ByVal parameters As Dictionary(Of String, Object)) As Integer
+        Dim newID As Integer = 0
+
+        Try
+            Using conn As New SqlConnection(SqlConnect)
+                conn.Open()
+                Using cmd As New SqlCommand(query & "; SELECT SCOPE_IDENTITY();", conn)
+                    cmd.CommandType = CommandType.Text
+                    cmd.CommandTimeout = 0
+
+                    ' Add parameters safely
+                    For Each param In parameters
+                        cmd.Parameters.AddWithValue(param.Key, param.Value)
+                    Next
+
+                    ' Execute and return new identity value
+                    Dim result = cmd.ExecuteScalar()
+                    If result IsNot Nothing AndAlso IsNumeric(result) Then
+                        newID = Convert.ToInt32(result)
+                    End If
+                End Using
+            End Using
+
+        Catch ex As Exception
+            Console.WriteLine("Error (Insert): " & ex.Message)
+        End Try
+
+        Return newID
+    End Function
+
+    ' UPDATE FUNCTION (Return affected rows)
+    Public Shared Function ExecuteUpdate(ByVal query As String, ByVal parameters As Dictionary(Of String, Object)) As Integer
+        Dim rowsAffected As Integer = 0
+
+        Try
+            Using conn As New SqlConnection(SqlConnect)
+                conn.Open()
+                Using cmd As New SqlCommand(query, conn)
+                    cmd.CommandType = CommandType.Text
+                    cmd.CommandTimeout = 0
+
+                    ' Add parameters safely
+                    For Each param In parameters
+                        cmd.Parameters.AddWithValue(param.Key, param.Value)
+                    Next
+
+                    rowsAffected = cmd.ExecuteNonQuery()
+                End Using
+            End Using
+
+        Catch ex As Exception
+            Console.WriteLine("Error (Update): " & ex.Message)
+        End Try
+
+        Return rowsAffected
+    End Function
+
+    ' DELETE FUNCTION (Return affected rows)
+    Public Shared Function ExecuteDelete(ByVal query As String, ByVal parameters As Dictionary(Of String, Object)) As Integer
+        Dim rowsAffected As Integer = 0
+
+        Try
+            Using conn As New SqlConnection(SqlConnect)
+                conn.Open()
+                Using cmd As New SqlCommand(query, conn)
+                    cmd.CommandType = CommandType.Text
+                    cmd.CommandTimeout = 0
+
+                    ' Add parameters safely
+                    For Each param In parameters
+                        cmd.Parameters.AddWithValue(param.Key, param.Value)
+                    Next
+
+                    rowsAffected = cmd.ExecuteNonQuery()
+                End Using
+            End Using
+
+        Catch ex As Exception
+            Console.WriteLine("Error (Delete): " & ex.Message)
+        End Try
+
+        Return rowsAffected
+    End Function
+
+    Public Shared Function ExecuteProcedure(ByVal procedureName As String, Optional ByVal parameters As Dictionary(Of String, Object) = Nothing, Optional ByVal expectResult As Boolean = False) As Object
+        Dim result As Object = Nothing
+
+        Try
+            Using conn As New SqlConnection(SqlConnect)
+                conn.Open()
+
+                Using cmd As New SqlCommand(procedureName, conn)
+                    cmd.CommandType = CommandType.StoredProcedure
+                    cmd.CommandTimeout = 0
+
+                    ' Add parameters dynamically (if any)
+                    If parameters IsNot Nothing Then
+                        For Each param In parameters
+                            cmd.Parameters.AddWithValue(param.Key, param.Value)
+                        Next
+                    End If
+
+                    '  Choose mode depending on whether results are expected
+                    If expectResult Then
+                        Using da As New SqlDataAdapter(cmd)
+                            Dim dt As New DataTable()
+                            da.Fill(dt)
+                            result = dt  ' Return DataTable for SELECT results
+                        End Using
+                    Else
+                        result = cmd.ExecuteNonQuery()  ' Return affected rows for insert/update/delete
+                    End If
+                End Using
+            End Using
+
+        Catch ex As Exception
+            Console.WriteLine($"Error executing procedure [{procedureName}]: " & ex.Message)
+        End Try
+
+        Return result
+    End Function
+
+#End Region
 
 #Region "Report Function"
-
-    Public Shared Function GetMonthNumber(monthName As String) As Integer
-        Try
-            Return DateTime.ParseExact(monthName, "MMMM", Globalization.CultureInfo.InvariantCulture).Month
-        Catch ex As Exception
-            Return 0
-        End Try
-    End Function
 
     Public Shared Function AdjustValue(baseValue As Double, dcflgObj As Object) As Double
         Dim dcflg As String = ""
@@ -222,7 +323,6 @@ Public Class ClassFunction
         Return colName
     End Function
 
-
     Public Shared Function NumberToWords(ByVal number As Integer) As String
         Select Case number
             Case 1 : Return "One"
@@ -241,20 +341,17 @@ Public Class ClassFunction
         End Select
     End Function
 
-
-    Public Shared Function MonthNameToNum(monthName As String) As Integer
+    Public Shared Function GetMonthNumber(monthName As String) As Integer
         Try
-            ' Parse month name using DateTime
-            Dim monthDate As DateTime = DateTime.ParseExact(monthName, "MMMM", Globalization.CultureInfo.InvariantCulture)
-            Return monthDate.Month
+            Return DateTime.ParseExact(monthName, "MMMM", Globalization.CultureInfo.InvariantCulture).Month
         Catch ex As Exception
-            ' If invalid month name, return 0
             Return 0
         End Try
     End Function
-#End Region
 
 #End Region
+
+
 
 
 End Class

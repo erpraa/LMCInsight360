@@ -1,5 +1,6 @@
 ﻿Module GlobalVariable
 
+    Public SystemTitle As String = "LMC Insight360"
     Public AppSecurity As String = "R@z4ña"
 
     Public Const NumericFormat As String = "#,##0.00;(#,##0.00)"

@@ -33,8 +33,8 @@ Partial Class CtrAnnexA
         Me.RbtnAccum = New System.Windows.Forms.RadioButton()
         Me.RbtnMonthly = New System.Windows.Forms.RadioButton()
         Me.LabelControl6 = New DevExpress.XtraEditors.LabelControl()
-        Me.BtnGenerate = New LMCInsight360.RoundedButton()
         Me.PnlReportType = New System.Windows.Forms.Panel()
+        Me.BtnGenerate = New LMCInsight360.RoundedButton()
         CType(Me.CbxSapSource.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.CbxBusinessType.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PnlFooter.SuspendLayout()
@@ -119,11 +119,11 @@ Partial Class CtrAnnexA
         Me.LblStatus.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.LblStatus.Appearance.Options.UseFont = True
         Me.LblStatus.Appearance.Options.UseForeColor = True
-        Me.LblStatus.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None
+        Me.LblStatus.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.Horizontal
         Me.LblStatus.Dock = System.Windows.Forms.DockStyle.Left
-        Me.LblStatus.Location = New System.Drawing.Point(321, 0)
+        Me.LblStatus.Location = New System.Drawing.Point(112, 0)
         Me.LblStatus.Name = "LblStatus"
-        Me.LblStatus.Size = New System.Drawing.Size(203, 36)
+        Me.LblStatus.Size = New System.Drawing.Size(51, 23)
         Me.LblStatus.TabIndex = 27
         Me.LblStatus.Text = "Status:"
         '
@@ -133,11 +133,11 @@ Partial Class CtrAnnexA
         Me.LblLoadDate.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.LblLoadDate.Appearance.Options.UseFont = True
         Me.LblLoadDate.Appearance.Options.UseForeColor = True
-        Me.LblLoadDate.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None
+        Me.LblLoadDate.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.Horizontal
         Me.LblLoadDate.Dock = System.Windows.Forms.DockStyle.Left
         Me.LblLoadDate.Location = New System.Drawing.Point(0, 0)
         Me.LblLoadDate.Name = "LblLoadDate"
-        Me.LblLoadDate.Size = New System.Drawing.Size(321, 36)
+        Me.LblLoadDate.Size = New System.Drawing.Size(112, 23)
         Me.LblLoadDate.TabIndex = 25
         Me.LblLoadDate.Text = "Date and Time"
         '
@@ -239,6 +239,17 @@ Partial Class CtrAnnexA
         Me.LabelControl6.TabIndex = 39
         Me.LabelControl6.Text = "Report Type"
         '
+        'PnlReportType
+        '
+        Me.PnlReportType.Controls.Add(Me.RbtnBoth)
+        Me.PnlReportType.Controls.Add(Me.RbtnMonthly)
+        Me.PnlReportType.Controls.Add(Me.RbtnAccum)
+        Me.PnlReportType.Controls.Add(Me.LabelControl6)
+        Me.PnlReportType.Location = New System.Drawing.Point(32, 113)
+        Me.PnlReportType.Name = "PnlReportType"
+        Me.PnlReportType.Size = New System.Drawing.Size(350, 82)
+        Me.PnlReportType.TabIndex = 43
+        '
         'BtnGenerate
         '
         Me.BtnGenerate.BackColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(149, Byte), Integer), CType(CType(150, Byte), Integer))
@@ -251,17 +262,6 @@ Partial Class CtrAnnexA
         Me.BtnGenerate.TabIndex = 42
         Me.BtnGenerate.Text = "📥 Generate Report"
         Me.BtnGenerate.UseVisualStyleBackColor = False
-        '
-        'PnlReportType
-        '
-        Me.PnlReportType.Controls.Add(Me.RbtnBoth)
-        Me.PnlReportType.Controls.Add(Me.RbtnMonthly)
-        Me.PnlReportType.Controls.Add(Me.RbtnAccum)
-        Me.PnlReportType.Controls.Add(Me.LabelControl6)
-        Me.PnlReportType.Location = New System.Drawing.Point(32, 113)
-        Me.PnlReportType.Name = "PnlReportType"
-        Me.PnlReportType.Size = New System.Drawing.Size(350, 82)
-        Me.PnlReportType.TabIndex = 43
         '
         'CtrAnnexA
         '
@@ -285,6 +285,7 @@ Partial Class CtrAnnexA
         CType(Me.CbxSapSource.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.CbxBusinessType.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PnlFooter.ResumeLayout(False)
+        Me.PnlFooter.PerformLayout()
         CType(Me.TxtYear.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.CbxMonth.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PnlReportType.ResumeLayout(False)
