@@ -9,12 +9,6 @@ Public Class CtrDataInitializeFI
         LoadData()
         TxtMonth.Text = ""
         TxtYear.Text = ""
-
-        TxtMonth.Properties.ReadOnly = True
-        TxtYear.Properties.ReadOnly = True
-
-        GridControl2.Hide()
-
     End Sub
 
     Private Sub BtnLoadData_Click(sender As Object, e As EventArgs) Handles BtnLoadData.Click
@@ -25,7 +19,7 @@ Public Class CtrDataInitializeFI
         End If
 
         Dim result As DialogResult
-        result = MessageBox.Show("This may take several minutes to load data....", SystemTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+        result = MessageBox.Show("This may take several minutes to load data....", SystemTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
         If result = DialogResult.Yes Then
 
             Dim sql As String = $"select * from FI_PSTNGPRD where RYEAR={TxtYear.Text} and POPER={GetMonthNumber(TxtMonth.Text)}"
@@ -49,7 +43,10 @@ Public Class CtrDataInitializeFI
                 Dim params As New Dictionary(Of String, Object) From {{"@PostingPeriod", postingperiod}, {"@FiscalYear", fiscalyear}}
 
                 ExecuteDelete(DelTrxDetails, params)
-                ExecuteDelete(deltrxdata, params)
+                ExecuteDelete(DelTrxData, params)
+
+                Dim reseed As New Dictionary(Of String, Object) From {{"@TableName", "FI_TRXDETAILS"}}
+                ExecuteProcedure("RESEED_TRXROW", reseed, False)
 
                 LoadDataDetails("L4P", CasConnect, fiscalyear, postingperiod)
                 LoadDataDetails("LRP", ResConnect, fiscalyear, postingperiod)
@@ -79,7 +76,7 @@ Public Class CtrDataInitializeFI
         End If
 
         Dim result As DialogResult
-        result = MessageBox.Show($"Do you want to close the {TxtMonth.Text} {TxtYear.Text} period?", SystemTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+        result = MessageBox.Show($"Are you sure you want to close the {TxtMonth.Text} {TxtYear.Text} period? {vbCrLf} Please ensure that all data is up to date before proceeding.", SystemTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question)
         If result = DialogResult.Yes Then
 
             Dim sql As String = $"select * from FI_PSTNGPRD where RYEAR={TxtYear.Text} and POPER={GetMonthNumber(TxtMonth.Text)}"
@@ -181,11 +178,10 @@ Public Class CtrDataInitializeFI
 
     Private Sub LoadData()
 
-        ' 🔹 Save the current selected values before refreshing
+        ' Save the current selected values before refreshing
         Dim lastYear As String = TxtYear.Text
         Dim lastMonth As String = TxtMonth.Text
 
-        ' 🔹 Refresh or reload your data
         GridControl1.DataSource = PopulateDataSQL(ViewPostingPeriod)
 
         If GridView1.RowCount > 0 Then
@@ -203,19 +199,13 @@ Public Class CtrDataInitializeFI
             Next
         End If
 
-
         GridView1.BestFitColumns()
-        GridView1.OptionsFind.AlwaysVisible = True
+        GridView1.OptionsFind.AlwaysVisible = False
         GridView1.OptionsBehavior.Editable = False
         GridView1.OptionsView.ShowAutoFilterRow = False
 
 
-        GridControl2.DataSource = PopulateDataSQL("Select TRX_ORIGIN, SAKNR, TXT20, TXT50, CreatedDate From FI_SKAT Where SAKNR In (Select * from FI_NEWGL)")
-        GridView2.BestFitColumns()
-        GridView2.OptionsFind.AlwaysVisible = True
-        GridView2.OptionsBehavior.Editable = False
-        GridView2.OptionsView.ShowAutoFilterRow = False
-
+        BtnNewGL.Text = GetValue("SELECT COUNT(*) FROM FI_NEWGL") & " New GL"
     End Sub
 
     Private Sub GetSapDataHeader()
@@ -393,4 +383,7 @@ Public Class CtrDataInitializeFI
 
     End Sub
 
+    Private Sub BtnNewGL_Click(sender As Object, e As EventArgs) Handles BtnNewGL.Click
+        FrmViewGL.ShowDialog()
+    End Sub
 End Class

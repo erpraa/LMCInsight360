@@ -66,6 +66,32 @@
 
 #End Region
 
+#Region "Annex B Report"
+    Public Shared Function RptQueryBIS(FiscalYear As String, PostingPeriod As String, TrxOrigin As String, FSItem As String, businessType As String) As String
+        Dim Gresult As String
+        Dim pTrxOrigin As String = Nothing
+        Dim pbusinessType As String = Nothing
+
+
+        If TrxOrigin <> Nothing Then
+            pTrxOrigin = $"and TrxOrigin='{TrxOrigin}'"
+        End If
+
+        If businessType = "FOODSTUFF" Then
+            pbusinessType = $"and BusType='Foodstuff Only'"
+        End If
+
+
+        Gresult = $"Select SUM(Amount) from vwFI_GLREPORT where FiscalYear={FiscalYear} and PostingPeriod IN ({PostingPeriod}) and FSItem='{FSItem}' {pTrxOrigin} {pbusinessType}"
+
+        Return Gresult
+    End Function
+
+#End Region
+
+
+
+
 #Region "CtrDataInitializeFI Module"
     Public NotInheritable Class Datainialized
         Public Shared ReadOnly Property DelTrxDetails As String

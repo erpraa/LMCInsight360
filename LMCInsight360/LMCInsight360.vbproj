@@ -104,6 +104,12 @@
     <Compile Include="Forms\FICO\CtrAnnexB.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Forms\FICO\FrmViewGL.Designer.vb">
+      <DependentUpon>FrmViewGL.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FICO\FrmViewGL.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\FrmMain.Designer.vb">
       <DependentUpon>FrmMain.vb</DependentUpon>
     </Compile>
@@ -161,6 +167,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FICO\CtrAnnexB.resx">
       <DependentUpon>CtrAnnexB.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FICO\FrmViewGL.resx">
+      <DependentUpon>FrmViewGL.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FrmMain.resx">
       <DependentUpon>FrmMain.vb</DependentUpon>

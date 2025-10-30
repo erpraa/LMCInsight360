@@ -1090,7 +1090,7 @@ Skip:
 
         If CbxMonth.EditValue <> "" And TxtYear.EditValue <> "" Then
 
-            Dim dataList As List(Of Dictionary(Of String, String)) = GetMultiValues($"Select case when PSTDATE is Null then LDDATE else PSTDATE end as LPDATE, PSTATS from FI_PSTNGPRD where POPER ={GetMonthNumber(CbxMonth.EditValue.ToString())} and RYEAR={TxtYear.EditValue}")
+            Dim dataList As List(Of Dictionary(Of String, String)) = GetMultiValues($"Select LDDATE, PSTATS from FI_PSTNGPRD where POPER ={GetMonthNumber(CbxMonth.EditValue.ToString())} and RYEAR={TxtYear.EditValue}")
 
             For Each record In dataList
 
@@ -1102,7 +1102,7 @@ Skip:
                     LblStatus.ForeColor = Color.Red
                 End If
 
-                LblLoadDate.Text = "Last Load Date: " & record("LPDATE")
+                LblLoadDate.Text = "Last Load Date: " & record("LDDATE")
 
             Next
 
