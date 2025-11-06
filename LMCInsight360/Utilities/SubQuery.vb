@@ -87,6 +87,30 @@
         Return Gresult
     End Function
 
+
+    Public Shared Function RptQueryGaae(FiscalYear As String, PostingPeriod As String, FSItem As String, GLaccnt As Integer, TrxOrigin As String, businessType As String) As String
+        Dim Gresult As String
+        Dim pTrxOrigin As String = Nothing
+        Dim pbusinessType As String = Nothing
+
+
+        If TrxOrigin <> Nothing Then
+            pTrxOrigin = $"and TrxOrigin='{TrxOrigin}'"
+        End If
+
+        If businessType = "FOODSTUFF" Then
+            pbusinessType = $"and BusType='Foodstuff Only'"
+        End If
+
+
+        Gresult = $"Select SUM(Amount) from vwFI_GLREPORT where FiscalYear={FiscalYear} and PostingPeriod IN ({PostingPeriod}) and FSItem='{FSItem}' and GLAccount={GLaccnt} {pTrxOrigin} {pbusinessType}"
+
+        Return Gresult
+    End Function
+
+
+
+
 #End Region
 
 

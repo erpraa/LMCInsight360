@@ -24,7 +24,6 @@ Partial Class CtrAnnexB
         Me.RbtnMonthly = New System.Windows.Forms.RadioButton()
         Me.RbtnAccum = New System.Windows.Forms.RadioButton()
         Me.LabelControl6 = New DevExpress.XtraEditors.LabelControl()
-        Me.BtnGenerate = New LMCInsight360.RoundedButton()
         Me.LabelControl4 = New DevExpress.XtraEditors.LabelControl()
         Me.CbxBusinessType = New DevExpress.XtraEditors.ComboBoxEdit()
         Me.TxtYear = New DevExpress.XtraEditors.TextEdit()
@@ -36,7 +35,9 @@ Partial Class CtrAnnexB
         Me.TxtCompYear = New DevExpress.XtraEditors.TextEdit()
         Me.CbxCompMonth = New DevExpress.XtraEditors.ComboBoxEdit()
         Me.CbxStatementType = New DevExpress.XtraEditors.ComboBoxEdit()
-        Me.LabelControl5 = New DevExpress.XtraEditors.LabelControl()
+        Me.LblTypeReport = New DevExpress.XtraEditors.LabelControl()
+        Me.BtnGenerate = New LMCInsight360.RoundedButton()
+        Me.CbxRptSheet = New DevExpress.XtraEditors.ComboBoxEdit()
         Me.PnlReportType.SuspendLayout()
         CType(Me.CbxBusinessType.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TxtYear.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -45,6 +46,7 @@ Partial Class CtrAnnexB
         CType(Me.TxtCompYear.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.CbxCompMonth.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.CbxStatementType.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.CbxRptSheet.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'PnlReportType
@@ -104,19 +106,6 @@ Partial Class CtrAnnexB
         Me.LabelControl6.Size = New System.Drawing.Size(94, 23)
         Me.LabelControl6.TabIndex = 39
         Me.LabelControl6.Text = "Report Type"
-        '
-        'BtnGenerate
-        '
-        Me.BtnGenerate.BackColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(149, Byte), Integer), CType(CType(150, Byte), Integer))
-        Me.BtnGenerate.FlatAppearance.BorderSize = 0
-        Me.BtnGenerate.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BtnGenerate.ForeColor = System.Drawing.Color.White
-        Me.BtnGenerate.Location = New System.Drawing.Point(410, 270)
-        Me.BtnGenerate.Name = "BtnGenerate"
-        Me.BtnGenerate.Size = New System.Drawing.Size(210, 33)
-        Me.BtnGenerate.TabIndex = 51
-        Me.BtnGenerate.Text = "📥 Generate Report"
-        Me.BtnGenerate.UseVisualStyleBackColor = False
         '
         'LabelControl4
         '
@@ -299,17 +288,49 @@ Partial Class CtrAnnexB
         Me.CbxStatementType.Size = New System.Drawing.Size(210, 30)
         Me.CbxStatementType.TabIndex = 57
         '
-        'LabelControl5
+        'LblTypeReport
         '
-        Me.LabelControl5.Appearance.Font = New System.Drawing.Font("Segoe UI", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelControl5.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.LabelControl5.Appearance.Options.UseFont = True
-        Me.LabelControl5.Appearance.Options.UseForeColor = True
-        Me.LabelControl5.Location = New System.Drawing.Point(405, 62)
-        Me.LabelControl5.Name = "LabelControl5"
-        Me.LabelControl5.Size = New System.Drawing.Size(136, 23)
-        Me.LabelControl5.TabIndex = 56
-        Me.LabelControl5.Text = "Statement Type: *"
+        Me.LblTypeReport.Appearance.Font = New System.Drawing.Font("Segoe UI", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LblTypeReport.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.LblTypeReport.Appearance.Options.UseFont = True
+        Me.LblTypeReport.Appearance.Options.UseForeColor = True
+        Me.LblTypeReport.Location = New System.Drawing.Point(405, 62)
+        Me.LblTypeReport.Name = "LblTypeReport"
+        Me.LblTypeReport.Size = New System.Drawing.Size(136, 23)
+        Me.LblTypeReport.TabIndex = 56
+        Me.LblTypeReport.Text = "Statement Type: *"
+        '
+        'BtnGenerate
+        '
+        Me.BtnGenerate.BackColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(149, Byte), Integer), CType(CType(150, Byte), Integer))
+        Me.BtnGenerate.FlatAppearance.BorderSize = 0
+        Me.BtnGenerate.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnGenerate.ForeColor = System.Drawing.Color.White
+        Me.BtnGenerate.Location = New System.Drawing.Point(410, 270)
+        Me.BtnGenerate.Name = "BtnGenerate"
+        Me.BtnGenerate.Size = New System.Drawing.Size(210, 33)
+        Me.BtnGenerate.TabIndex = 51
+        Me.BtnGenerate.Text = "📥 Generate Report"
+        Me.BtnGenerate.UseVisualStyleBackColor = False
+        '
+        'CbxRptSheet
+        '
+        Me.CbxRptSheet.Location = New System.Drawing.Point(405, 91)
+        Me.CbxRptSheet.Name = "CbxRptSheet"
+        Me.CbxRptSheet.Properties.Appearance.BackColor = System.Drawing.Color.White
+        Me.CbxRptSheet.Properties.Appearance.BorderColor = System.Drawing.Color.FromArgb(CType(CType(10, Byte), Integer), CType(CType(53, Byte), Integer), CType(CType(121, Byte), Integer))
+        Me.CbxRptSheet.Properties.Appearance.Font = New System.Drawing.Font("Segoe UI", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CbxRptSheet.Properties.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.CbxRptSheet.Properties.Appearance.Options.UseBackColor = True
+        Me.CbxRptSheet.Properties.Appearance.Options.UseBorderColor = True
+        Me.CbxRptSheet.Properties.Appearance.Options.UseFont = True
+        Me.CbxRptSheet.Properties.Appearance.Options.UseForeColor = True
+        Me.CbxRptSheet.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple
+        Me.CbxRptSheet.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.CbxRptSheet.Properties.Items.AddRange(New Object() {"", "Selling Expenses", "Administrative Expenses"})
+        Me.CbxRptSheet.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor
+        Me.CbxRptSheet.Size = New System.Drawing.Size(210, 30)
+        Me.CbxRptSheet.TabIndex = 58
         '
         'CtrAnnexB
         '
@@ -317,8 +338,9 @@ Partial Class CtrAnnexB
         Me.Appearance.Options.UseBackColor = True
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 17.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.CbxRptSheet)
         Me.Controls.Add(Me.CbxStatementType)
-        Me.Controls.Add(Me.LabelControl5)
+        Me.Controls.Add(Me.LblTypeReport)
         Me.Controls.Add(Me.LabelControl2)
         Me.Controls.Add(Me.TxtCompYear)
         Me.Controls.Add(Me.CbxCompMonth)
@@ -342,6 +364,7 @@ Partial Class CtrAnnexB
         CType(Me.TxtCompYear.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.CbxCompMonth.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.CbxStatementType.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.CbxRptSheet.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -364,5 +387,6 @@ Partial Class CtrAnnexB
     Friend WithEvents TxtCompYear As DevExpress.XtraEditors.TextEdit
     Friend WithEvents CbxCompMonth As DevExpress.XtraEditors.ComboBoxEdit
     Friend WithEvents CbxStatementType As DevExpress.XtraEditors.ComboBoxEdit
-    Friend WithEvents LabelControl5 As DevExpress.XtraEditors.LabelControl
+    Friend WithEvents LblTypeReport As DevExpress.XtraEditors.LabelControl
+    Friend WithEvents CbxRptSheet As DevExpress.XtraEditors.ComboBoxEdit
 End Class
