@@ -2,8 +2,6 @@
 Imports DevExpress.XtraBars.Docking2010.Views
 Imports System.Data.SqlClient
 Imports DevExpress.XtraEditors
-'Imports DevExpress.XtraGrid
-'Imports DevExpress.XtraGrid.Views.Grid
 Imports LMCInsight360.ClassFunction
 
 Imports Excel = Microsoft.Office.Interop.Excel
@@ -17,7 +15,7 @@ Public Class SubClass
         ' Set the document caption (tab name)
         doc.Caption = TabName
 
-        ' ✅ Disable close button only for specific tab
+        ' Disable close button only for specific tab
         If TabName = "Home" Then
             Dim tdoc = TryCast(doc, DevExpress.XtraBars.Docking2010.Views.Tabbed.Document)
             If tdoc IsNot Nothing Then
@@ -55,7 +53,6 @@ Public Class SubClass
 
 #End Region
 
-
 #Region "General Sub"
     Public Shared Sub LoadComboBox(combo As ComboBoxEdit, sqlQuery As String, columnName As String)
         Dim dt As New DataTable()
@@ -79,27 +76,6 @@ Public Class SubClass
             MessageBox.Show("Error loading ComboBox: " & ex.Message)
         End Try
     End Sub
-
-
-    ' Reusable function to load query into a GridControl (non-editable)
-    'Public Shared Sub LoadDataToGrid(query As String, grid As GridControl)
-    '    Using conn As New SqlConnection(SqlConnect)
-    '        Dim da As New SqlDataAdapter(query, conn)
-    '        Dim dt As New DataTable()
-    '        da.Fill(dt)
-    '        grid.DataSource = dt
-    '    End Using
-
-    '    ' Ensure the main view is a GridView and set read-only
-    '    Dim view As GridView = TryCast(grid.MainView, GridView)
-    '    If view IsNot Nothing Then
-    '        view.OptionsBehavior.Editable = False
-    '        view.OptionsBehavior.ReadOnly = True
-    '        view.OptionsView.ShowGroupPanel = False   ' optional: hides group panel
-    '        view.BestFitColumns()                     ' optional: auto-fit columns
-    '    End If
-    'End Sub
-
 
 #End Region
 
@@ -128,26 +104,95 @@ Public Class SubClass
         cell.Font.Bold = True
     End Sub
 
-    Public Shared Sub SetBottomBorder(ws As Excel.Worksheet, row As Integer, col As Integer, uline As String)
-        Dim cell As Excel.Range = ws.Cells(row, col)
+    Public Enum LinePosition
+        Top
+        Bottom
+        Left
+        Right
+    End Enum
 
-        Select Case uline
-            Case "S"  ' Single line
-                cell.Borders(Excel.XlBordersIndex.xlEdgeBottom).LineStyle = Excel.XlLineStyle.xlContinuous
-                cell.Borders(Excel.XlBordersIndex.xlEdgeBottom).Weight = Excel.XlBorderWeight.xlThin
+    Public Shared Sub SetBorderStyle(ByVal ws As Excel.Worksheet,
+                                 row As Integer,
+                                 col As Integer,
+                                 lineType As String,
+                                 position As Object,
+                                 Optional ByVal lineWeight As Excel.XlBorderWeight = Excel.XlBorderWeight.xlThin,
+                                 Optional ByVal lineColor As Integer = 0)
 
-            Case "D"  ' Double line
-                cell.Borders(Excel.XlBordersIndex.xlEdgeBottom).LineStyle = Excel.XlLineStyle.xlDouble
-                ' For double line, Excel ignores Weight (it auto-formats as double line)
-                ' but you can still set weight if needed:
-                cell.Borders(Excel.XlBordersIndex.xlEdgeBottom).Weight = Excel.XlBorderWeight.xlThick
+        Dim rng As Excel.Range = ws.Cells(row, col)
 
-            Case Else ' No line
-                cell.Borders(Excel.XlBordersIndex.xlEdgeBottom).LineStyle = Excel.XlLineStyle.xlLineStyleNone
+        '-------------------------------------------
+        ' 1. Convert position (string or enum) → enum
+        '-------------------------------------------
+        Dim posEnum As LinePosition
+
+        If TypeOf position Is String Then
+            Dim posStr As String = position.ToString().Trim().ToUpper()
+
+            If posStr = "" Then
+                Exit Sub
+            End If
+
+            Select Case posStr
+                Case "T" : posEnum = LinePosition.Top
+                Case "B" : posEnum = LinePosition.Bottom
+                Case "L" : posEnum = LinePosition.Left
+                Case "R" : posEnum = LinePosition.Right
+                Case Else
+                    Throw New Exception("Invalid position: " & position)
+            End Select
+        Else
+            posEnum = CType(position, LinePosition)
+        End If
+
+        '-------------------------------------------
+        ' 2. Determine line style (S = Single, D = Double, else remove)
+        '-------------------------------------------
+        Dim style As Excel.XlLineStyle
+
+
+        Select Case lineType.Trim().ToUpper()
+            Case "S"
+                style = Excel.XlLineStyle.xlContinuous
+            Case "D"
+                style = Excel.XlLineStyle.xlDouble
+                lineWeight = Excel.XlBorderWeight.xlThick
+            Case Else
+                ' Remove border
+                Dim idxNone As Excel.XlBordersIndex
+
+                Select Case posEnum
+                    Case LinePosition.Top : idxNone = Excel.XlBordersIndex.xlEdgeTop
+                    Case LinePosition.Bottom : idxNone = Excel.XlBordersIndex.xlEdgeBottom
+                    Case LinePosition.Left : idxNone = Excel.XlBordersIndex.xlEdgeLeft
+                    Case LinePosition.Right : idxNone = Excel.XlBordersIndex.xlEdgeRight
+                End Select
+
+                rng.Borders(idxNone).LineStyle = Excel.XlLineStyle.xlLineStyleNone
+                Return
         End Select
+
+        '-------------------------------------------
+        ' 3. Apply border
+        '-------------------------------------------
+        Dim idx As Excel.XlBordersIndex
+
+        Select Case posEnum
+            Case LinePosition.Top : idx = Excel.XlBordersIndex.xlEdgeTop
+            Case LinePosition.Bottom : idx = Excel.XlBordersIndex.xlEdgeBottom
+            Case LinePosition.Left : idx = Excel.XlBordersIndex.xlEdgeLeft
+            Case LinePosition.Right : idx = Excel.XlBordersIndex.xlEdgeRight
+        End Select
+
+        With rng.Borders(idx)
+            .LineStyle = style
+            .Color = lineColor
+            .Weight = lineWeight
+        End With
+
     End Sub
 
-#End Region
+
     Public Shared Sub SetBackFontColor(ws As Excel.Worksheet, row As Integer, col As Integer, fntclr As String, bckclr As String)
         Dim cell As Excel.Range = ws.Cells(row, col)
 
@@ -184,6 +229,7 @@ Public Class SubClass
         End If
     End Sub
 
+#End Region
 
     Public Shared Sub FeatureUnavailable(Optional featureName As String = "")
         Dim message As String

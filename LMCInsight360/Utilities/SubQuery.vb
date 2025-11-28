@@ -110,10 +110,67 @@
 
 
 
+    Public Shared Function RptQueryUnFxF(FiscalYear As String, PostingPeriod As String, FSItem As String, TCurrency As String, TrxOrigin As String, businessType As String) As String
+        Dim Gresult As String
+        Dim pTrxOrigin As String = Nothing
+        Dim pbusinessType As String = Nothing
+
+
+        If TrxOrigin <> Nothing Then
+            pTrxOrigin = $"and TrxOrigin='{TrxOrigin}'"
+        End If
+
+        If businessType = "FOODSTUFF" Then
+            pbusinessType = $"and BusType='Foodstuff Only'"
+        End If
+
+        Gresult = $"SELECT TOP 1 RunningTotal FROM (
+                    SELECT 
+                    TCCurrency,
+                    PostingPeriod,
+                    SUM(TCAmount) AS MonthlyTotal,
+                    SUM(SUM(TCAmount)) OVER (PARTITION BY TCCurrency ORDER BY PostingPeriod ROWS UNBOUNDED PRECEDING) AS RunningTotal
+                  FROM vwFI_GLREPORT
+                  WHERE FiscalYear = {FiscalYear} AND PostingPeriod <= {PostingPeriod}
+                    AND FSItem='{FSItem}'
+                    AND TCCurrency='{TCurrency}'
+                    {pTrxOrigin} {pbusinessType}
+                    GROUP BY TCCurrency, PostingPeriod
+                    ) x
+                    ORDER BY PostingPeriod DESC;"
+
+        Return Gresult
+    End Function
+
+    Public Shared Function RptQueryUnFxP(FiscalYear As String, PostingPeriod As String, FSItem As String, TrxOrigin As String, businessType As String) As String
+        Dim Gresult As String
+        Dim pTrxOrigin As String = Nothing
+        Dim pbusinessType As String = Nothing
+
+
+        If TrxOrigin <> Nothing Then
+            pTrxOrigin = $"AND f.TRX_ORIGIN='{TrxOrigin}'"
+        End If
+
+        If businessType = "FOODSTUFF" Then
+            pbusinessType = "AND b.BSTYPE='Foodstuff Only'"
+        End If
+
+        Gresult = $"SELECT SUM(f.HSL) * - 1 AS TotalHSL
+                    FROM dbo.FI_VACDOCA f
+                    INNER JOIN vwFI_GETGLGRP g ON LEFT(LTRIM(RTRIM(f.SGTXT)), 6) = CAST(g.SAKNR AS VARCHAR(20))
+                    LEFT JOIN FI_BRANCH b ON f.PRCTR = b.PRCTR 
+                    WHERE 
+                    f.AUGDT IS NULL
+                    AND f.GJAHR = {FiscalYear} AND f.POPER = {PostingPeriod}
+	                AND g.CTM1 = '{FSItem}'
+                    {pTrxOrigin} {pbusinessType}"
+
+        Return Gresult
+    End Function
+
 
 #End Region
-
-
 
 
 #Region "CtrDataInitializeFI Module"
@@ -178,11 +235,115 @@
             End Get
         End Property
 
-       Public Shared ReadOnly Property SelecT004G As String
+        Public Shared ReadOnly Property SelecT004G As String
             Get
                 Return "FSTAG,SPRAS,BUKRS,FSTTX From SAPHANADB.T004G  Where MANDT = '800' And BUKRS = '1000' AND SPRAS='E'"
             End Get
         End Property
+
+        Public Shared ReadOnly Property SelecLFA1 As String
+            Get
+                Return "Trim(LEADING '0' FROM LIFNR) AS LIFNR,LAND1,NAME1,NAME2,STRAS,ORT01,PSTLZ,STCEG,KTOKK FROM SAPHANADB.LFA1 where KTOKK='BANK' and MANDT='800'"
+            End Get
+        End Property
+
+        Public Shared ReadOnly Property SelectBSEG As String
+            Get
+                Return "BUKRS
+      ,H_BLART
+      ,KOART
+      ,SHKZG
+      ,TRIM(LEADING '0' FROM LIFNR) AS LIFNR
+      ,TRIM(LEADING '0' FROM BELNR) AS BELNR
+      ,AUGBL
+      ,GJAHR
+      ,TRIM(LEADING '0' FROM BUZEI) AS BUZEI
+      ,TO_VARCHAR(TO_DATE(H_BLDAT, 'YYYYMMDD'), 'YYYY-MM-DD') AS H_BLDAT
+      ,TO_VARCHAR(TO_DATE(H_BUDAT, 'YYYYMMDD'), 'YYYY-MM-DD') AS H_BUDAT
+      , CASE 
+          WHEN AUGDT = '00000000' THEN NULL
+          ELSE TO_VARCHAR(TO_DATE(AUGDT, 'YYYYMMDD'), 'YYYY-MM-DD') 
+        END AS AUGDT
+       , CASE 
+          WHEN AUGCP = '00000000' THEN NULL
+          ELSE TO_VARCHAR(TO_DATE(AUGCP, 'YYYYMMDD'), 'YYYY-MM-DD') 
+        END AS AUGCP
+        , CASE 
+          WHEN FDTAG = '00000000' THEN NULL
+          ELSE TO_VARCHAR(TO_DATE(FDTAG, 'YYYYMMDD'), 'YYYY-MM-DD') 
+        END AS FDTAG        
+              , CASE 
+          WHEN VALUT = '00000000' THEN NULL
+          ELSE TO_VARCHAR(TO_DATE(VALUT, 'YYYYMMDD'), 'YYYY-MM-DD') 
+        END AS VALUT         
+    , CASE 
+          WHEN SK1DT = '00000000' THEN NULL
+          ELSE TO_VARCHAR(TO_DATE(SK1DT, 'YYYYMMDD'), 'YYYY-MM-DD') 
+        END AS SK1DT
+       , CASE 
+          WHEN SK2DT = '00000000' THEN NULL
+          ELSE TO_VARCHAR(TO_DATE(SK2DT, 'YYYYMMDD'), 'YYYY-MM-DD') 
+        END AS SK2DT
+      ,PSWSL
+      ,WRBTR
+      ,RFCCUR
+      ,DMBTR
+      ,MWSTS
+      ,WMWST
+      ,BSCHL
+      ,ZUONR
+      ,SGTXT
+      ,KOKRS
+      ,TRIM(LEADING '0' FROM HKONT) AS HKONT
+      ,PRCTR
+      ,TO_VARCHAR(CURRENT_TIMESTAMP, 'YYYY-MM-DD HH24:MI:SS.FF3') AS UpdateDate
+FROM SAPHANADB.BSEG where H_BLART='KA'"
+            End Get
+        End Property
+
+        Public Shared ReadOnly Property SelectACDOCA As String
+            Get
+                Return "BELNR
+      ,RLDNR
+      ,BLART    
+  	,CASE 
+          WHEN BLDAT = '00000000' THEN NULL
+          ELSE TO_VARCHAR(TO_DATE(BLDAT, 'YYYYMMDD'), 'YYYY-MM-DD') 
+        END AS BLDAT    
+      
+      ,CASE 
+          WHEN BUDAT = '00000000' THEN NULL
+          ELSE TO_VARCHAR(TO_DATE(BUDAT, 'YYYYMMDD'), 'YYYY-MM-DD') 
+        END AS BUDAT 
+	 ,CASE 
+          WHEN AUGDT = '00000000' THEN NULL
+          ELSE TO_VARCHAR(TO_DATE(AUGDT, 'YYYYMMDD'), 'YYYY-MM-DD') 
+        END AS AUGDT 
+      ,GJAHR
+      ,POPER
+      ,RBUKRS
+      ,TRIM(LEADING '0' FROM RACCT) AS RACCT
+      ,PRCTR
+      ,RCNTR
+      ,LIFNR
+      ,TRIM(LEADING '0' FROM GKONT) AS GKONT
+      ,BSCHL
+      ,BTTYPE
+      ,DOCLN
+      ,RWCUR
+      ,WSL
+      ,RHCUR
+      ,HSL
+      ,SGTXT
+      ,ZUONR
+      ,GKOAR
+      ,DRCRK
+      ,SDM_VERSION
+      ,TO_VARCHAR(CURRENT_TIMESTAMP, 'YYYY-MM-DD HH24:MI:SS.FF3') AS UpdateDate
+  FROM SAPHANADB.ACDOCA where (RACCT IN ('0000721001','0000721004','0000721005') OR GKONT IN ('0000721002','0000721006'))"
+            End Get
+        End Property
+
 
     End Class
 

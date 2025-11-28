@@ -51,6 +51,7 @@ Partial Class FrmMain
         Me.AccordionControlElement3 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.BtnAnnxB_IScomp = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.BtnAnnxB_SEGAAE = New DevExpress.XtraBars.Navigation.AccordionControlElement()
+        Me.BtnAnnxB_RUGainLoss = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.AccordionControlElement6 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.AccordionControlElement2 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.BtnDataInitializedFI = New DevExpress.XtraBars.Navigation.AccordionControlElement()
@@ -417,7 +418,7 @@ Partial Class FrmMain
         '
         'AccordionControlElement3
         '
-        Me.AccordionControlElement3.Elements.AddRange(New DevExpress.XtraBars.Navigation.AccordionControlElement() {Me.BtnAnnxB_IScomp, Me.BtnAnnxB_SEGAAE})
+        Me.AccordionControlElement3.Elements.AddRange(New DevExpress.XtraBars.Navigation.AccordionControlElement() {Me.BtnAnnxB_IScomp, Me.BtnAnnxB_SEGAAE, Me.BtnAnnxB_RUGainLoss})
         Me.AccordionControlElement3.Expanded = True
         Me.AccordionControlElement3.Name = "AccordionControlElement3"
         Me.AccordionControlElement3.Text = "📑 Annex B Report"
@@ -433,6 +434,12 @@ Partial Class FrmMain
         Me.BtnAnnxB_SEGAAE.Name = "BtnAnnxB_SEGAAE"
         Me.BtnAnnxB_SEGAAE.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item
         Me.BtnAnnxB_SEGAAE.Text = "SE & GAAE"
+        '
+        'BtnAnnxB_RUGainLoss
+        '
+        Me.BtnAnnxB_RUGainLoss.Name = "BtnAnnxB_RUGainLoss"
+        Me.BtnAnnxB_RUGainLoss.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item
+        Me.BtnAnnxB_RUGainLoss.Text = "RealizedFx & UnrealizeFx"
         '
         'AccordionControlElement6
         '
@@ -684,4 +691,5 @@ Partial Class FrmMain
     Friend WithEvents AccordionControlElement3 As DevExpress.XtraBars.Navigation.AccordionControlElement
     Friend WithEvents BtnAnnxB_IScomp As DevExpress.XtraBars.Navigation.AccordionControlElement
     Friend WithEvents BtnAnnxB_SEGAAE As DevExpress.XtraBars.Navigation.AccordionControlElement
+    Friend WithEvents BtnAnnxB_RUGainLoss As DevExpress.XtraBars.Navigation.AccordionControlElement
 End Class

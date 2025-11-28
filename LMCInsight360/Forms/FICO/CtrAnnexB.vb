@@ -16,12 +16,14 @@ Public Class CtrAnnexB
         TxtYear.Text = Date.Now.Year.ToString()
     End Sub
 
+#Region "Filter Logic"
     Sub FilterLogic(sender As Object, e As EventArgs) Handles CbxStatementType.SelectedIndexChanged, CbxMonth.SelectedIndexChanged, TxtYear.EditValueChanged, CbxCompMonth.SelectedIndexChanged, TxtCompYear.EditValueChanged
         Select Case BtnAnnexB
             Case 1
                 LblTypeReport.Text = "Statement Type: *"
                 CbxStatementType.Show()
                 CbxRptSheet.Hide()
+                CbxRptSheet1.Hide()
 
                 If CbxStatementType.EditValue = "MONTH TO MONTH" Then
                     TxtCompYear.Text = TxtYear.Text
@@ -44,11 +46,24 @@ Public Class CtrAnnexB
                 LblTypeReport.Text = "(SE/GAAE) Report: *"
                 CbxStatementType.Hide()
                 CbxRptSheet.Show()
+                CbxRptSheet1.Hide()
+                PnlReportType.Hide()
 
-                CbxStatementType.Enabled = False
-                PnlReportType.Enabled = False
+            Case 3
+                LblTypeReport.Text = "RealizedFx/UnrealizeFx: *"
+                CbxStatementType.Hide()
+                CbxRptSheet.Hide()
+                CbxRptSheet1.Show()
+                PnlReportType.Hide()
+
+                LblCompPrd.Hide()
+                CbxCompMonth.Hide()
+                TxtCompYear.Hide()
         End Select
     End Sub
+#End Region
+
+#Region "Annex B Report"
 
     Private Sub BtnGenerate_Click(sender As Object, e As EventArgs) Handles BtnGenerate.Click
         If String.IsNullOrWhiteSpace(CbxMonth.Text) Then
@@ -81,11 +96,15 @@ Public Class CtrAnnexB
                     Generate_ISComp()
                 Case 2
                     Generate_SEGAAE()
+                Case 3
+                    Generate_RUFx_GainLoss()
             End Select
 
         End If
 
     End Sub
+
+#End Region
 
 #Region "IScomparative"
 
@@ -265,7 +284,7 @@ Public Class CtrAnnexB
 
                                     .Cells(row, 1) = reader("RPTDISPLY").ToString()
                                     ApplyCellFormat(.Cells(row, 1), reader)
-                                    SetBottomBorder(wsheet, row, 1, reader("ULINE").ToString().Trim())
+                                    SetBorderStyle(wsheet, row, 1, reader("ULINE"), reader("PLINE"))
                                     SetBackFontColor(wsheet, row, 1, reader("FNTCLR").ToString(), reader("BCKCLR").ToString())
                                     SetSquareBorder(wsheet, 5, 1, Excel.XlBorderWeight.xlThin)
 
@@ -324,7 +343,7 @@ Public Class CtrAnnexB
                                                 .Cells(row, col) = remark
                                             End If
 
-                                            SetBottomBorder(wsheet, row, col, reader("ULINE").ToString().Trim())
+                                            SetBorderStyle(wsheet, row, col, reader("ULINE"), reader("PLINE"))
                                         End If
 
                                         .Cells(row, col).Borders(Excel.XlBordersIndex.xlEdgeRight).LineStyle = Excel.XlLineStyle.xlContinuous
@@ -392,7 +411,7 @@ Public Class CtrAnnexB
         With wsheet
             .Cells(row, col).NumberFormat = format
             ApplyCellFormat(.Cells(row, col), reader)
-            SetBottomBorder(wsheet, row, col, reader("ULINE").ToString().Trim())
+            SetBorderStyle(wsheet, row, col, reader("ULINE"), reader("PLINE"))
             SetBackFontColor(wsheet, row, col, reader("FNTCLR").ToString(), reader("BCKCLR").ToString())
         End With
     End Sub
@@ -668,6 +687,480 @@ Public Class CtrAnnexB
 
         Catch ex As Exception
             MessageBox.Show("Error generating FS SEGAAE: " & ex.Message)
+        End Try
+
+        SplashScreenManager.CloseDefaultWaitForm()
+    End Sub
+
+#End Region
+
+#Region "RealizedFx / UnrealizedFx (Gain or Loss)"
+    Private Sub Generate_RUFx_GainLoss()
+
+        Dim sapSource As String
+        Select Case CbxSapSource.EditValue
+            Case "CAS" : sapSource = "L4P"
+            Case "Reserved" : sapSource = "LRP"
+            Case Else : sapSource = Nothing
+        End Select
+
+        Dim excelApp As New Excel.Application()
+        Dim wbook As Excel.Workbook = excelApp.Workbooks.Add()
+
+        For i As Integer = wbook.Sheets.Count To 2 Step -1
+            wbook.Sheets(i).Delete()
+        Next
+
+        Dim fiscalMonth As Integer = GetMonthNumber(CbxMonth.EditValue)
+        Dim fiscalYear As Integer = TxtYear.EditValue
+
+        If CbxBusinessType.EditValue = "" Then
+
+            If CbxRptSheet1.EditValue = "RealizedFx Gain Loss" Then
+                FS_RealizedFx(fiscalMonth, fiscalYear, sapSource, "FOODSTUFF", wbook, True)
+                FS_RealizedFx(fiscalMonth, fiscalYear, sapSource, "OVERALL", wbook, False)
+            ElseIf CbxRptSheet1.EditValue = "UnrealizedFx Gain Loss" Then
+                FS_UnrealizedFx(fiscalMonth, fiscalYear, sapSource, "FOODSTUFF", wbook, True)
+                FS_UnrealizedFx(fiscalMonth, fiscalYear, sapSource, "OVERALL", wbook, False)
+            Else
+                FS_RealizedFx(fiscalMonth, fiscalYear, sapSource, "FOODSTUFF", wbook, True)
+                FS_UnrealizedFx(fiscalMonth, fiscalYear, sapSource, "FOODSTUFF", wbook, False)
+                FS_RealizedFx(fiscalMonth, fiscalYear, sapSource, "OVERALL", wbook, False)
+                FS_UnrealizedFx(fiscalMonth, fiscalYear, sapSource, "OVERALL", wbook, False)
+            End If
+        Else
+            Dim BusinessType As String = CbxBusinessType.EditValue
+
+            If CbxRptSheet1.EditValue = "RealizedFx Gain Loss" Then
+                FS_RealizedFx(fiscalMonth, fiscalYear, sapSource, BusinessType, wbook, True)
+            ElseIf CbxRptSheet1.EditValue = "UnrealizedFx Gain Loss" Then
+                FS_UnrealizedFx(fiscalMonth, fiscalYear, sapSource, BusinessType, wbook, True)
+            Else
+                FS_RealizedFx(fiscalMonth, fiscalYear, sapSource, BusinessType, wbook, True)
+                FS_UnrealizedFx(fiscalMonth, fiscalYear, sapSource, BusinessType, wbook, False)
+            End If
+
+        End If
+
+        wbook.Sheets(1).Activate()
+        excelApp.Visible = True
+
+        If wbook IsNot Nothing Then Marshal.ReleaseComObject(wbook)
+        If excelApp IsNot Nothing Then Marshal.ReleaseComObject(excelApp)
+        wbook = Nothing
+        excelApp = Nothing
+        GC.Collect()
+        GC.WaitForPendingFinalizers()
+    End Sub
+
+    Private Sub FS_RealizedFx(fiscalMonth As Integer, fiscalYear As Integer, sapSource As String, businessType As String, wbook As Excel.Workbook, useFirstSheet As Boolean)
+        SplashScreenManager.ShowForm(Me, GetType(WaitFrm), True, True, False)
+
+        Dim wsheet As Excel.Worksheet = Nothing
+        Dim headerColor = RGB(198, 224, 180)
+
+        Dim Fcnt, F1cnt, F2cnt, F3cnt As Integer
+
+        Try
+            If useFirstSheet Then
+                wsheet = CType(wbook.Sheets(1), Excel.Worksheet)
+            Else
+                wsheet = CType(wbook.Sheets.Add(After:=wbook.Sheets(wbook.Sheets.Count)), Excel.Worksheet)
+            End If
+
+            Dim saptitle As String = Nothing
+            Dim col, row As Integer
+            Dim baseCol As Integer = 1
+            Dim baseRow As Integer = 6
+
+            With wsheet
+
+                'Report Title
+                saptitle = If(sapSource = "L4P", " (CAS)", If(sapSource = "LRP", " (Reserved)", ""))
+                Dim typeLabel As String = If(businessType = "FOODSTUFF", "Foodstuff", "Overall")
+                Dim namePrefix As String = If(businessType = "FOODSTUFF", "Food", "Overall")
+
+                .Name = $"RealizedFx Gain Loss - {namePrefix}"
+                .Cells(1, 1).Value = "Liwayway Marketing Corporation"
+                .Cells(2, 1) = $"Summary of Realized Gain/Loss on Foreign Currency - {typeLabel} {saptitle}"
+                .Cells(3, 1) = $"For the Period Ended {MonthName(fiscalMonth)} {Date.DaysInMonth(fiscalYear, fiscalMonth)}, {fiscalYear}"
+
+                'Title Design
+                For i As Integer = 1 To 3
+                    ApplyTitleStyle(.Range(.Cells(i, 1), .Cells(i, 9)), Nothing, "180,198,231")
+                Next
+
+                .Cells(5, 1).Value = "REALIZED GAIN\(LOSS) - FINANCIAL"
+                .Cells(5, 3).Value = "Loan Payment"
+                .Cells(5, 6).Value = " Exchange Rate"
+                .Range("F5:H5").Merge()
+
+                With .Range("A5:I6")
+                    .HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
+                    .Font.Bold = True
+                    .Interior.Color = headerColor
+                End With
+
+                Dim trxOrigin As String = Nothing
+                If sapSource <> Nothing Then
+                    trxOrigin = $"and TrxOrigin='{sapSource}'"
+                End If
+
+                Dim query As String = $"Select 
+                                        VendorName as 'Name of Bank',
+                                        Assignment as 'PN Number',	
+                                        AmountCC as '{MonthName(fiscalMonth)} 1-{Date.DaysInMonth(fiscalYear, fiscalMonth)}, {fiscalYear}',									  
+									    FORMAT(PostingDate, 'dd-MMM-yy') as 'Booking Date',
+                                        FORMAT(ClearingDate, 'dd-MMM-yy')  as 'Payment Date',
+                                        BRate as 'Original Rate',
+                                        PRate as 'Payment Rate',
+                                        (BRate - PRate) as 'Net Change',
+                                        (BRate - PRate) * AmountCC AS 'Net Amount'
+
+                                        from LMCMSTRPT.dbo.vwFI_GAINLOSSR
+                                        where DocumentType = 'KA' and PostingKey = '31' and DocumentCurrency = 'USD'
+                                        and FiscalYear = {fiscalYear}
+                                        and Month(ClearingDate) ={fiscalMonth}
+                                        {trxOrigin}
+
+										order by VendorName"
+
+                Dim dt As New DataTable()
+
+                Using conn As New SqlConnection(SqlConnect)
+                    Dim cmd As New SqlCommand(query, conn)
+                    conn.Open()
+                    Dim reader As SqlDataReader = cmd.ExecuteReader()
+                    dt.Load(reader)
+                End Using
+
+                col = baseCol
+                row = baseRow
+
+                'Column Headers
+                For i As Integer = 0 To dt.Columns.Count - 1
+                    .Cells(row, col) = dt.Columns(i).ColumnName
+                    col += 1
+                Next
+
+                'Write Data Rows
+                For r As Integer = 0 To dt.Rows.Count - 1
+                    col = baseCol
+                    row += 1
+
+                    For c As Integer = 0 To dt.Columns.Count - 1
+                        .Cells(row, col) = dt.Rows(r)(c).ToString()
+                        col += 1
+                    Next
+                Next
+
+                'Add Formula
+                row += 1 '
+                .Cells(row, 1).Value = "REALIZED GAIN/(LOSS) on Forex - Bank Loan"
+                .Cells(row, 3).Formula = $"=SUM(C{baseRow + 1}:C{row - 1})"
+                .Cells(row, 6).Formula = $"=SUMPRODUCT(C{baseRow + 1}:C{row - 1},F{baseRow + 1}:F{row - 1}) / C{row}"
+                .Cells(row, 7).Formula = $"=SUMPRODUCT(C{baseRow + 1}:C{row - 1},G{baseRow + 1}:G{row - 1}) / C{row}"
+                .Cells(row, 8).Formula = $"=F{row}-G{row}"
+                .Cells(row, 9).Formula = $"=SUM(I{baseRow + 1}:I{row - 1})"
+
+                'Format 
+                .Range($"C{baseRow + 1}:C{row}").NumberFormat = DollarFormat
+                .Range($"F{baseRow + 1}:H{row}").NumberFormat = ExchangeRateFormat
+                .Range($"I{baseRow + 1}:I{row}").NumberFormat = NumericFormat
+
+                With .Range($"A{row}:I{row}")
+                    .Font.Bold = True
+                    .Interior.Color = headerColor
+                End With
+
+                With .Range($"A{baseRow - 1}:I{row}")
+                    .Borders.LineStyle = Excel.XlLineStyle.xlContinuous
+                    .Borders.Weight = Excel.XlBorderWeight.xlThin
+                End With
+
+                F1cnt = row
+                col = baseCol
+                row += 2
+
+                'GAIN/LOSS - OPERATIONS
+                Dim dataF As List(Of Dictionary(Of String, String)) = GetMultiValues("select * from FI_RPTFORMAT where RPTTYPE='BRFX' order by RPTSRT")
+
+                Dim bsType As String = If(businessType = "FOODSTUFF", "'Foodstuff Only'", "NULL")
+
+                If sapSource <> Nothing Then
+                    trxOrigin = "'" & sapSource & "'"
+                Else
+                    trxOrigin = "NULL"
+                End If
+
+                For Each record As Dictionary(Of String, String) In dataF
+                    Dim FsItem = record("ERGSL").ToString
+                    Dim Fmrla = record("FRMLA").ToString
+
+                    .Cells(row, baseCol) = record("RPTDISPLY").ToString
+                    SetBorderStyle(wsheet, row, baseCol, record("ULINE"), record("PLINE"))
+                    SetBorderStyle(wsheet, row, baseCol, "S", "R")
+
+                    For i As Integer = 0 To dt.Columns.Count - 1
+                        SetBorderStyle(wsheet, row, col, record("ULINE"), record("PLINE"))
+                        SetBorderStyle(wsheet, row, col, "S", "R")
+                        col += 1
+                    Next
+
+                    col -= 1
+
+                    If FsItem <> "SKP" AndAlso FsItem <> "" Then
+                        .Cells(row, col) = AdjustValue(Val(GetAmount($"select SUM(Amount) from FnFI_GAINLOSSR ({fiscalYear},{fiscalMonth},'{FsItem}',{bsType},{trxOrigin})")), record("DCFLG").ToString())
+                        .Cells(row, col).NumberFormat = GetCurrencyFormat("Normal")
+
+                        Fcnt += 1
+                    End If
+
+                    If Fmrla = "F1" Then
+                        .Cells(row, col) = $"=SUM(I{row - Fcnt}:I{row - 1})"
+                        .Cells(row, col).Font.Bold = True
+                        F2cnt = row
+                        Fcnt = 0
+                    ElseIf Fmrla = "F2" Then
+                        .Cells(row, col) = $"=I{row - 1}"
+                        .Cells(row, col).Font.Bold = True
+                        F3cnt = row
+                    ElseIf Fmrla = "F3" Then
+                        .Cells(row, col) = $"=I{F1cnt}+I{F2cnt}+I{F3cnt}"
+                        .Cells(row, col).Font.Bold = True
+                    End If
+
+                    col = baseCol
+                    row += 1
+                Next
+
+                .UsedRange.Font.Name = "Tahoma"
+                .UsedRange.Columns.AutoFit()
+
+            End With
+
+        Catch ex As Exception
+            MessageBox.Show("Error generating: " & ex.Message)
+        End Try
+
+        SplashScreenManager.CloseDefaultWaitForm()
+    End Sub
+
+    Private Sub FS_UnrealizedFx(fiscalMonth As Integer, fiscalYear As Integer, sapSource As String, businessType As String, wbook As Excel.Workbook, useFirstSheet As Boolean)
+        SplashScreenManager.ShowForm(Me, GetType(WaitFrm), True, True, False)
+
+        Dim wsheet As Excel.Worksheet = Nothing
+
+        Dim Grp1Color = RGB(198, 224, 180)
+        Dim Grp2Color = RGB(155, 194, 230)
+
+        Dim Fcnt, F1cnt, F2cnt, F3cnt As Integer
+
+        Try
+            If useFirstSheet Then
+                wsheet = CType(wbook.Sheets(1), Excel.Worksheet)
+            Else
+                wsheet = CType(wbook.Sheets.Add(After:=wbook.Sheets(wbook.Sheets.Count)), Excel.Worksheet)
+            End If
+
+            Dim saptitle As String = Nothing
+            Dim col, row As Integer
+            Dim baseCol As Integer = 1
+            Dim baseRow As Integer = 6
+
+            With wsheet
+
+                'Report Title
+                saptitle = If(sapSource = "L4P", " (CAS)", If(sapSource = "LRP", " (Reserved)", ""))
+                Dim typeLabel As String = If(businessType = "FOODSTUFF", "Foodstuff", "Overall")
+                Dim namePrefix As String = If(businessType = "FOODSTUFF", "Food", "Overall")
+
+                .Name = $"UnrealizeFx Gain Loss - {namePrefix}"
+                .Cells(1, 1).Value = "Liwayway Marketing Corporation"
+                .Cells(2, 1) = $"Summary of Unrealized Gain/Loss on Foreign Currency - {typeLabel} {saptitle}"
+                .Cells(3, 1) = $"For the Period Ended {MonthName(fiscalMonth)} {Date.DaysInMonth(fiscalYear, fiscalMonth)}, {fiscalYear}"
+
+                'Title Design
+                For i As Integer = 1 To 3
+                    ApplyTitleStyle(.Range(.Cells(i, 1), .Cells(i, 8)), Nothing, "180,198,231")
+                Next
+
+                .Cells(5, 1).Value = "UNREALIZED GAIN\(LOSS) - FINANCIAL"
+                .Cells(5, 3).Value = "Loan Balance"
+                .Cells(5, 6).Value = " Exchange Rate"
+                .Range("E5:G5").Merge()
+
+                With .Range("A5:H6")
+                    .HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
+                    .Font.Bold = True
+                    .Interior.Color = Grp1Color
+                End With
+
+                Dim trxOrigin As String = "NULL"
+                If sapSource <> Nothing Then
+                    trxOrigin = "'" & sapSource & "'"
+                End If
+
+                Dim query As String = $"select 
+                                       VendorName as 'Name of Bank',
+                                       Assignment as 'PN Number',
+                                       AmountCC as '{MonthName(fiscalMonth)} 1-{Date.DaysInMonth(fiscalYear, fiscalMonth)}, {fiscalYear}',
+                                       FORMAT(PostingDate, 'dd-MMM-yy') as 'Booking Date',
+                                       BRate as 'Doc Rate',
+                                       RRate as '{MonthName(fiscalMonth)} 1-{Date.DaysInMonth(fiscalYear, fiscalMonth)}, {fiscalYear} ',
+                                       UNetChange as 'Net Change',
+                                       UAmountNet as 'Net Amount'from FnFI_GAINLOSSU ({fiscalMonth},{fiscalYear},{trxOrigin})
+                                       Order by VendorName"
+
+                Dim dt As New DataTable()
+
+                Using conn As New SqlConnection(SqlConnect)
+                    Dim cmd As New SqlCommand(query, conn)
+                    conn.Open()
+                    Dim reader As SqlDataReader = cmd.ExecuteReader()
+                    dt.Load(reader)
+                End Using
+
+                col = baseCol
+                row = baseRow
+
+                'Column Headers
+                For i As Integer = 0 To dt.Columns.Count - 1
+                    .Cells(row, col) = dt.Columns(i).ColumnName
+                    col += 1
+                Next
+
+                'Write Data Rows
+                For r As Integer = 0 To dt.Rows.Count - 1
+                    col = baseCol
+                    row += 1
+
+                    For c As Integer = 0 To dt.Columns.Count - 1
+                        .Cells(row, col) = dt.Rows(r)(c).ToString()
+                        col += 1
+                    Next
+                Next
+
+                'Add Formula
+                row += 1 '
+                .Cells(row, 1).Value = "TOTAL"
+                .Cells(row, 3).Formula = $"=SUM(C{baseRow + 1}:C{row - 1})"
+                .Cells(row, 5).Formula = $"=SUMPRODUCT(C{baseRow + 1}:C{row - 1},E{baseRow + 1}:E{row - 1}) / C{row}"
+                .Cells(row, 6).Formula = $"=SUMPRODUCT(C{baseRow + 1}:C{row - 1},F{baseRow + 1}:F{row - 1}) / C{row}"
+                .Cells(row, 7).Formula = $"=E{row}-F{row}"
+                .Cells(row, 8).Formula = $"=SUM(H{baseRow + 1}:H{row - 1})"
+
+                'Format 
+                .Range($"C{baseRow + 1}:C{row}").NumberFormat = DollarFormat
+                .Range($"E{baseRow + 1}:G{row}").NumberFormat = ExchangeRateFormat
+
+                With .Range($"A{row}:H{row}")
+                    .Font.Bold = True
+                    .Interior.Color = Grp1Color
+                    .RowHeight = 25
+                End With
+
+                row += 1 '
+
+                '210001 - Valuation
+                Dim dataV As List(Of Dictionary(Of String, String)) = GetMultiValues($"SELECT SGTXT,SUM(HSL) AS AMT FROM FI_VACDOCA AS f 
+                               WHERE LEFT(LTRIM(RTRIM(f.SGTXT)), 6) in ('210001') 
+                               and BUDAT='{fiscalYear}-{fiscalMonth}-01'
+                               GROUP BY SGTXT")
+
+                For Each record As Dictionary(Of String, String) In dataV
+                    .Cells(row, 1) = record("SGTXT").ToString
+                    .Cells(row, 8) = record("AMT")
+                Next
+
+                row += 1
+
+                .Cells(row, 1) = "UNREALIZED GAIN/(LOSS) on Forex - Bank Loans"
+                .Cells(row, 8) = $"=(H{row - 2} + H{row - 1}) * -1"
+                .Range($"H{baseRow + 1}:H{row}").NumberFormat = NumericFormat
+
+                With .Range($"A{row}:H{row}")
+                    .Font.Bold = True
+                    .Interior.Color = Grp2Color
+                    .RowHeight = 25
+                End With
+
+                With .Range($"A{baseRow - 1}:H{row}")
+                    .Borders.LineStyle = Excel.XlLineStyle.xlContinuous
+                    .Borders.Weight = Excel.XlBorderWeight.xlThin
+                End With
+
+                F1cnt = row
+                col = baseCol
+                row += 2
+
+                'Foreign Currency Breakdown
+                Dim tCurrency As String = Nothing
+
+                Dim dataF As List(Of Dictionary(Of String, String)) = GetMultiValues("select * from FI_RPTFORMAT where RPTTYPE='BUFX' order by RPTSRT")
+
+                Dim currencies As String() = {"USD", "EUR", "JPY", "SGD", "CNY", "HKD", "Normal"}
+
+                For Each record As Dictionary(Of String, String) In dataF
+                    Dim Fmrla As String = record("FRMLA").ToString
+                    Dim FsItem As String = record("ERGSL").ToString
+
+                    .Cells(row, baseCol) = record("RPTDISPLY").ToString
+                    SetBorderStyle(wsheet, row, baseCol, record("ULINE"), record("PLINE"))
+                    SetBorderStyle(wsheet, row, baseCol, "S", "R")
+
+                    For i As Integer = 0 To currencies.Length - 1
+                        tCurrency = currencies(i)
+                        col += 1
+
+                        If FsItem <> "" Then
+                            If tCurrency = "Normal" Then
+                                .Cells(row, col) = Val(GetAmount(RptQueryUnFxP(fiscalYear, fiscalMonth, FsItem, sapSource, businessType)))
+                            Else
+                                .Cells(row, col) = Val(GetAmount(RptQueryUnFxF(fiscalYear, fiscalMonth, FsItem, tCurrency, sapSource, businessType)))
+                            End If
+                            .Cells(row, col).NumberFormat = GetCurrencyFormat(tCurrency)
+                        End If
+
+                        SetBorderStyle(wsheet, row, col, record("ULINE"), record("PLINE"))
+                        SetBorderStyle(wsheet, row, col, "S", "R")
+                    Next
+
+                    If FsItem <> "" Then
+                        Fcnt += 1
+                    End If
+
+                    If Fmrla = "F1" Then
+                        .Cells(row, 8) = $"=SUM(H{row - Fcnt}:H{row - 1})"
+                        .Cells(row, 8).Font.Bold = True
+                        F2cnt = row
+                        Fcnt = 0
+                    ElseIf Fmrla = "F2" Then
+                        .Cells(row, 8) = $"=SUM(H{row - Fcnt}:H{row - 1})"
+                        .Cells(row, 8).Font.Bold = True
+                        F3cnt = row
+                    ElseIf Fmrla = "F3" Then
+                        .Cells(row, 8) = $"=H{F1cnt}+H{F2cnt}+H{F3cnt}"
+                        .Cells(row, 8).Font.Bold = True
+                    End If
+
+                    col = baseCol
+                    row += 1
+                Next
+
+                With .Range(.Cells(row - 1, 1), .Cells(row - 1, currencies.Length + 1))
+                    .Font.Bold = True
+                    .Interior.Color = Grp2Color
+                    .RowHeight = 25
+                End With
+
+                .UsedRange.Font.Name = "Tahoma"
+                .UsedRange.Columns.AutoFit()
+
+            End With
+
+        Catch ex As Exception
+            MessageBox.Show("Error generating: " & ex.Message)
         End Try
 
         SplashScreenManager.CloseDefaultWaitForm()

@@ -38,7 +38,7 @@ Public Class CtrDataInitializeFI
 
                 SplashScreenManager.ShowForm(Me, GetType(WaitFrm), True, True, False)
 
-                GetSapDataHeader()
+                LoadSapDataHeader()
 
                 Dim params As New Dictionary(Of String, Object) From {{"@PostingPeriod", postingperiod}, {"@FiscalYear", fiscalyear}}
 
@@ -60,12 +60,21 @@ Public Class CtrDataInitializeFI
                 }
                 ExecuteUpdate(UpdateLoadDate, upparams)
 
+                ExecuteDelete("Delete from FI_VBSEG")
+                LoadDataSAPSQL("FI_VBSEG", CasConnect, $"Select 'L4P' as TRX_ORIGIN,{SelectBSEG}")
+                LoadDataSAPSQL("FI_VBSEG", ResConnect, $"Select 'LRP' as TRX_ORIGIN,{SelectBSEG}")
+
+                ExecuteDelete("Delete from FI_VACDOCA")
+                LoadDataSAPSQL("FI_VACDOCA", CasConnect, $"Select 'L4P' as TRX_ORIGIN,{SelectACDOCA}")
+                LoadDataSAPSQL("FI_VACDOCA", ResConnect, $"Select 'LRP' as TRX_ORIGIN,{SelectACDOCA}")
+
                 SplashScreenManager.CloseDefaultWaitForm()
             Next
 
             LoadData()
 
         End If
+
     End Sub
 
     Private Sub BtnClosedPeriod_Click(sender As Object, e As EventArgs) Handles BtnClosedPeriod.Click
@@ -208,7 +217,7 @@ Public Class CtrDataInitializeFI
         BtnNewGL.Text = GetValue("SELECT COUNT(*) FROM FI_NEWGL") & " New GL"
     End Sub
 
-    Private Sub GetSapDataHeader()
+    Private Sub LoadSapDataHeader()
         LoadDataHeader("FI_SKAT", $"Select 'LRP' as TRX_ORIGIN,{SelectSKAT}", "SAKNR", ResConnect)
         LoadDataHeader("FI_SKAT", $"Select 'L4P' as TRX_ORIGIN,{SelectSKAT}", "SAKNR", CasConnect)
 
@@ -217,6 +226,9 @@ Public Class CtrDataInitializeFI
 
         LoadDataHeader("FI_T004G", $"Select 'LRP' as TRX_ORIGIN,{SelecT004G}", "FSTAG", ResConnect)
         LoadDataHeader("FI_T004G", $"Select 'L4P' as TRX_ORIGIN,{SelecT004G}", "FSTAG", CasConnect)
+
+        LoadDataHeader("FI_VLFA1", $"Select 'LRP' as TRX_ORIGIN,{SelecLFA1}", "LIFNR", ResConnect)
+        LoadDataHeader("FI_VLFA1", $"Select 'L4P' as TRX_ORIGIN,{SelecLFA1}", "LIFNR", CasConnect)
     End Sub
 
     Public Sub LoadDataHeader(sqlTable As String, hanaQuery As String, keyColumn As String, str_hanaConnect As String)
@@ -382,6 +394,36 @@ Public Class CtrDataInitializeFI
         End Using
 
     End Sub
+
+    Sub LoadDataSAPSQL(sql_tableName As String, str_hanaConnect As String, str_hanQuery As String)
+
+        Using hanaConn As New HanaConnection(str_hanaConnect)
+            hanaConn.Open()
+
+            Dim hanaCmd As New HanaCommand(str_hanQuery, hanaConn)
+
+            Using reader As HanaDataReader = hanaCmd.ExecuteReader()
+                Using sqlConn As New SqlConnection(SqlConnect)
+                    sqlConn.Open()
+
+                    ' Bulk copy to SQL Server table
+                    Using bulkCopy As New SqlBulkCopy(sqlConn)
+                        bulkCopy.DestinationTableName = $"dbo.{sql_tableName}"
+                        bulkCopy.BulkCopyTimeout = 0
+
+                        bulkCopy.WriteToServer(reader)
+                    End Using
+                End Using
+            End Using
+        End Using
+
+    End Sub
+
+
+
+
+
+
 
     Private Sub BtnNewGL_Click(sender As Object, e As EventArgs) Handles BtnNewGL.Click
         FrmViewGL.ShowDialog()

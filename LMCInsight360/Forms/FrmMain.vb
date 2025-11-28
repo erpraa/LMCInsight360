@@ -1,6 +1,28 @@
-﻿Imports LMCInsight360.ClassDesign
+﻿' **********************************************************************
+' Project Name      : LMC FS/SR Automation System
+' Prepared By       : ERP Department
+' Commencement Date : August 20, 2025
+' Programmer        : Raymart Azaña
+' Project Lead      : Dennis Becina
+' Version           : 1.0
+' Status            : In Progress
+' Last Modified     : [Insert Date]
+' **********************************************************************
+
+Imports LMCInsight360.ClassDesign
 Imports LMCInsight360.SubClass
+
 Public Class FrmMain
+
+    Private Sub FrmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        BtnHome.Hide()
+        PnlLeft.Width = 0
+
+        ApplyFlatStyle(SideBarSD.Elements)
+        ApplyFlatStyle(SideBarFICO.Elements)
+        ApplyFlatStyle(SideBarMaintenace.Elements)
+
+    End Sub
 
 #Region "Main GUI Design"
 
@@ -158,15 +180,6 @@ Public Class FrmMain
 
 
 #End Region
-    Private Sub FrmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        BtnHome.Hide()
-        PnlLeft.Width = 0
-
-        ApplyFlatStyle(SideBarSD.Elements)
-        ApplyFlatStyle(SideBarFICO.Elements)
-        ApplyFlatStyle(SideBarMaintenace.Elements)
-
-    End Sub
 
 #Region "Finacial Statement"
 
@@ -204,14 +217,15 @@ Public Class FrmMain
         TabMenu(Me, New CtrAnnexB, "SE & GAAE")
     End Sub
 
+    Private Sub BtnAnnxB_RUGainLoss_Click(sender As Object, e As EventArgs) Handles BtnAnnxB_RUGainLoss.Click
+        Gbl_ReportTag = 3
+        TabMenu(Me, New CtrAnnexB, "RealizedFx & UnrealizeFx")
+    End Sub
+
 
 
 
 
 #End Region
-
-
-
-
 
 End Class

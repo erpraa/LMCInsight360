@@ -146,12 +146,46 @@ Public Class ClassFunction
         Return serverDate
     End Function
 
+    Public Shared Function GetCurrencyFormat(currency As String) As String
+        Select Case currency.ToUpper()
+
+            Case "PHP"
+                Return "_-[$PHP ]* #,##0.00_-;_-[$PHP ]* (#,##0.00)_-;_-[$PHP ]* 0.00_-;_-@_-"
+
+            Case "EUR"
+                Return "_-[$EUR ]* #,##0.00_-;_-[$EUR ]* (#,##0.00)_-;_-[$EUR ]* 0.00_-;_-@_-"
+
+            Case "USD"
+                Return "_-[$USD ]* #,##0.00_-;_-[$USD ]* (#,##0.00)_-;_-[$USD ]* 0.00_-;_-@_-"
+
+            Case "JPY"
+                Return "_-[$JPY ]* #,##0.00_-;_-[$JPY ]* (#,##0.00)_-;_-[$JPY ]* 0.00_-;_-@_-"
+
+            Case "SGD"
+                Return "_-[$SGD ]* #,##0.00_-;_-[$SGD ]* (#,##0.00)_-;_-[$SGD ]* 0.00_-;_-@_-"
+
+            Case "CNY"
+                Return "_-[$CNY ]* #,##0.00_-;_-[$CNY ]* (#,##0.00)_-;_-[$CNY ]* 0.00_-;_-@_-"
+
+            Case "KRW"
+                Return "_-[$KRW ]* #,##0_-;_-[$KRW ]* (#,##0)_-;_-[$KRW ]* 0_-;_-@_-"
+
+            Case "HKD"
+                Return "_-[$HKD ]* #,##0.00_-;_-[$HKD ]* (#,##0.00)_-;_-[$HKD ]* 0.00_-;_-@_-"
+
+            Case Else
+                Return "#,##0.00;(#,##0.00)"
+        End Select
+
+    End Function
+
+
 #End Region
 
 #Region "Submit Function"
 
     ' INSERT FUNCTION (Return new ID)
-    Public Shared Function ExecuteInsert(ByVal query As String, ByVal parameters As Dictionary(Of String, Object)) As Integer
+    Public Shared Function ExecuteInsert(ByVal query As String, Optional ByVal parameters As Dictionary(Of String, Object) = Nothing) As Integer
         Dim newID As Integer = 0
 
         Try
@@ -162,9 +196,11 @@ Public Class ClassFunction
                     cmd.CommandTimeout = 0
 
                     ' Add parameters safely
-                    For Each param In parameters
-                        cmd.Parameters.AddWithValue(param.Key, param.Value)
-                    Next
+                    If parameters IsNot Nothing Then
+                        For Each param In parameters
+                            cmd.Parameters.AddWithValue(param.Key, param.Value)
+                        Next
+                    End If
 
                     ' Execute and return new identity value
                     Dim result = cmd.ExecuteScalar()
@@ -182,7 +218,7 @@ Public Class ClassFunction
     End Function
 
     ' UPDATE FUNCTION (Return affected rows)
-    Public Shared Function ExecuteUpdate(ByVal query As String, ByVal parameters As Dictionary(Of String, Object)) As Integer
+    Public Shared Function ExecuteUpdate(ByVal query As String, Optional ByVal parameters As Dictionary(Of String, Object) = Nothing) As Integer
         Dim rowsAffected As Integer = 0
 
         Try
@@ -193,9 +229,11 @@ Public Class ClassFunction
                     cmd.CommandTimeout = 0
 
                     ' Add parameters safely
-                    For Each param In parameters
-                        cmd.Parameters.AddWithValue(param.Key, param.Value)
-                    Next
+                    If parameters IsNot Nothing Then
+                        For Each param In parameters
+                            cmd.Parameters.AddWithValue(param.Key, param.Value)
+                        Next
+                    End If
 
                     rowsAffected = cmd.ExecuteNonQuery()
                 End Using
@@ -209,23 +247,28 @@ Public Class ClassFunction
     End Function
 
     ' DELETE FUNCTION (Return affected rows)
-    Public Shared Function ExecuteDelete(ByVal query As String, ByVal parameters As Dictionary(Of String, Object)) As Integer
+    Public Shared Function ExecuteDelete(ByVal query As String, Optional ByVal parameters As Dictionary(Of String, Object) = Nothing) As Integer
+
         Dim rowsAffected As Integer = 0
 
         Try
             Using conn As New SqlConnection(SqlConnect)
                 conn.Open()
+
                 Using cmd As New SqlCommand(query, conn)
                     cmd.CommandType = CommandType.Text
                     cmd.CommandTimeout = 0
 
-                    ' Add parameters safely
-                    For Each param In parameters
-                        cmd.Parameters.AddWithValue(param.Key, param.Value)
-                    Next
+                    ' Add parameters only if provided
+                    If parameters IsNot Nothing Then
+                        For Each param In parameters
+                            cmd.Parameters.AddWithValue(param.Key, param.Value)
+                        Next
+                    End If
 
                     rowsAffected = cmd.ExecuteNonQuery()
                 End Using
+
             End Using
 
         Catch ex As Exception
@@ -234,6 +277,7 @@ Public Class ClassFunction
 
         Return rowsAffected
     End Function
+
 
     Public Shared Function ExecuteProcedure(ByVal procedureName As String, Optional ByVal parameters As Dictionary(Of String, Object) = Nothing, Optional ByVal expectResult As Boolean = False) As Object
         Dim result As Object = Nothing

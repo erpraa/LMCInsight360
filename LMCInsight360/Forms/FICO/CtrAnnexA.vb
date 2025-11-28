@@ -146,7 +146,6 @@ Public Class CtrAnnexA
 #End Region
 
 #Region "Income Statement Report"
-
     Private Sub Generate_IncomeStatement()
 
         SplashScreenManager.ShowForm(Me, GetType(WaitFrm), True, True, False)
@@ -363,7 +362,7 @@ Public Class CtrAnnexA
 
                                     .Cells(row, 1) = reader("RPTDISPLY").ToString()
                                     .Cells(row, 1).Font.Size = reader("TSIZE").ToString()
-                                    SetBottomBorder(wsheet, row, 1, reader("ULINE").ToString().Trim())
+                                    SetBorderStyle(wsheet, row, 1, reader("ULINE"), reader("PLINE"))
 
                                     Dim totalBranches As Integer = branches.Count
                                     Dim i As Integer = 0
@@ -429,16 +428,16 @@ Public Class CtrAnnexA
                                                 End Select
 
                                                 .Cells(row, col) = AdjustValue(Val(GetAmount(RptQueryIS(fYear, fMonth, sapSource, br.Key, fsItem, includePurchases, businessType))), reader("DCFLG").ToString())
-
                                                 ApplyCellFormat(.Cells(row, col), reader)
-                                                SetBottomBorder(wsheet, row, col, reader("ULINE").ToString().Trim())
+                                                SetBorderStyle(wsheet, row, col, reader("ULINE"), reader("PLINE"))
+
                                             End If
 
                                             ' Apply formulas
                                             If reader("FRMLA").ToString() <> "" Then
                                                 .Cells(row, col).Formula = GetExcelFormula(reader("FRMLA").ToString(), col)
                                                 ApplyCellFormat(.Cells(row, col), reader)
-                                                SetBottomBorder(wsheet, row, col, reader("ULINE").ToString().Trim())
+                                                SetBorderStyle(wsheet, row, col, reader("ULINE"), reader("PLINE"))
                                             End If
 
                                             col += 1
@@ -451,7 +450,7 @@ Public Class CtrAnnexA
                                                     If br.Key = "Marshmallows" Then
                                                         .Cells(row, col).Formula = $"=SUM(B{row}:{GetExcelColName(col - 1)}{row})"
                                                         ApplyCellFormat(.Cells(row, col), reader)
-                                                        SetBottomBorder(wsheet, row, col, reader("ULINE").ToString().Trim())
+                                                        SetBorderStyle(wsheet, row, col, reader("ULINE"), reader("PLINE"))
                                                         col += 1
                                                     End If
 
@@ -459,7 +458,7 @@ Public Class CtrAnnexA
                                                     If i = totalBranches Then
                                                         .Cells(row, col).Formula = $"=SUM({GetExcelColName(col - 2)}{row}:{GetExcelColName(col - 1)}{row})"
                                                         ApplyCellFormat(.Cells(row, col), reader)
-                                                        SetBottomBorder(wsheet, row, col, reader("ULINE").ToString().Trim())
+                                                        SetBorderStyle(wsheet, row, col, reader("ULINE"), reader("PLINE"))
                                                         col += 1
                                                     End If
 
@@ -468,7 +467,7 @@ Public Class CtrAnnexA
                                                     If i = totalBranches Then
                                                         .Cells(row, col).Formula = $"=SUM(B{row}:{GetExcelColName(col - 1)}{row})"
                                                         ApplyCellFormat(.Cells(row, col), reader)
-                                                        SetBottomBorder(wsheet, row, col, reader("ULINE").ToString().Trim())
+                                                        SetBorderStyle(wsheet, row, col, reader("ULINE"), reader("PLINE"))
                                                         col += 1
                                                     End If
 
@@ -487,6 +486,19 @@ Public Class CtrAnnexA
                         End Using
                     End Using
                 End Using
+
+                For Each br In branches
+                    If businessType = "FOODSTUFF" Then
+                        .Cells(11, col).Value = .Cells(11, col).Value
+                        col += 1
+                        If br.Key = "Marshmallows" Then
+                            col += 1
+                        End If
+                    Else
+                        .Cells(11, col).Value = .Cells(11, col).Value
+                        col += 1
+                    End If
+                Next
 
                 'Final Format
                 .Range("B6").Select()
@@ -656,7 +668,7 @@ Public Class CtrAnnexA
                                     End If
 
                                     If row = 37 OrElse row = 73 Then
-                                        SetBottomBorder(wsheet, row, 1, reader("ULINE").ToString().Trim())
+                                        SetBorderStyle(wsheet, row, 1, reader("ULINE"), reader("PLINE"))
                                     End If
 
                                     Dim totalmonth As Integer = HeaderName.Count
@@ -686,7 +698,7 @@ Skip:
                                             End If
 
                                             ApplyCellFormat(.Cells(row, col), reader)
-                                            SetBottomBorder(wsheet, row, col, reader("ULINE").ToString().Trim())
+                                            SetBorderStyle(wsheet, row, col, reader("ULINE"), reader("PLINE"))
                                             SetBackFontColor(wsheet, row, col, reader("FNTCLR").ToString(), reader("BCKCLR").ToString())
 
                                         End If
