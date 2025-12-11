@@ -156,7 +156,7 @@
             pbusinessType = "AND b.BSTYPE='Foodstuff Only'"
         End If
 
-        Gresult = $"SELECT SUM(f.HSL) * - 1 AS TotalHSL
+        Gresult = $"SELECT SUM(f.HSL) AS TotalHSL
                     FROM dbo.FI_VACDOCA f
                     INNER JOIN vwFI_GETGLGRP g ON LEFT(LTRIM(RTRIM(f.SGTXT)), 6) = CAST(g.SAKNR AS VARCHAR(20))
                     LEFT JOIN FI_BRANCH b ON f.PRCTR = b.PRCTR 
@@ -344,9 +344,41 @@ FROM SAPHANADB.BSEG where H_BLART='KA'"
             End Get
         End Property
 
-
     End Class
 
-#End Region
 
+    Public Shared Function SelectTCURR(FiscalYear As String, PostingPeriod As String)
+        Dim Gresult As String
+
+        Gresult = $"select * from ( 
+            SELECT KURST,FCURR,TCURR,TO_VARCHAR(TO_DATE(TO_VARCHAR(99999999 - GDATU), 'YYYYMMDD'),'YYYY-MM-DD') AS GDATU,UKURS,
+            TO_VARCHAR(CURRENT_TIMESTAMP, 'YYYY-MM-DD HH24:MI:SS.FF3') AS UpdateDate
+            FROM SAPHANADB.TCURR WHERE MANDT = '800' AND KURST = 'M' ) Temp
+            WHERE year(GDATU)={FiscalYear} and  month(GDATU)={PostingPeriod}"
+
+        Return Gresult
+
+    End Function
+
+    Public Shared Function SelectBKPF(TrxOrg As String, FiscalYear As String, PostingPeriod As String)
+        Dim Gresult As String
+
+        Gresult = $"SELECT '{TrxOrg}' as TRX_ORIGIN,
+                    BUKRS,
+                    BELNR,
+                    GJAHR,
+                    BLART,
+                    TO_VARCHAR(TO_DATE(BLDAT, 'YYYYMMDD'), 'YYYY-MM-DD') AS BLDAT,
+                    TO_VARCHAR(TO_DATE(CPUDT, 'YYYYMMDD'), 'YYYY-MM-DD') AS CPUDT,
+                    TO_VARCHAR(TO_DATE(BUDAT, 'YYYYMMDD'), 'YYYY-MM-DD') AS BUDAT,
+                    MONAT,
+                    KURSF,
+                    TO_VARCHAR(CURRENT_TIMESTAMP, 'YYYY-MM-DD HH24:MI:SS.FF3') AS UpdateDate
+                    FROM SAPHANADB.BKPF where MANDT='800' and KURSF > 1 and  GJAHR={FiscalYear} and MONAT={PostingPeriod}"
+
+        Return Gresult
+
+    End Function
+
+#End Region
 End Class

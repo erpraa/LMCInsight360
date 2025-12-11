@@ -51,6 +51,7 @@ Public Class CtrDataInitializeFI
                 LoadDataDetails("L4P", CasConnect, fiscalyear, postingperiod)
                 LoadDataDetails("LRP", ResConnect, fiscalyear, postingperiod)
                 ExecuteProcedure("INS_FI_TRXDATA", params, False)
+                ExecuteProcedure("UPD_FI_TRXDATA", params, False)
 
                 Dim upparams As New Dictionary(Of String, Object) From {
                     {"@loaddate", GetServerDate()},
@@ -68,12 +69,20 @@ Public Class CtrDataInitializeFI
                 LoadDataSAPSQL("FI_VACDOCA", CasConnect, $"Select 'L4P' as TRX_ORIGIN,{SelectACDOCA}")
                 LoadDataSAPSQL("FI_VACDOCA", ResConnect, $"Select 'LRP' as TRX_ORIGIN,{SelectACDOCA}")
 
+                LoadDataSAPSQL("FI_VTCURR", CasConnect, SubQuery.SelectTCURR(fiscalyear, postingperiod))
+
+                LoadDataSAPSQL("FI_VBKPF", CasConnect, SubQuery.SelectBKPF("L4P", fiscalyear, postingperiod))
+                LoadDataSAPSQL("FI_VBKPF", ResConnect, SubQuery.SelectBKPF("LRP", fiscalyear, postingperiod))
+
                 SplashScreenManager.CloseDefaultWaitForm()
             Next
 
             LoadData()
 
         End If
+
+
+
 
     End Sub
 

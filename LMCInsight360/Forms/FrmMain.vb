@@ -206,6 +206,9 @@ Public Class FrmMain
     Private Sub BtnDataInitializedFI_Click(sender As Object, e As EventArgs) Handles BtnDataInitializedFI.Click
         TabMenu(Me, New CtrDataInitializeFI, "Data Initialization-FI")
     End Sub
+    Private Sub BtnDataInitializedMM_Click(sender As Object, e As EventArgs) Handles BtnDataInitializedMM.Click
+        TabMenu(Me, New CtrDataInitializeMM, "Data Initialization-MM")
+    End Sub
 
     Private Sub BtnAnnxB_IScomp_Click(sender As Object, e As EventArgs) Handles BtnAnnxB_IScomp.Click
         Gbl_ReportTag = 1
@@ -221,6 +224,13 @@ Public Class FrmMain
         Gbl_ReportTag = 3
         TabMenu(Me, New CtrAnnexB, "RealizedFx & UnrealizeFx")
     End Sub
+
+    Private Sub BtnAnnxB_Gen_Click(sender As Object, e As EventArgs) Handles BtnAnnxB_Gen.Click
+        Gbl_ReportTag = 4
+        TabMenu(Me, New CtrAnnexB, "Generate Annex B")
+    End Sub
+
+
 
 
 

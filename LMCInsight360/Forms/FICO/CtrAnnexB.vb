@@ -808,7 +808,7 @@ Public Class CtrAnnexB
 
                 Dim query As String = $"Select 
                                         VendorName as 'Name of Bank',
-                                        Assignment as 'PN Number',	
+                                        Text as 'PN Number',	
                                         AmountCC as '{MonthName(fiscalMonth)} 1-{Date.DaysInMonth(fiscalYear, fiscalMonth)}, {fiscalYear}',									  
 									    FORMAT(PostingDate, 'dd-MMM-yy') as 'Booking Date',
                                         FORMAT(ClearingDate, 'dd-MMM-yy')  as 'Payment Date',
@@ -1003,10 +1003,10 @@ Public Class CtrAnnexB
 
                 Dim query As String = $"select 
                                        VendorName as 'Name of Bank',
-                                       Assignment as 'PN Number',
+                                       Text as 'PN Number',
                                        AmountCC as '{MonthName(fiscalMonth)} 1-{Date.DaysInMonth(fiscalYear, fiscalMonth)}, {fiscalYear}',
                                        FORMAT(PostingDate, 'dd-MMM-yy') as 'Booking Date',
-                                       BRate as 'Doc Rate',
+                                       BRate2 as 'Doc Rate',
                                        RRate as '{MonthName(fiscalMonth)} 1-{Date.DaysInMonth(fiscalYear, fiscalMonth)}, {fiscalYear} ',
                                        UNetChange as 'Net Change',
                                        UAmountNet as 'Net Amount'from FnFI_GAINLOSSU ({fiscalMonth},{fiscalYear},{trxOrigin})
@@ -1076,7 +1076,7 @@ Public Class CtrAnnexB
                 row += 1
 
                 .Cells(row, 1) = "UNREALIZED GAIN/(LOSS) on Forex - Bank Loans"
-                .Cells(row, 8) = $"=(H{row - 2} + H{row - 1}) * -1"
+                .Cells(row, 8) = $"=(H{row - 1} - H{row - 2})"
                 .Range($"H{baseRow + 1}:H{row}").NumberFormat = NumericFormat
 
                 With .Range($"A{row}:H{row}")
@@ -1117,7 +1117,11 @@ Public Class CtrAnnexB
                             If tCurrency = "Normal" Then
                                 .Cells(row, col) = Val(GetAmount(RptQueryUnFxP(fiscalYear, fiscalMonth, FsItem, sapSource, businessType)))
                             Else
-                                .Cells(row, col) = Val(GetAmount(RptQueryUnFxF(fiscalYear, fiscalMonth, FsItem, tCurrency, sapSource, businessType)))
+                                If tCurrency = "JPY" Then
+                                    .Cells(row, col) = Val(GetAmount(RptQueryUnFxF(fiscalYear, fiscalMonth, FsItem, tCurrency, sapSource, businessType))) / 10
+                                Else
+                                    .Cells(row, col) = Val(GetAmount(RptQueryUnFxF(fiscalYear, fiscalMonth, FsItem, tCurrency, sapSource, businessType)))
+                                End If
                             End If
                             .Cells(row, col).NumberFormat = GetCurrencyFormat(tCurrency)
                         End If

@@ -52,6 +52,7 @@ Partial Class FrmMain
         Me.BtnAnnxB_IScomp = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.BtnAnnxB_SEGAAE = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.BtnAnnxB_RUGainLoss = New DevExpress.XtraBars.Navigation.AccordionControlElement()
+        Me.BtnAnnxB_Gen = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.AccordionControlElement6 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.AccordionControlElement2 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.BtnDataInitializedFI = New DevExpress.XtraBars.Navigation.AccordionControlElement()
@@ -74,6 +75,7 @@ Partial Class FrmMain
         Me.MenuSilde = New System.Windows.Forms.Timer(Me.components)
         Me.DocumentManager1 = New DevExpress.XtraBars.Docking2010.DocumentManager(Me.components)
         Me.TabbedView1 = New DevExpress.XtraBars.Docking2010.Views.Tabbed.TabbedView(Me.components)
+        Me.BtnDataInitializedMM = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.PnlMiddle.SuspendLayout()
         Me.PnlHeader.SuspendLayout()
         Me.PnlTopHeader.SuspendLayout()
@@ -389,6 +391,7 @@ Partial Class FrmMain
         'AccordionControlElement4
         '
         Me.AccordionControlElement4.Elements.AddRange(New DevExpress.XtraBars.Navigation.AccordionControlElement() {Me.BtnAnnxA_IS, Me.BtnAnnxA_BS, Me.BtnAnnxA_DS, Me.BtnAnnxA_Gen})
+        Me.AccordionControlElement4.Expanded = True
         Me.AccordionControlElement4.Name = "AccordionControlElement4"
         Me.AccordionControlElement4.Text = "📑 Annex A Report"
         '
@@ -418,7 +421,7 @@ Partial Class FrmMain
         '
         'AccordionControlElement3
         '
-        Me.AccordionControlElement3.Elements.AddRange(New DevExpress.XtraBars.Navigation.AccordionControlElement() {Me.BtnAnnxB_IScomp, Me.BtnAnnxB_SEGAAE, Me.BtnAnnxB_RUGainLoss})
+        Me.AccordionControlElement3.Elements.AddRange(New DevExpress.XtraBars.Navigation.AccordionControlElement() {Me.BtnAnnxB_IScomp, Me.BtnAnnxB_SEGAAE, Me.BtnAnnxB_RUGainLoss, Me.BtnAnnxB_Gen})
         Me.AccordionControlElement3.Expanded = True
         Me.AccordionControlElement3.Name = "AccordionControlElement3"
         Me.AccordionControlElement3.Text = "📑 Annex B Report"
@@ -441,6 +444,12 @@ Partial Class FrmMain
         Me.BtnAnnxB_RUGainLoss.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item
         Me.BtnAnnxB_RUGainLoss.Text = "RealizedFx & UnrealizeFx"
         '
+        'BtnAnnxB_Gen
+        '
+        Me.BtnAnnxB_Gen.Name = "BtnAnnxB_Gen"
+        Me.BtnAnnxB_Gen.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item
+        Me.BtnAnnxB_Gen.Text = "Consolidated Annex B"
+        '
         'AccordionControlElement6
         '
         Me.AccordionControlElement6.Name = "AccordionControlElement6"
@@ -448,7 +457,7 @@ Partial Class FrmMain
         '
         'AccordionControlElement2
         '
-        Me.AccordionControlElement2.Elements.AddRange(New DevExpress.XtraBars.Navigation.AccordionControlElement() {Me.BtnDataInitializedFI})
+        Me.AccordionControlElement2.Elements.AddRange(New DevExpress.XtraBars.Navigation.AccordionControlElement() {Me.BtnDataInitializedFI, Me.BtnDataInitializedMM})
         Me.AccordionControlElement2.Expanded = True
         Me.AccordionControlElement2.Name = "AccordionControlElement2"
         Me.AccordionControlElement2.Text = "🗂️  Data Management"
@@ -457,6 +466,7 @@ Partial Class FrmMain
         '
         Me.BtnDataInitializedFI.Expanded = True
         Me.BtnDataInitializedFI.Name = "BtnDataInitializedFI"
+        Me.BtnDataInitializedFI.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item
         Me.BtnDataInitializedFI.Text = "🛢️  Data Initialized -FI"
         '
         'SideBarMaintenace
@@ -608,6 +618,12 @@ Partial Class FrmMain
         Me.TabbedView1.AppearancePage.Header.Options.UseForeColor = True
         Me.TabbedView1.Style = DevExpress.XtraBars.Docking2010.Views.DockingViewStyle.Light
         '
+        'BtnDataInitializedMM
+        '
+        Me.BtnDataInitializedMM.Name = "BtnDataInitializedMM"
+        Me.BtnDataInitializedMM.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item
+        Me.BtnDataInitializedMM.Text = "🏷️  Data Initialized -MM"
+        '
         'FrmMain
         '
         Me.Appearance.BackColor = System.Drawing.Color.White
@@ -692,4 +708,6 @@ Partial Class FrmMain
     Friend WithEvents BtnAnnxB_IScomp As DevExpress.XtraBars.Navigation.AccordionControlElement
     Friend WithEvents BtnAnnxB_SEGAAE As DevExpress.XtraBars.Navigation.AccordionControlElement
     Friend WithEvents BtnAnnxB_RUGainLoss As DevExpress.XtraBars.Navigation.AccordionControlElement
+    Friend WithEvents BtnAnnxB_Gen As DevExpress.XtraBars.Navigation.AccordionControlElement
+    Friend WithEvents BtnDataInitializedMM As DevExpress.XtraBars.Navigation.AccordionControlElement
 End Class
