@@ -6,14 +6,15 @@ Module GlobalConnection
 
     'Temporary only
     Public strServerName = "192.168.200.90"
-    Public strUser = "sa"
-    Public strPassword = "LmcNa01"
+    Public strUser = "fa"
+    Public strPassword = "update1012225"
     Public strDatabase = "LMCMSTRPT"
 
     Public SqlConnect = $"Data Source='{strServerName}';User ID='{strUser}';password='{strPassword}';Initial Catalog='{strDatabase}';MultipleActiveResultSets=True"
 
     Public CasConnect As String = GetConnectionString("L4P")
     Public ResConnect As String = GetConnectionString("LRP")
+
     Public DispCasConnect As String = DispConnection("L4P")
     Public DispResConnect As String = DispConnection("LRP")
 

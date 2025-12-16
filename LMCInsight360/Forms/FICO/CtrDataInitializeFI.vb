@@ -69,6 +69,12 @@ Public Class CtrDataInitializeFI
                 LoadDataSAPSQL("FI_VACDOCA", CasConnect, $"Select 'L4P' as TRX_ORIGIN,{SelectACDOCA}")
                 LoadDataSAPSQL("FI_VACDOCA", ResConnect, $"Select 'LRP' as TRX_ORIGIN,{SelectACDOCA}")
 
+
+                ExecuteDelete("Delete from FI_VDOCVEN")
+                LoadDataSAPSQL("FI_VDOCVEN", CasConnect, $"Select distinct 'L4P' as TRX_ORIGIN,{SelectACDOCAN}")
+                LoadDataSAPSQL("FI_VDOCVEN", ResConnect, $"Select distinct 'LRP' as TRX_ORIGIN,{SelectACDOCAN}")
+
+
                 LoadDataSAPSQL("FI_VTCURR", CasConnect, SubQuery.SelectTCURR(fiscalyear, postingperiod))
 
                 LoadDataSAPSQL("FI_VBKPF", CasConnect, SubQuery.SelectBKPF("L4P", fiscalyear, postingperiod))

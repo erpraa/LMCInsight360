@@ -62,7 +62,7 @@ Partial Class FrmLogin
         Me.LblLinkDatabase.ActiveLinkColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(184, Byte), Integer))
         Me.LblLinkDatabase.Font = New System.Drawing.Font("Century Gothic", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblLinkDatabase.LinkColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(184, Byte), Integer))
-        Me.LblLinkDatabase.Location = New System.Drawing.Point(96, 359)
+        Me.LblLinkDatabase.Location = New System.Drawing.Point(92, 358)
         Me.LblLinkDatabase.Name = "LblLinkDatabase"
         Me.LblLinkDatabase.Size = New System.Drawing.Size(189, 24)
         Me.LblLinkDatabase.TabIndex = 56
@@ -75,7 +75,7 @@ Partial Class FrmLogin
         Me.LblClose.AutoSize = True
         Me.LblClose.Font = New System.Drawing.Font("Segoe UI", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblClose.ForeColor = System.Drawing.Color.Red
-        Me.LblClose.Location = New System.Drawing.Point(343, 3)
+        Me.LblClose.Location = New System.Drawing.Point(343, 5)
         Me.LblClose.Name = "LblClose"
         Me.LblClose.Size = New System.Drawing.Size(34, 25)
         Me.LblClose.TabIndex = 54
@@ -149,7 +149,7 @@ Partial Class FrmLogin
         Me.BtnLogin.FlatAppearance.BorderSize = 0
         Me.BtnLogin.Font = New System.Drawing.Font("Segoe UI Semibold", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BtnLogin.ForeColor = System.Drawing.Color.White
-        Me.BtnLogin.Location = New System.Drawing.Point(122, 294)
+        Me.BtnLogin.Location = New System.Drawing.Point(120, 294)
         Me.BtnLogin.Name = "BtnLogin"
         Me.BtnLogin.Size = New System.Drawing.Size(140, 35)
         Me.BtnLogin.TabIndex = 46

@@ -347,12 +347,20 @@ FROM SAPHANADB.BSEG where H_BLART='KA'"
       ,DRCRK
       ,SDM_VERSION
       ,TO_VARCHAR(CURRENT_TIMESTAMP, 'YYYY-MM-DD HH24:MI:SS.FF3') AS UpdateDate
-  FROM SAPHANADB.ACDOCA where (RACCT IN ('0000721001','0000721004','0000721005') OR GKONT IN ('0000721002','0000721006'))"
+  FROM SAPHANADB.ACDOCA where (RACCT IN ('0000721001','0000721004','0000721005','0000721002','0000721006') OR GKONT IN ('0000721002','0000721006'))"
             End Get
         End Property
 
-    End Class
+        Public Shared ReadOnly Property SelectACDOCAN As String
+            Get
+                Return "BELNR,LIFNR from SAPHANADB.BSEG where LIFNR<>'' 
+                    and BELNR IN (Select distinct BELNR from SAPHANADB.ACDOCA 
+                    where (RACCT IN ('0000721001','0000721004','0000721005','0000721002','0000721006') OR GKONT IN ('0000721002','0000721006')))"
+            End Get
+        End Property
 
+
+    End Class
 
     Public Shared Function SelectTCURR(FiscalYear As String, PostingPeriod As String)
         Dim Gresult As String
@@ -386,6 +394,10 @@ FROM SAPHANADB.BSEG where H_BLART='KA'"
         Return Gresult
 
     End Function
+
+
+
+
 
 #End Region
 End Class
