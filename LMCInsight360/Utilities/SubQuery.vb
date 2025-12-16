@@ -1,5 +1,12 @@
 ﻿Public Class SubQuery
 
+
+#Region "Account Maintenance"
+    Public Shared GetUserNumRnge As String = "SELECT 'PSY' + RIGHT('00000' + CAST(COALESCE(MAX(CAST(SUBSTRING(UserID, 4, LEN(UserID)-3) AS INT)), 0) + 1 AS VARCHAR), 5) AS NextTrxCount FROM MSTR_USERS"
+
+#End Region
+
+
 #Region "Annex A Report"
     Public Shared Function RptQueryIS(FiscalYear As String, PostingPeriod As String, TrxOrigin As String, busUnit As String, FSItem As String, PurcH As Boolean, businessType As String) As String
 
@@ -223,13 +230,13 @@
             End Get
         End Property
 
-         Public Shared ReadOnly Property SelectSKAT As String
+        Public Shared ReadOnly Property SelectSKAT As String
             Get
                 Return "Trim(LEADING '0' FROM SAKNR) AS SAKNR,KTOPL,SPRAS,TXT20,TXT50,MCOD1 From SAPHANADB.SKAT Where MANDT = '800' And KTOPL = '1000' AND SPRAS='E'"
             End Get
         End Property
 
-          Public Shared ReadOnly Property SelectSKB1 As String
+        Public Shared ReadOnly Property SelectSKB1 As String
             Get
                 Return "Trim(LEADING '0' FROM SAKNR) AS SAKNR,BUKRS,TO_VARCHAR(TO_DATE(ERDAT, 'YYYYMMDD'), 'YYYY-MM-DD') AS ERDAT,ERNAM,FDLEV,FIPLS,FSTAG,HBKID,HKTID,MITKZ,MWSKZ,WAERS,XGKON,XINTB,XKRES,XOPVW,XSPEB,ZINRT,ZUAWA,XMWNO,XSALH From SAPHANADB.SKB1 Where MANDT = '800' And BUKRS = '2000'ORDER BY SAKNR;"
             End Get

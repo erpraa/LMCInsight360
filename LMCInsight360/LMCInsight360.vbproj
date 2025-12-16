@@ -120,11 +120,23 @@
     <Compile Include="Forms\FICO\FrmViewGL.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\FrmLogin.Designer.vb">
+      <DependentUpon>FrmLogin.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmLogin.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\FrmMain.Designer.vb">
       <DependentUpon>FrmMain.vb</DependentUpon>
     </Compile>
     <Compile Include="Forms\FrmMain.vb">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ACCOUNT\CtrCreateAccount.Designer.vb">
+      <DependentUpon>CtrCreateAccount.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ACCOUNT\CtrCreateAccount.vb">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Interface\FrmAdminInfo.Designer.vb">
       <DependentUpon>FrmAdminInfo.vb</DependentUpon>
@@ -184,8 +196,14 @@
     <EmbeddedResource Include="Forms\FICO\FrmViewGL.resx">
       <DependentUpon>FrmViewGL.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmLogin.resx">
+      <DependentUpon>FrmLogin.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FrmMain.resx">
       <DependentUpon>FrmMain.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ACCOUNT\CtrCreateAccount.resx">
+      <DependentUpon>CtrCreateAccount.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Interface\FrmAdminInfo.resx">
       <DependentUpon>FrmAdminInfo.vb</DependentUpon>

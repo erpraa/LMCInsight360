@@ -55,7 +55,7 @@ Public Class CtrDataInitializeFI
 
                 Dim upparams As New Dictionary(Of String, Object) From {
                     {"@loaddate", GetServerDate()},
-                    {"@postby", "Administrator"},
+                    {"@postby", GstrUselogin},
                     {"@PostingPeriod", postingperiod},
                     {"@FiscalYear", fiscalyear}
                 }
@@ -80,9 +80,6 @@ Public Class CtrDataInitializeFI
             LoadData()
 
         End If
-
-
-
 
     End Sub
 

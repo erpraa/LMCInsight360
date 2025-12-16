@@ -323,7 +323,7 @@ Partial Class CtrAnnexB
         '
         'BtnGenerate
         '
-        Me.BtnGenerate.BackColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(149, Byte), Integer), CType(CType(150, Byte), Integer))
+        Me.BtnGenerate.BackColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(184, Byte), Integer))
         Me.BtnGenerate.FlatAppearance.BorderSize = 0
         Me.BtnGenerate.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BtnGenerate.ForeColor = System.Drawing.Color.White

@@ -8,9 +8,9 @@ Public Class CtrDataInitializeMM
 
     End Sub
 
-    Private Sub btnUpload_Click(sender As Object, e As EventArgs) Handles btnUpload.Click
+    Private Sub BtnUpload_Click(sender As Object, e As EventArgs) Handles BtnUpload.Click
 
-        Dim excelPath As String = txtFilePath.Text
+        Dim excelPath As String = TxtFilePath.Text
 
         If excelPath = "" Then
             MsgBox("Please select an Excel file.")
@@ -89,12 +89,14 @@ Public Class CtrDataInitializeMM
 
     End Sub
 
-    Private Sub btnBrowse_Click(sender As Object, e As EventArgs) Handles btnBrowse.Click
-        Dim ofd As New OpenFileDialog
-        ofd.Filter = "Excel Files|*.xlsx;*.xls"
+    Private Sub BtnBrowse_Click(sender As Object, e As EventArgs) Handles BtnBrowse.Click
+        Dim ofd As New OpenFileDialog() With {
+            .Filter = "Excel Files|*.xlsx;*.xls"
+        }
 
         If ofd.ShowDialog = DialogResult.OK Then
-            txtFilePath.Text = ofd.FileName
+            TxtFilePath.Text = ofd.FileName
         End If
     End Sub
+
 End Class

@@ -2,7 +2,6 @@
 Imports DevExpress.XtraBars.Docking2010.Views
 Imports System.Data.SqlClient
 Public Class ClassFunction
-
 #Region "FrmMain"
     Public Shared Function CheckifTabExists(tabtext As String) As Boolean
         Dim visibleDocs As New List(Of String)()
@@ -19,6 +18,33 @@ Public Class ClassFunction
 #End Region
 
 #Region "Get Function"
+    Public Shared Function GetServerDate() As DateTime
+        Dim serverDate As DateTime
+
+        Using conn As New SqlConnection(SqlConnect)
+            conn.Open()
+            Using cmd As New SqlCommand("SELECT GETDATE()", conn)
+                serverDate = Convert.ToDateTime(cmd.ExecuteScalar())
+            End Using
+        End Using
+
+        Return serverDate
+    End Function
+
+    Public Shared Sub UpdateLoginStatus(userID As String, isLoggedIn As Boolean)
+        Dim query As String = "UPDATE MSTR_USERS SET IsLoggedIn = @IsLoggedIn WHERE UserID = @UserID"
+
+        Using conn As New SqlConnection(SqlConnect)
+            Using cmd As New SqlCommand(query, conn)
+                cmd.Parameters.AddWithValue("@UserID", userID)
+                cmd.Parameters.AddWithValue("@IsLoggedIn", isLoggedIn)
+
+                conn.Open()
+                cmd.ExecuteNonQuery()
+            End Using
+        End Using
+    End Sub
+
     Public Shared Function GetMultiValues(ByVal query As String) As List(Of Dictionary(Of String, String))
         Dim result As New List(Of Dictionary(Of String, String))
 
@@ -133,18 +159,7 @@ Public Class ClassFunction
         Return dvcv
     End Function
 
-    Public Shared Function GetServerDate() As DateTime
-        Dim serverDate As DateTime
 
-        Using conn As New SqlConnection(SqlConnect)
-            conn.Open()
-            Using cmd As New SqlCommand("SELECT GETDATE()", conn)
-                serverDate = Convert.ToDateTime(cmd.ExecuteScalar())
-            End Using
-        End Using
-
-        Return serverDate
-    End Function
 
     Public Shared Function GetCurrencyFormat(currency As String) As String
         Select Case currency.ToUpper()
@@ -185,37 +200,36 @@ Public Class ClassFunction
 #Region "Submit Function"
 
     ' INSERT FUNCTION (Return new ID)
-    Public Shared Function ExecuteInsert(ByVal query As String, Optional ByVal parameters As Dictionary(Of String, Object) = Nothing) As Integer
-        Dim newID As Integer = 0
+    Public Shared Function ExecuteInsert(ByVal query As String, Optional ByVal parameters As Dictionary(Of String, Object) = Nothing) As String
+
+        Dim newID As String = ""
 
         Try
             Using conn As New SqlConnection(SqlConnect)
                 conn.Open()
-                Using cmd As New SqlCommand(query & "; SELECT SCOPE_IDENTITY();", conn)
+                Using cmd As New SqlCommand(query, conn)
                     cmd.CommandType = CommandType.Text
                     cmd.CommandTimeout = 0
 
-                    ' Add parameters safely
                     If parameters IsNot Nothing Then
                         For Each param In parameters
                             cmd.Parameters.AddWithValue(param.Key, param.Value)
                         Next
                     End If
 
-                    ' Execute and return new identity value
                     Dim result = cmd.ExecuteScalar()
-                    If result IsNot Nothing AndAlso IsNumeric(result) Then
-                        newID = Convert.ToInt32(result)
+                    If result IsNot Nothing Then
+                        newID = result.ToString()
                     End If
                 End Using
             End Using
-
         Catch ex As Exception
             Console.WriteLine("Error (Insert): " & ex.Message)
         End Try
 
         Return newID
     End Function
+
 
     ' UPDATE FUNCTION (Return affected rows)
     Public Shared Function ExecuteUpdate(ByVal query As String, Optional ByVal parameters As Dictionary(Of String, Object) = Nothing) As Integer

@@ -22,6 +22,8 @@ Public Class FrmMain
         ApplyFlatStyle(SideBarFICO.Elements)
         ApplyFlatStyle(SideBarMaintenace.Elements)
 
+
+        Lbluser.Text = GstrUselogin
     End Sub
 
 #Region "Main GUI Design"
@@ -169,7 +171,7 @@ Public Class FrmMain
 
     Private Sub ShowUserInfo()
         Dim popup As New FrmAdminInfo With {
-            .Size = New Size(309, 245)
+            .Size = New Size(309, 270)
         }
         Dim pt As Point = Me.PointToScreen(New Point(PnlBRight.Right - popup.Width, PnlTopHeader.Bottom))
         popup.StartPosition = FormStartPosition.Manual
@@ -177,8 +179,6 @@ Public Class FrmMain
 
         popup.Show(Me)
     End Sub
-
-
 #End Region
 
 #Region "Finacial Statement"
@@ -228,6 +228,10 @@ Public Class FrmMain
     Private Sub BtnAnnxB_Gen_Click(sender As Object, e As EventArgs) Handles BtnAnnxB_Gen.Click
         Gbl_ReportTag = 4
         TabMenu(Me, New CtrAnnexB, "Generate Annex B")
+    End Sub
+
+    Private Sub CreateAccount_Click(sender As Object, e As EventArgs) Handles CreateAccount.Click
+        TabMenu(Me, New CtrCreateAccount, "Create Account")
     End Sub
 
 

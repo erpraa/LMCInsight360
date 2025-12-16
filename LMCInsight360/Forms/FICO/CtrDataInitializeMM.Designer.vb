@@ -22,40 +22,41 @@ Partial Class CtrDataInitializeMM
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.btnBrowse = New LMCInsight360.RoundedButton()
-        Me.btnUpload = New LMCInsight360.RoundedButton()
+        Me.BtnBrowse = New LMCInsight360.RoundedButton()
+        Me.BtnUpload = New LMCInsight360.RoundedButton()
         Me.GridControl1 = New DevExpress.XtraGrid.GridControl()
         Me.GridView1 = New DevExpress.XtraGrid.Views.Grid.GridView()
-        Me.txtFilePath = New System.Windows.Forms.TextBox()
+        Me.TxtFilePath = New System.Windows.Forms.TextBox()
+        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         CType(Me.GridControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'btnBrowse
+        'BtnBrowse
         '
-        Me.btnBrowse.BackColor = System.Drawing.Color.FromArgb(CType(CType(108, Byte), Integer), CType(CType(117, Byte), Integer), CType(CType(125, Byte), Integer))
-        Me.btnBrowse.FlatAppearance.BorderSize = 0
-        Me.btnBrowse.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnBrowse.ForeColor = System.Drawing.Color.White
-        Me.btnBrowse.Location = New System.Drawing.Point(664, 417)
-        Me.btnBrowse.Name = "btnBrowse"
-        Me.btnBrowse.Size = New System.Drawing.Size(142, 30)
-        Me.btnBrowse.TabIndex = 55
-        Me.btnBrowse.Text = "Browse"
-        Me.btnBrowse.UseVisualStyleBackColor = False
+        Me.BtnBrowse.BackColor = System.Drawing.Color.FromArgb(CType(CType(108, Byte), Integer), CType(CType(117, Byte), Integer), CType(CType(125, Byte), Integer))
+        Me.BtnBrowse.FlatAppearance.BorderSize = 0
+        Me.BtnBrowse.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnBrowse.ForeColor = System.Drawing.Color.White
+        Me.BtnBrowse.Location = New System.Drawing.Point(664, 417)
+        Me.BtnBrowse.Name = "BtnBrowse"
+        Me.BtnBrowse.Size = New System.Drawing.Size(142, 30)
+        Me.BtnBrowse.TabIndex = 55
+        Me.BtnBrowse.Text = "Browse"
+        Me.BtnBrowse.UseVisualStyleBackColor = False
         '
-        'btnUpload
+        'BtnUpload
         '
-        Me.btnUpload.BackColor = System.Drawing.Color.DodgerBlue
-        Me.btnUpload.FlatAppearance.BorderSize = 0
-        Me.btnUpload.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnUpload.ForeColor = System.Drawing.Color.White
-        Me.btnUpload.Location = New System.Drawing.Point(812, 417)
-        Me.btnUpload.Name = "btnUpload"
-        Me.btnUpload.Size = New System.Drawing.Size(140, 30)
-        Me.btnUpload.TabIndex = 57
-        Me.btnUpload.Text = "Upload"
-        Me.btnUpload.UseVisualStyleBackColor = False
+        Me.BtnUpload.BackColor = System.Drawing.Color.DodgerBlue
+        Me.BtnUpload.FlatAppearance.BorderSize = 0
+        Me.BtnUpload.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnUpload.ForeColor = System.Drawing.Color.White
+        Me.BtnUpload.Location = New System.Drawing.Point(812, 417)
+        Me.BtnUpload.Name = "BtnUpload"
+        Me.BtnUpload.Size = New System.Drawing.Size(140, 30)
+        Me.BtnUpload.TabIndex = 57
+        Me.BtnUpload.Text = "Upload"
+        Me.BtnUpload.UseVisualStyleBackColor = False
         '
         'GridControl1
         '
@@ -77,23 +78,27 @@ Partial Class CtrDataInitializeMM
         Me.GridView1.OptionsSelection.EnableAppearanceFocusedCell = False
         Me.GridView1.OptionsView.ShowGroupPanel = False
         '
-        'txtFilePath
+        'TxtFilePath
         '
-        Me.txtFilePath.Location = New System.Drawing.Point(17, 417)
-        Me.txtFilePath.Multiline = True
-        Me.txtFilePath.Name = "txtFilePath"
-        Me.txtFilePath.Size = New System.Drawing.Size(623, 30)
-        Me.txtFilePath.TabIndex = 59
+        Me.TxtFilePath.Location = New System.Drawing.Point(17, 417)
+        Me.TxtFilePath.Multiline = True
+        Me.TxtFilePath.Name = "TxtFilePath"
+        Me.TxtFilePath.Size = New System.Drawing.Size(623, 30)
+        Me.TxtFilePath.TabIndex = 59
+        '
+        'OpenFileDialog1
+        '
+        Me.OpenFileDialog1.FileName = "OpenFileDialog1"
         '
         'CtrDataInitializeMM
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(234, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(246, Byte), Integer))
-        Me.Controls.Add(Me.txtFilePath)
+        Me.Controls.Add(Me.TxtFilePath)
         Me.Controls.Add(Me.GridControl1)
-        Me.Controls.Add(Me.btnUpload)
-        Me.Controls.Add(Me.btnBrowse)
+        Me.Controls.Add(Me.BtnUpload)
+        Me.Controls.Add(Me.BtnBrowse)
         Me.Name = "CtrDataInitializeMM"
         Me.Size = New System.Drawing.Size(996, 500)
         CType(Me.GridControl1, System.ComponentModel.ISupportInitialize).EndInit()
@@ -103,9 +108,10 @@ Partial Class CtrDataInitializeMM
 
     End Sub
 
-    Friend WithEvents btnBrowse As RoundedButton
-    Friend WithEvents btnUpload As RoundedButton
+    Friend WithEvents BtnBrowse As RoundedButton
+    Friend WithEvents BtnUpload As RoundedButton
     Friend WithEvents GridControl1 As DevExpress.XtraGrid.GridControl
     Friend WithEvents GridView1 As DevExpress.XtraGrid.Views.Grid.GridView
-    Friend WithEvents txtFilePath As TextBox
+    Friend WithEvents TxtFilePath As TextBox
+    Friend WithEvents OpenFileDialog1 As OpenFileDialog
 End Class
