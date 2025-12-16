@@ -9,4 +9,8 @@ Public Class FrmViewGL
         GridView1.OptionsView.ShowAutoFilterRow = False
 
     End Sub
+
+    Private Sub BtnNewGL_Click(sender As Object, e As EventArgs) Handles BtnNewGL.Click
+        ShowMaintenance()
+    End Sub
 End Class

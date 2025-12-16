@@ -98,6 +98,8 @@ Public Class CtrAnnexB
                     Generate_SEGAAE()
                 Case 3
                     Generate_RUFx_GainLoss()
+                Case 4
+                    ShowMaintenance()
             End Select
 
         End If

@@ -186,4 +186,7 @@ Public Class FrmLogin
         End If
     End Sub
 
+    Private Sub LblLinkDatabase_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LblLinkDatabase.LinkClicked
+        ShowMaintenance()
+    End Sub
 End Class

@@ -3,7 +3,6 @@
     Public SystemTitle As String = "LMC Insight360"
 
 
-
     'Global String
 
     Public GstrUseID As String = Nothing
@@ -26,5 +25,20 @@
     Public Const DollarFormat As String = "\$#,##0.00"
 
     Public Gbl_ReportTag As Integer = Nothing
+
+
+
+
+
+    Public Sub ShowMaintenance(Optional message As String = Nothing)
+        Dim defaultMessage As String = "We’re working on this feature. It will be available soon."
+
+        MessageBox.Show(
+            If(message, defaultMessage),
+            "System Maintenance",
+            MessageBoxButtons.OK,
+            MessageBoxIcon.Information
+        )
+    End Sub
 
 End Module

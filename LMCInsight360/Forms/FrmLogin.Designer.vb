@@ -21,7 +21,7 @@ Partial Class FrmLogin
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmLogin))
         Me.RPnlLeft = New LMCInsight360.RoundedPanel()
-        Me.lblLinkDatabase = New System.Windows.Forms.LinkLabel()
+        Me.LblLinkDatabase = New System.Windows.Forms.LinkLabel()
         Me.LblClose = New System.Windows.Forms.Label()
         Me.LblSignIn = New System.Windows.Forms.Label()
         Me.LblWelcome = New System.Windows.Forms.Label()
@@ -44,7 +44,7 @@ Partial Class FrmLogin
         'RPnlLeft
         '
         Me.RPnlLeft.BackColor = System.Drawing.Color.FromArgb(CType(CType(234, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(246, Byte), Integer))
-        Me.RPnlLeft.Controls.Add(Me.lblLinkDatabase)
+        Me.RPnlLeft.Controls.Add(Me.LblLinkDatabase)
         Me.RPnlLeft.Controls.Add(Me.LblClose)
         Me.RPnlLeft.Controls.Add(Me.LblSignIn)
         Me.RPnlLeft.Controls.Add(Me.LblWelcome)
@@ -57,18 +57,18 @@ Partial Class FrmLogin
         Me.RPnlLeft.Size = New System.Drawing.Size(380, 500)
         Me.RPnlLeft.TabIndex = 49
         '
-        'lblLinkDatabase
+        'LblLinkDatabase
         '
-        Me.lblLinkDatabase.ActiveLinkColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(184, Byte), Integer))
-        Me.lblLinkDatabase.Font = New System.Drawing.Font("Century Gothic", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblLinkDatabase.LinkColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(184, Byte), Integer))
-        Me.lblLinkDatabase.Location = New System.Drawing.Point(96, 359)
-        Me.lblLinkDatabase.Name = "lblLinkDatabase"
-        Me.lblLinkDatabase.Size = New System.Drawing.Size(189, 24)
-        Me.lblLinkDatabase.TabIndex = 56
-        Me.lblLinkDatabase.TabStop = True
-        Me.lblLinkDatabase.Text = "🔗 Connect to Database"
-        Me.lblLinkDatabase.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.LblLinkDatabase.ActiveLinkColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(184, Byte), Integer))
+        Me.LblLinkDatabase.Font = New System.Drawing.Font("Century Gothic", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LblLinkDatabase.LinkColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(184, Byte), Integer))
+        Me.LblLinkDatabase.Location = New System.Drawing.Point(96, 359)
+        Me.LblLinkDatabase.Name = "LblLinkDatabase"
+        Me.LblLinkDatabase.Size = New System.Drawing.Size(189, 24)
+        Me.LblLinkDatabase.TabIndex = 56
+        Me.LblLinkDatabase.TabStop = True
+        Me.LblLinkDatabase.Text = "🔗 Connect to Database"
+        Me.LblLinkDatabase.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'LblClose
         '
@@ -149,9 +149,9 @@ Partial Class FrmLogin
         Me.BtnLogin.FlatAppearance.BorderSize = 0
         Me.BtnLogin.Font = New System.Drawing.Font("Segoe UI Semibold", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BtnLogin.ForeColor = System.Drawing.Color.White
-        Me.BtnLogin.Location = New System.Drawing.Point(120, 291)
+        Me.BtnLogin.Location = New System.Drawing.Point(122, 294)
         Me.BtnLogin.Name = "BtnLogin"
-        Me.BtnLogin.Size = New System.Drawing.Size(150, 36)
+        Me.BtnLogin.Size = New System.Drawing.Size(140, 35)
         Me.BtnLogin.TabIndex = 46
         Me.BtnLogin.Text = "LOGIN"
         Me.BtnLogin.UseVisualStyleBackColor = False
@@ -248,7 +248,7 @@ Partial Class FrmLogin
     Friend WithEvents LblInsight As Label
     Friend WithEvents LblLmc As Label
     Friend WithEvents LblClose As Label
-    Friend WithEvents lblLinkDatabase As LinkLabel
+    Friend WithEvents LblLinkDatabase As LinkLabel
     Friend WithEvents TxtUsername As DevExpress.XtraEditors.TextEdit
     Friend WithEvents TxtPassword As DevExpress.XtraEditors.TextEdit
 End Class

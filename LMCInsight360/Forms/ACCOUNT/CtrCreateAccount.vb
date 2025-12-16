@@ -76,7 +76,7 @@ Public Class CtrCreateAccount
         End Try
     End Sub
 
-    Private Sub TxtName_EditValueChanged(sender As Object, e As EventArgs) Handles TxtName.EditValueChanged
-
+    Private Sub TxtName_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TxtName.KeyPress
+        e.KeyChar = Char.ToUpper(e.KeyChar)
     End Sub
 End Class

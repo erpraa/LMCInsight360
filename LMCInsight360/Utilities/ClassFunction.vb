@@ -1,6 +1,6 @@
-﻿
-Imports DevExpress.XtraBars.Docking2010.Views
+﻿Imports DevExpress.XtraBars.Docking2010.Views
 Imports System.Data.SqlClient
+Imports System.Deployment.Application
 Public Class ClassFunction
 #Region "FrmMain"
     Public Shared Function CheckifTabExists(tabtext As String) As Boolean
@@ -18,6 +18,16 @@ Public Class ClassFunction
 #End Region
 
 #Region "Get Function"
+
+    Public Shared Function GetPublishVersion() As String
+        If ApplicationDeployment.IsNetworkDeployed Then
+            Dim version As Version = ApplicationDeployment.CurrentDeployment.CurrentVersion
+            Return version.ToString()
+        Else
+            Return ""
+        End If
+    End Function
+
     Public Shared Function GetServerDate() As DateTime
         Dim serverDate As DateTime
 

@@ -1,4 +1,5 @@
-﻿Public Class FrmAdminInfo
+﻿Imports LMCInsight360.ClassFunction
+Public Class FrmAdminInfo
     Private Sub FrmAdminInfo_Deactivate(sender As Object, e As EventArgs) Handles Me.Deactivate
         Me.Close()
     End Sub
@@ -10,7 +11,7 @@
         LblReportServer.Text = strServerName
         LblCasServer.Text = DispCasConnect
         LblResServer.Text = DispResConnect
-
+        LblVersion.Text = "Version: " & GetPublishVersion()
     End Sub
 
 End Class

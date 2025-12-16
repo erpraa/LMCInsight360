@@ -41,19 +41,6 @@ Partial Class FrmMain
         Me.PnlBLeft = New DevExpress.XtraEditors.SidePanel()
         Me.PnlLeft = New LMCInsight360.RoundedPanel()
         Me.PnlLeftBody = New DevExpress.XtraEditors.SidePanel()
-        Me.SideBarMaintenace = New DevExpress.XtraBars.Navigation.AccordionControl()
-        Me.CreateAccount = New DevExpress.XtraBars.Navigation.AccordionControlElement()
-        Me.AccordionControlElement19 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
-        Me.AccordionControlElement20 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
-        Me.SideBarSD = New DevExpress.XtraBars.Navigation.AccordionControl()
-        Me.AccordionControlElement10 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
-        Me.AccordionControlElement12 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
-        Me.AccordionControlElement13 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
-        Me.AccordionControlElement14 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
-        Me.AccordionControlElement15 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
-        Me.AccordionControlElement16 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
-        Me.AccordionControlElement17 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
-        Me.AccordionControlElement18 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.SideBarFICO = New DevExpress.XtraBars.Navigation.AccordionControl()
         Me.AccordionControlElement1 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.AccordionControlElement4 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
@@ -70,6 +57,19 @@ Partial Class FrmMain
         Me.AccordionControlElement2 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.BtnDataInitializedFI = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.BtnDataInitializedMM = New DevExpress.XtraBars.Navigation.AccordionControlElement()
+        Me.SideBarMaintenace = New DevExpress.XtraBars.Navigation.AccordionControl()
+        Me.CreateAccount = New DevExpress.XtraBars.Navigation.AccordionControlElement()
+        Me.AccordionControlElement19 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
+        Me.AccordionControlElement20 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
+        Me.SideBarSD = New DevExpress.XtraBars.Navigation.AccordionControl()
+        Me.AccordionControlElement10 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
+        Me.AccordionControlElement12 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
+        Me.AccordionControlElement13 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
+        Me.AccordionControlElement14 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
+        Me.AccordionControlElement15 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
+        Me.AccordionControlElement16 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
+        Me.AccordionControlElement17 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
+        Me.AccordionControlElement18 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.PnlLeftHeader = New DevExpress.XtraEditors.SidePanel()
         Me.PnlIRight = New DevExpress.XtraEditors.SidePanel()
         Me.PnlILeft = New DevExpress.XtraEditors.SidePanel()
@@ -83,9 +83,9 @@ Partial Class FrmMain
         Me.PnlMainBtn.SuspendLayout()
         Me.PnlLeft.SuspendLayout()
         Me.PnlLeftBody.SuspendLayout()
+        CType(Me.SideBarFICO, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SideBarMaintenace, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SideBarSD, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.SideBarFICO, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DocumentManager1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TabbedView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -354,100 +354,15 @@ Partial Class FrmMain
         Me.PnlLeftBody.Appearance.BackColor = System.Drawing.Color.Transparent
         Me.PnlLeftBody.Appearance.Options.UseBackColor = True
         Me.PnlLeftBody.BorderThickness = 0
+        Me.PnlLeftBody.Controls.Add(Me.SideBarFICO)
         Me.PnlLeftBody.Controls.Add(Me.SideBarMaintenace)
         Me.PnlLeftBody.Controls.Add(Me.SideBarSD)
-        Me.PnlLeftBody.Controls.Add(Me.SideBarFICO)
         Me.PnlLeftBody.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PnlLeftBody.Location = New System.Drawing.Point(15, 128)
         Me.PnlLeftBody.Name = "PnlLeftBody"
         Me.PnlLeftBody.Size = New System.Drawing.Size(284, 525)
         Me.PnlLeftBody.TabIndex = 2
         Me.PnlLeftBody.Text = "SidePanel3"
-        '
-        'SideBarMaintenace
-        '
-        Me.SideBarMaintenace.Appearance.AccordionControl.BackColor = System.Drawing.Color.FromArgb(CType(CType(185, Byte), Integer), CType(CType(206, Byte), Integer), CType(CType(223, Byte), Integer))
-        Me.SideBarMaintenace.Appearance.AccordionControl.Options.UseBackColor = True
-        Me.SideBarMaintenace.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SideBarMaintenace.Elements.AddRange(New DevExpress.XtraBars.Navigation.AccordionControlElement() {Me.CreateAccount, Me.AccordionControlElement19, Me.AccordionControlElement20})
-        Me.SideBarMaintenace.Location = New System.Drawing.Point(0, 0)
-        Me.SideBarMaintenace.Name = "SideBarMaintenace"
-        Me.SideBarMaintenace.OptionsMinimizing.AllowMinimizeMode = DevExpress.Utils.DefaultBoolean.[False]
-        Me.SideBarMaintenace.ScrollBarMode = DevExpress.XtraBars.Navigation.ScrollBarMode.Hidden
-        Me.SideBarMaintenace.ShowFilterControl = DevExpress.XtraBars.Navigation.ShowFilterControl.Always
-        Me.SideBarMaintenace.Size = New System.Drawing.Size(284, 525)
-        Me.SideBarMaintenace.TabIndex = 1
-        Me.SideBarMaintenace.Text = "AccordionControl2"
-        '
-        'CreateAccount
-        '
-        Me.CreateAccount.Name = "CreateAccount"
-        Me.CreateAccount.Text = "🔐  Create Account"
-        '
-        'AccordionControlElement19
-        '
-        Me.AccordionControlElement19.Name = "AccordionControlElement19"
-        Me.AccordionControlElement19.Text = "👤  User Access"
-        '
-        'AccordionControlElement20
-        '
-        Me.AccordionControlElement20.Name = "AccordionControlElement20"
-        Me.AccordionControlElement20.Text = "💡  About"
-        '
-        'SideBarSD
-        '
-        Me.SideBarSD.Appearance.AccordionControl.BackColor = System.Drawing.Color.FromArgb(CType(CType(185, Byte), Integer), CType(CType(206, Byte), Integer), CType(CType(223, Byte), Integer))
-        Me.SideBarSD.Appearance.AccordionControl.Options.UseBackColor = True
-        Me.SideBarSD.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SideBarSD.Elements.AddRange(New DevExpress.XtraBars.Navigation.AccordionControlElement() {Me.AccordionControlElement10, Me.AccordionControlElement12, Me.AccordionControlElement13, Me.AccordionControlElement14, Me.AccordionControlElement15, Me.AccordionControlElement16, Me.AccordionControlElement17, Me.AccordionControlElement18})
-        Me.SideBarSD.Location = New System.Drawing.Point(0, 0)
-        Me.SideBarSD.Name = "SideBarSD"
-        Me.SideBarSD.OptionsMinimizing.AllowMinimizeMode = DevExpress.Utils.DefaultBoolean.[False]
-        Me.SideBarSD.ScrollBarMode = DevExpress.XtraBars.Navigation.ScrollBarMode.Hidden
-        Me.SideBarSD.ShowFilterControl = DevExpress.XtraBars.Navigation.ShowFilterControl.Always
-        Me.SideBarSD.Size = New System.Drawing.Size(284, 525)
-        Me.SideBarSD.TabIndex = 0
-        Me.SideBarSD.Text = "AccordionControl1"
-        '
-        'AccordionControlElement10
-        '
-        Me.AccordionControlElement10.Name = "AccordionControlElement10"
-        Me.AccordionControlElement10.Text = "📇  Master Data"
-        '
-        'AccordionControlElement12
-        '
-        Me.AccordionControlElement12.Name = "AccordionControlElement12"
-        Me.AccordionControlElement12.Text = "📊  Sales Percentage"
-        '
-        'AccordionControlElement13
-        '
-        Me.AccordionControlElement13.Name = "AccordionControlElement13"
-        Me.AccordionControlElement13.Text = "🤵  Top Management"
-        '
-        'AccordionControlElement14
-        '
-        Me.AccordionControlElement14.Name = "AccordionControlElement14"
-        Me.AccordionControlElement14.Text = "💰  Acctg Department"
-        '
-        'AccordionControlElement15
-        '
-        Me.AccordionControlElement15.Name = "AccordionControlElement15"
-        Me.AccordionControlElement15.Text = "🛒  Sales Department"
-        '
-        'AccordionControlElement16
-        '
-        Me.AccordionControlElement16.Name = "AccordionControlElement16"
-        Me.AccordionControlElement16.Text = "🪙  Tax Department"
-        '
-        'AccordionControlElement17
-        '
-        Me.AccordionControlElement17.Name = "AccordionControlElement17"
-        Me.AccordionControlElement17.Text = "💹  Mktg Department"
-        '
-        'AccordionControlElement18
-        '
-        Me.AccordionControlElement18.Name = "AccordionControlElement18"
-        Me.AccordionControlElement18.Text = "📑  Other Report"
         '
         'SideBarFICO
         '
@@ -560,6 +475,91 @@ Partial Class FrmMain
         Me.BtnDataInitializedMM.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item
         Me.BtnDataInitializedMM.Text = "🏷️  Data Initialized -MM"
         '
+        'SideBarMaintenace
+        '
+        Me.SideBarMaintenace.Appearance.AccordionControl.BackColor = System.Drawing.Color.FromArgb(CType(CType(185, Byte), Integer), CType(CType(206, Byte), Integer), CType(CType(223, Byte), Integer))
+        Me.SideBarMaintenace.Appearance.AccordionControl.Options.UseBackColor = True
+        Me.SideBarMaintenace.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SideBarMaintenace.Elements.AddRange(New DevExpress.XtraBars.Navigation.AccordionControlElement() {Me.CreateAccount, Me.AccordionControlElement19, Me.AccordionControlElement20})
+        Me.SideBarMaintenace.Location = New System.Drawing.Point(0, 0)
+        Me.SideBarMaintenace.Name = "SideBarMaintenace"
+        Me.SideBarMaintenace.OptionsMinimizing.AllowMinimizeMode = DevExpress.Utils.DefaultBoolean.[False]
+        Me.SideBarMaintenace.ScrollBarMode = DevExpress.XtraBars.Navigation.ScrollBarMode.Hidden
+        Me.SideBarMaintenace.ShowFilterControl = DevExpress.XtraBars.Navigation.ShowFilterControl.Always
+        Me.SideBarMaintenace.Size = New System.Drawing.Size(284, 525)
+        Me.SideBarMaintenace.TabIndex = 1
+        Me.SideBarMaintenace.Text = "AccordionControl2"
+        '
+        'CreateAccount
+        '
+        Me.CreateAccount.Name = "CreateAccount"
+        Me.CreateAccount.Text = "🔐  Create Account"
+        '
+        'AccordionControlElement19
+        '
+        Me.AccordionControlElement19.Name = "AccordionControlElement19"
+        Me.AccordionControlElement19.Text = "👤  User Access"
+        '
+        'AccordionControlElement20
+        '
+        Me.AccordionControlElement20.Name = "AccordionControlElement20"
+        Me.AccordionControlElement20.Text = "💡  About"
+        '
+        'SideBarSD
+        '
+        Me.SideBarSD.Appearance.AccordionControl.BackColor = System.Drawing.Color.FromArgb(CType(CType(185, Byte), Integer), CType(CType(206, Byte), Integer), CType(CType(223, Byte), Integer))
+        Me.SideBarSD.Appearance.AccordionControl.Options.UseBackColor = True
+        Me.SideBarSD.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SideBarSD.Elements.AddRange(New DevExpress.XtraBars.Navigation.AccordionControlElement() {Me.AccordionControlElement10, Me.AccordionControlElement12, Me.AccordionControlElement13, Me.AccordionControlElement14, Me.AccordionControlElement15, Me.AccordionControlElement16, Me.AccordionControlElement17, Me.AccordionControlElement18})
+        Me.SideBarSD.Location = New System.Drawing.Point(0, 0)
+        Me.SideBarSD.Name = "SideBarSD"
+        Me.SideBarSD.OptionsMinimizing.AllowMinimizeMode = DevExpress.Utils.DefaultBoolean.[False]
+        Me.SideBarSD.ScrollBarMode = DevExpress.XtraBars.Navigation.ScrollBarMode.Hidden
+        Me.SideBarSD.ShowFilterControl = DevExpress.XtraBars.Navigation.ShowFilterControl.Always
+        Me.SideBarSD.Size = New System.Drawing.Size(284, 525)
+        Me.SideBarSD.TabIndex = 0
+        Me.SideBarSD.Text = "AccordionControl1"
+        '
+        'AccordionControlElement10
+        '
+        Me.AccordionControlElement10.Name = "AccordionControlElement10"
+        Me.AccordionControlElement10.Text = "📇  Master Data"
+        '
+        'AccordionControlElement12
+        '
+        Me.AccordionControlElement12.Name = "AccordionControlElement12"
+        Me.AccordionControlElement12.Text = "📊  Sales Percentage"
+        '
+        'AccordionControlElement13
+        '
+        Me.AccordionControlElement13.Name = "AccordionControlElement13"
+        Me.AccordionControlElement13.Text = "🤵  Top Management"
+        '
+        'AccordionControlElement14
+        '
+        Me.AccordionControlElement14.Name = "AccordionControlElement14"
+        Me.AccordionControlElement14.Text = "💰  Acctg Department"
+        '
+        'AccordionControlElement15
+        '
+        Me.AccordionControlElement15.Name = "AccordionControlElement15"
+        Me.AccordionControlElement15.Text = "🛒  Sales Department"
+        '
+        'AccordionControlElement16
+        '
+        Me.AccordionControlElement16.Name = "AccordionControlElement16"
+        Me.AccordionControlElement16.Text = "🪙  Tax Department"
+        '
+        'AccordionControlElement17
+        '
+        Me.AccordionControlElement17.Name = "AccordionControlElement17"
+        Me.AccordionControlElement17.Text = "💹  Mktg Department"
+        '
+        'AccordionControlElement18
+        '
+        Me.AccordionControlElement18.Name = "AccordionControlElement18"
+        Me.AccordionControlElement18.Text = "📑  Other Report"
+        '
         'PnlLeftHeader
         '
         Me.PnlLeftHeader.AllowResize = False
@@ -646,9 +646,9 @@ Partial Class FrmMain
         Me.PnlMainBtn.ResumeLayout(False)
         Me.PnlLeft.ResumeLayout(False)
         Me.PnlLeftBody.ResumeLayout(False)
+        CType(Me.SideBarFICO, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.SideBarMaintenace, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.SideBarSD, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.SideBarFICO, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DocumentManager1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TabbedView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)

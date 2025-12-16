@@ -11,7 +11,7 @@
 
 Imports LMCInsight360.ClassDesign
 Imports LMCInsight360.SubClass
-
+Imports LMCInsight360.ClassFunction
 Public Class FrmMain
 
     Private Sub FrmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -23,7 +23,8 @@ Public Class FrmMain
         ApplyFlatStyle(SideBarMaintenace.Elements)
 
 
-        Lbluser.Text = GstrUselogin
+
+        Lbluser.Text = StrConv(GstrUselogin, VbStrConv.ProperCase)
     End Sub
 
 #Region "Main GUI Design"
@@ -234,10 +235,54 @@ Public Class FrmMain
         TabMenu(Me, New CtrCreateAccount, "Create Account")
     End Sub
 
+    Private Sub AccordionControlElement19_Click(sender As Object, e As EventArgs) Handles AccordionControlElement19.Click
+        ShowMaintenance()
+    End Sub
 
+    Private Sub AccordionControlElement20_Click(sender As Object, e As EventArgs) Handles AccordionControlElement20.Click
+        ShowMaintenance()
+    End Sub
 
+    Private Sub AccordionControlElement10_Click(sender As Object, e As EventArgs) Handles AccordionControlElement10.Click
+        ShowMaintenance()
+    End Sub
 
+    Private Sub AccordionControlElement12_Click(sender As Object, e As EventArgs) Handles AccordionControlElement12.Click
+        ShowMaintenance()
+    End Sub
 
+    Private Sub AccordionControlElement13_Click(sender As Object, e As EventArgs) Handles AccordionControlElement13.Click
+        ShowMaintenance()
+    End Sub
+
+    Private Sub AccordionControlElement14_Click(sender As Object, e As EventArgs) Handles AccordionControlElement14.Click
+        ShowMaintenance()
+    End Sub
+
+    Private Sub AccordionControlElement15_Click(sender As Object, e As EventArgs) Handles AccordionControlElement15.Click
+        ShowMaintenance()
+    End Sub
+
+    Private Sub AccordionControlElement16_Click(sender As Object, e As EventArgs) Handles AccordionControlElement16.Click
+        ShowMaintenance()
+    End Sub
+
+    Private Sub AccordionControlElement17_Click(sender As Object, e As EventArgs) Handles AccordionControlElement17.Click
+        ShowMaintenance()
+    End Sub
+
+    Private Sub AccordionControlElement18_Click(sender As Object, e As EventArgs) Handles AccordionControlElement18.Click
+        ShowMaintenance()
+    End Sub
+
+    Private Sub AccordionControlElement6_Click(sender As Object, e As EventArgs) Handles AccordionControlElement6.Click
+        ShowMaintenance()
+    End Sub
+
+    Private Sub FrmMain_Disposed(sender As Object, e As EventArgs) Handles Me.Disposed
+        UpdateLoginStatus(GstrUseID, False)
+        FrmLogin.Close()
+    End Sub
 
 
 #End Region

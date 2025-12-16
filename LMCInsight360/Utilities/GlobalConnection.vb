@@ -2,13 +2,15 @@
 Imports LMCInsight360.CryptoEngine
 Module GlobalConnection
 
-    'Public strServerName, strUser, strPassword, strDatabase, SqlConnect1 As String
+    'Public strServerName, strUser, strPassword, strDatabase, SqlConnect As String
 
-    'Public SqlConnect As String = "Server=Localhost;Database=LMCMSTRPT;User Id=sa;Password=wasad123;"
-    Public SqlConnect As String = "Server=Localhost;Database=LMCMSTRPT;Integrated Security=True;TrustServerCertificate=True"
+    'Temporary only
+    Public strServerName = "192.168.200.90"
+    Public strUser = "sa"
+    Public strPassword = "LmcNa01"
+    Public strDatabase = "LMCMSTRPT"
 
-    Public strServerName = "LOCALHOST" 'Temporary only
-    Public strDatabase = "LMCMSTRPT" 'Temporary only
+    Public SqlConnect = $"Data Source='{strServerName}';User ID='{strUser}';password='{strPassword}';Initial Catalog='{strDatabase}';MultipleActiveResultSets=True"
 
     Public CasConnect As String = GetConnectionString("L4P")
     Public ResConnect As String = GetConnectionString("LRP")
