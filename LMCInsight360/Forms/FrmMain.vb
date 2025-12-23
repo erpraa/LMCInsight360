@@ -284,18 +284,6 @@ Public Class FrmMain
         FrmLogin.Close()
     End Sub
 
-    Private Sub FrmMain_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-
-        Dim result = MessageBox.Show("Are you sure you want to exit?", "Confirm Exit",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question
-            )
-
-        If result = DialogResult.No Then
-            e.Cancel = True
-        End If
-    End Sub
-
 
 #End Region
 

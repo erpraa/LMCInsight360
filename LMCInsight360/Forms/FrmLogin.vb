@@ -3,17 +3,9 @@ Imports LMCInsight360.ClassFunction
 Imports LMCInsight360.CryptoEngine
 
 Public Class FrmLogin
-
-    Private m_blnConn As Boolean = False
-
     Private Sub FrmLogin_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         TxtUsername.Properties.NullText = "Username"
         TxtPassword.Properties.NullText = "Password"
-        LblVersion.Text = "Version: " & GetPublishVersion()
-
-        Me.AcceptButton = BtnLogin
-
-        PnlSelectConn.Hide()
     End Sub
 
     Private Sub BtnLogin_Click(sender As Object, e As EventArgs) Handles BtnLogin.Click
@@ -193,22 +185,8 @@ Public Class FrmLogin
             TxtPassword.Properties.UseSystemPasswordChar = False
         End If
     End Sub
-    Private Sub ChkShowPass_CheckedChanged(sender As Object, e As EventArgs) Handles ChkShowPass.CheckedChanged
-        If TxtPassword.EditValue <> "" Then
-            If ChkShowPass.Checked Then
-                TxtPassword.Properties.UseSystemPasswordChar = False
-            Else
-                TxtPassword.Properties.UseSystemPasswordChar = True
-            End If
-        End If
-    End Sub
 
     Private Sub LblLinkDatabase_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LblLinkDatabase.LinkClicked
-        m_blnConn = Not m_blnConn
-        PnlSelectConn.Visible = m_blnConn
-    End Sub
-
-    Private Sub RPnlLeft_Paint(sender As Object, e As PaintEventArgs) Handles RPnlLeft.Paint
-
+        ShowMaintenance()
     End Sub
 End Class

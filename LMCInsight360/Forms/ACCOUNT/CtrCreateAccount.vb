@@ -3,12 +3,6 @@ Imports LMCInsight360.SubQuery
 Imports LMCInsight360.CryptoEngine
 
 Public Class CtrCreateAccount
-
-    Private Sub CtrCreateAccount_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        TxtPass.Properties.UseSystemPasswordChar = True
-        TxtRepass.Properties.UseSystemPasswordChar = True
-    End Sub
-
     Private Sub ChkShowpass_CheckedChanged(sender As Object, e As EventArgs) Handles ChkShowpass.CheckedChanged
         If ChkShowpass.Checked Then
             TxtPass.Properties.UseSystemPasswordChar = False
@@ -17,6 +11,10 @@ Public Class CtrCreateAccount
             TxtPass.Properties.UseSystemPasswordChar = True
             TxtRepass.Properties.UseSystemPasswordChar = True
         End If
+    End Sub
+
+    Private Sub CtrCreateAccount_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
     End Sub
 
     Sub ClearText()

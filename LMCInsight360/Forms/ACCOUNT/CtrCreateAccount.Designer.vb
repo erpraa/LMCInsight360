@@ -161,7 +161,7 @@ Partial Class CtrCreateAccount
         Me.ChkShowpass.AutoSize = True
         Me.ChkShowpass.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ChkShowpass.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.ChkShowpass.Location = New System.Drawing.Point(187, 212)
+        Me.ChkShowpass.Location = New System.Drawing.Point(187, 224)
         Me.ChkShowpass.Name = "ChkShowpass"
         Me.ChkShowpass.Size = New System.Drawing.Size(132, 24)
         Me.ChkShowpass.TabIndex = 58
