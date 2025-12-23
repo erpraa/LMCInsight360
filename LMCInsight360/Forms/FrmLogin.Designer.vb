@@ -21,6 +21,11 @@ Partial Class FrmLogin
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmLogin))
         Me.RPnlLeft = New LMCInsight360.RoundedPanel()
+        Me.PnlSelectConn = New System.Windows.Forms.Panel()
+        Me.ComboBoxEdit1 = New DevExpress.XtraEditors.ComboBoxEdit()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.lblAddConnection = New System.Windows.Forms.Label()
+        Me.ChkShowPass = New System.Windows.Forms.CheckBox()
         Me.LblLinkDatabase = New System.Windows.Forms.LinkLabel()
         Me.LblClose = New System.Windows.Forms.Label()
         Me.LblSignIn = New System.Windows.Forms.Label()
@@ -30,11 +35,14 @@ Partial Class FrmLogin
         Me.TxtPassword = New DevExpress.XtraEditors.TextEdit()
         Me.BtnLogin = New LMCInsight360.RoundedButton()
         Me.RPnlRight = New LMCInsight360.RoundedPanel()
+        Me.LblVersion = New DevExpress.XtraEditors.LabelControl()
         Me.LblInsight = New System.Windows.Forms.Label()
         Me.LblLmc = New System.Windows.Forms.Label()
         Me.LblCopyright = New DevExpress.XtraEditors.LabelControl()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.RPnlLeft.SuspendLayout()
+        Me.PnlSelectConn.SuspendLayout()
+        CType(Me.ComboBoxEdit1.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
         CType(Me.TxtUsername.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TxtPassword.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -44,6 +52,8 @@ Partial Class FrmLogin
         'RPnlLeft
         '
         Me.RPnlLeft.BackColor = System.Drawing.Color.FromArgb(CType(CType(234, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(246, Byte), Integer))
+        Me.RPnlLeft.Controls.Add(Me.PnlSelectConn)
+        Me.RPnlLeft.Controls.Add(Me.ChkShowPass)
         Me.RPnlLeft.Controls.Add(Me.LblLinkDatabase)
         Me.RPnlLeft.Controls.Add(Me.LblClose)
         Me.RPnlLeft.Controls.Add(Me.LblSignIn)
@@ -57,12 +67,70 @@ Partial Class FrmLogin
         Me.RPnlLeft.Size = New System.Drawing.Size(380, 500)
         Me.RPnlLeft.TabIndex = 49
         '
+        'PnlSelectConn
+        '
+        Me.PnlSelectConn.Controls.Add(Me.ComboBoxEdit1)
+        Me.PnlSelectConn.Controls.Add(Me.Label1)
+        Me.PnlSelectConn.Controls.Add(Me.lblAddConnection)
+        Me.PnlSelectConn.Location = New System.Drawing.Point(36, 409)
+        Me.PnlSelectConn.Name = "PnlSelectConn"
+        Me.PnlSelectConn.Size = New System.Drawing.Size(310, 43)
+        Me.PnlSelectConn.TabIndex = 59
+        '
+        'ComboBoxEdit1
+        '
+        Me.ComboBoxEdit1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.ComboBoxEdit1.Location = New System.Drawing.Point(36, 0)
+        Me.ComboBoxEdit1.Name = "ComboBoxEdit1"
+        Me.ComboBoxEdit1.Properties.Appearance.Font = New System.Drawing.Font("Segoe UI", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ComboBoxEdit1.Properties.Appearance.Options.UseFont = True
+        Me.ComboBoxEdit1.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.ComboBoxEdit1.Properties.EditValueChangedFiringMode = DevExpress.XtraEditors.Controls.EditValueChangedFiringMode.Buffered
+        Me.ComboBoxEdit1.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor
+        Me.ComboBoxEdit1.Size = New System.Drawing.Size(235, 30)
+        Me.ComboBoxEdit1.TabIndex = 29
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Label1.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.ForeColor = System.Drawing.Color.LightSeaGreen
+        Me.Label1.Location = New System.Drawing.Point(271, 0)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(39, 28)
+        Me.Label1.TabIndex = 61
+        Me.Label1.Text = "🌐"
+        '
+        'lblAddConnection
+        '
+        Me.lblAddConnection.AutoSize = True
+        Me.lblAddConnection.Dock = System.Windows.Forms.DockStyle.Left
+        Me.lblAddConnection.Font = New System.Drawing.Font("Segoe UI", 13.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblAddConnection.ForeColor = System.Drawing.Color.Red
+        Me.lblAddConnection.Location = New System.Drawing.Point(0, 0)
+        Me.lblAddConnection.Name = "lblAddConnection"
+        Me.lblAddConnection.Size = New System.Drawing.Size(36, 32)
+        Me.lblAddConnection.TabIndex = 28
+        Me.lblAddConnection.Text = "✚"
+        '
+        'ChkShowPass
+        '
+        Me.ChkShowPass.AutoSize = True
+        Me.ChkShowPass.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.ChkShowPass.Location = New System.Drawing.Point(60, 270)
+        Me.ChkShowPass.Name = "ChkShowPass"
+        Me.ChkShowPass.Size = New System.Drawing.Size(126, 23)
+        Me.ChkShowPass.TabIndex = 58
+        Me.ChkShowPass.Text = "Show Password"
+        Me.ChkShowPass.UseVisualStyleBackColor = True
+        '
         'LblLinkDatabase
         '
         Me.LblLinkDatabase.ActiveLinkColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(184, Byte), Integer))
         Me.LblLinkDatabase.Font = New System.Drawing.Font("Century Gothic", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblLinkDatabase.LinkColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(184, Byte), Integer))
-        Me.LblLinkDatabase.Location = New System.Drawing.Point(92, 358)
+        Me.LblLinkDatabase.Location = New System.Drawing.Point(92, 360)
         Me.LblLinkDatabase.Name = "LblLinkDatabase"
         Me.LblLinkDatabase.Size = New System.Drawing.Size(189, 24)
         Me.LblLinkDatabase.TabIndex = 56
@@ -149,7 +217,7 @@ Partial Class FrmLogin
         Me.BtnLogin.FlatAppearance.BorderSize = 0
         Me.BtnLogin.Font = New System.Drawing.Font("Segoe UI Semibold", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BtnLogin.ForeColor = System.Drawing.Color.White
-        Me.BtnLogin.Location = New System.Drawing.Point(120, 294)
+        Me.BtnLogin.Location = New System.Drawing.Point(120, 311)
         Me.BtnLogin.Name = "BtnLogin"
         Me.BtnLogin.Size = New System.Drawing.Size(140, 35)
         Me.BtnLogin.TabIndex = 46
@@ -159,6 +227,7 @@ Partial Class FrmLogin
         'RPnlRight
         '
         Me.RPnlRight.BackColor = System.Drawing.Color.FromArgb(CType(CType(185, Byte), Integer), CType(CType(206, Byte), Integer), CType(CType(223, Byte), Integer))
+        Me.RPnlRight.Controls.Add(Me.LblVersion)
         Me.RPnlRight.Controls.Add(Me.LblInsight)
         Me.RPnlRight.Controls.Add(Me.LblLmc)
         Me.RPnlRight.Controls.Add(Me.LblCopyright)
@@ -170,11 +239,26 @@ Partial Class FrmLogin
         Me.RPnlRight.Size = New System.Drawing.Size(285, 500)
         Me.RPnlRight.TabIndex = 50
         '
+        'LblVersion
+        '
+        Me.LblVersion.Appearance.Font = New System.Drawing.Font("Segoe UI Semibold", 7.8!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LblVersion.Appearance.ForeColor = System.Drawing.Color.Gray
+        Me.LblVersion.Appearance.Options.UseFont = True
+        Me.LblVersion.Appearance.Options.UseForeColor = True
+        Me.LblVersion.Appearance.Options.UseTextOptions = True
+        Me.LblVersion.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
+        Me.LblVersion.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None
+        Me.LblVersion.Location = New System.Drawing.Point(0, 256)
+        Me.LblVersion.Name = "LblVersion"
+        Me.LblVersion.Size = New System.Drawing.Size(271, 23)
+        Me.LblVersion.TabIndex = 56
+        Me.LblVersion.Text = "Version: 0.0.0.0"
+        '
         'LblInsight
         '
         Me.LblInsight.Font = New System.Drawing.Font("Segoe UI Semibold", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblInsight.ForeColor = System.Drawing.Color.FromArgb(CType(CType(10, Byte), Integer), CType(CType(53, Byte), Integer), CType(CType(121, Byte), Integer))
-        Me.LblInsight.Location = New System.Drawing.Point(0, 226)
+        Me.LblInsight.Location = New System.Drawing.Point(0, 224)
         Me.LblInsight.Name = "LblInsight"
         Me.LblInsight.Size = New System.Drawing.Size(271, 26)
         Me.LblInsight.TabIndex = 55
@@ -198,7 +282,7 @@ Partial Class FrmLogin
         Me.LblCopyright.Appearance.ForeColor = System.Drawing.Color.Gray
         Me.LblCopyright.Appearance.Options.UseFont = True
         Me.LblCopyright.Appearance.Options.UseForeColor = True
-        Me.LblCopyright.Location = New System.Drawing.Point(10, 473)
+        Me.LblCopyright.Location = New System.Drawing.Point(12, 471)
         Me.LblCopyright.Name = "LblCopyright"
         Me.LblCopyright.Size = New System.Drawing.Size(194, 17)
         Me.LblCopyright.TabIndex = 52
@@ -228,6 +312,9 @@ Partial Class FrmLogin
         Me.Text = "FrmLogin"
         Me.RPnlLeft.ResumeLayout(False)
         Me.RPnlLeft.PerformLayout()
+        Me.PnlSelectConn.ResumeLayout(False)
+        Me.PnlSelectConn.PerformLayout()
+        CType(Me.ComboBoxEdit1.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel1.ResumeLayout(False)
         CType(Me.TxtUsername.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TxtPassword.Properties, System.ComponentModel.ISupportInitialize).EndInit()
@@ -251,4 +338,10 @@ Partial Class FrmLogin
     Friend WithEvents LblLinkDatabase As LinkLabel
     Friend WithEvents TxtUsername As DevExpress.XtraEditors.TextEdit
     Friend WithEvents TxtPassword As DevExpress.XtraEditors.TextEdit
+    Friend WithEvents ChkShowPass As CheckBox
+    Friend WithEvents LblVersion As DevExpress.XtraEditors.LabelControl
+    Friend WithEvents PnlSelectConn As Panel
+    Friend WithEvents lblAddConnection As Label
+    Friend WithEvents ComboBoxEdit1 As DevExpress.XtraEditors.ComboBoxEdit
+    Friend WithEvents Label1 As Label
 End Class

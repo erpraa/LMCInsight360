@@ -353,7 +353,7 @@ FROM SAPHANADB.BSEG where H_BLART='KA'"
 
         Public Shared ReadOnly Property SelectACDOCAN As String
             Get
-                Return "BELNR,LIFNR from SAPHANADB.BSEG where LIFNR<>'' 
+                Return "BELNR,LIFNR,TO_VARCHAR(CURRENT_TIMESTAMP, 'YYYY-MM-DD HH24:MI:SS.FF3') AS UpdateDate from SAPHANADB.BSEG where LIFNR<>'' 
                     and BELNR IN (Select distinct BELNR from SAPHANADB.ACDOCA 
                     where (RACCT IN ('0000721001','0000721004','0000721005','0000721002','0000721006') OR GKONT IN ('0000721002','0000721006')))"
             End Get

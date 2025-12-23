@@ -75,8 +75,10 @@ Public Class CtrDataInitializeFI
                 LoadDataSAPSQL("FI_VDOCVEN", ResConnect, $"Select distinct 'LRP' as TRX_ORIGIN,{SelectACDOCAN}")
 
 
+                ExecuteDelete($"DELETE from FI_VTCURR WHERE year(GDATU)={fiscalyear} and month(GDATU)={postingperiod}")
                 LoadDataSAPSQL("FI_VTCURR", CasConnect, SubQuery.SelectTCURR(fiscalyear, postingperiod))
 
+                ExecuteDelete($"DELETE from FI_VBKPF WHERE GJAHR={fiscalyear} and MONAT={postingperiod}")
                 LoadDataSAPSQL("FI_VBKPF", CasConnect, SubQuery.SelectBKPF("L4P", fiscalyear, postingperiod))
                 LoadDataSAPSQL("FI_VBKPF", ResConnect, SubQuery.SelectBKPF("LRP", fiscalyear, postingperiod))
 
@@ -85,6 +87,7 @@ Public Class CtrDataInitializeFI
 
             LoadData()
 
+            MessageBox.Show("Data has been successfully reloaded", SystemTitle, MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
 
     End Sub
@@ -124,7 +127,7 @@ Public Class CtrDataInitializeFI
 
                 Dim upparams As New Dictionary(Of String, Object) From {
                     {"@postdate", GetServerDate()},
-                    {"@postby", "Administrator"},
+                    {"@postby", GstrUselogin},
                     {"@poststat", True},
                     {"@PostingPeriod", postingperiod},
                     {"@FiscalYear", fiscalyear}
@@ -174,7 +177,7 @@ Public Class CtrDataInitializeFI
 
                 Dim upparams As New Dictionary(Of String, Object) From {
                     {"@postdate", DBNull.Value},
-                    {"@postby", "Administrator"},
+                    {"@postby", GstrUselogin},
                     {"@poststat", False},
                     {"@PostingPeriod", postingperiod},
                     {"@FiscalYear", fiscalyear}
@@ -430,12 +433,6 @@ Public Class CtrDataInitializeFI
         End Using
 
     End Sub
-
-
-
-
-
-
 
     Private Sub BtnNewGL_Click(sender As Object, e As EventArgs) Handles BtnNewGL.Click
         FrmViewGL.ShowDialog()
