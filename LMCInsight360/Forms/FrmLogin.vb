@@ -208,7 +208,4 @@ Public Class FrmLogin
         PnlSelectConn.Visible = m_blnConn
     End Sub
 
-    Private Sub RPnlLeft_Paint(sender As Object, e As PaintEventArgs) Handles RPnlLeft.Paint
-
-    End Sub
 End Class
