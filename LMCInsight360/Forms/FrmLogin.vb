@@ -5,6 +5,7 @@ Imports LMCInsight360.CryptoEngine
 Public Class FrmLogin
 
     Private m_blnConn As Boolean = False
+    Private m_blnAddCon As Boolean = False
 
     Private Sub FrmLogin_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         TxtUsername.Properties.NullText = "Username"
@@ -14,6 +15,18 @@ Public Class FrmLogin
         Me.AcceptButton = BtnLogin
 
         PnlSelectConn.Hide()
+
+
+        ' Get the last used profile name
+        LoadProfilesToComboBox()
+        Dim lastUsedProfile = GetSetting(Application.ProductName, "profiles", "lastUsed", "")
+        ' Set it as selected in ComboBox1 if it exists
+        If CbxSelectServer.Items.Contains(lastUsedProfile) Then
+            CbxSelectServer.SelectedItem = lastUsedProfile
+        End If
+        GConnection(CbxSelectServer.Text)
+        CbxSelectServer.DropDownStyle = ComboBoxStyle.DropDownList
+
     End Sub
 
     Private Sub BtnLogin_Click(sender As Object, e As EventArgs) Handles BtnLogin.Click
@@ -151,6 +164,8 @@ Public Class FrmLogin
 
     Private Sub RPnlLeft_MouseMove(sender As Object, e As MouseEventArgs) Handles RPnlLeft.MouseMove
         RoundedCornersForm_MouseMove(Me, e)
+
+        UpdatePopupPosition()
     End Sub
 
     Private Sub RPnlLeft_MouseUp(sender As Object, e As MouseEventArgs) Handles RPnlLeft.MouseUp
@@ -164,6 +179,7 @@ Public Class FrmLogin
     Sub RoundedCornersForm_MouseDown(e As MouseEventArgs)
         isDragging = True
         startPoint = e.Location
+
     End Sub
 
     Sub RoundedCornersForm_MouseMove(SelectForm As Form, e As MouseEventArgs)
@@ -208,4 +224,68 @@ Public Class FrmLogin
         PnlSelectConn.Visible = m_blnConn
     End Sub
 
+    Private popup As FrmAddConnection
+
+    Private Sub LblAddConnection_Click(sender As Object, e As EventArgs) Handles LblAddConnection.Click
+        m_blnAddCon = Not m_blnAddCon
+
+        If m_blnAddCon Then
+            ShowAddConn()
+        Else
+            If popup IsNot Nothing AndAlso Not popup.IsDisposed Then
+                popup.Close()
+            End If
+        End If
+    End Sub
+
+    Private Sub ShowAddConn()
+        If popup Is Nothing OrElse popup.IsDisposed Then
+            popup = New FrmAddConnection With {
+            .Size = New Size(350, 250),
+            .StartPosition = FormStartPosition.Manual,
+            .ShowInTaskbar = False
+        }
+            popup.Owner = Me
+            popup.Show(Me)
+        End If
+
+        UpdatePopupPosition()
+    End Sub
+
+    Private Sub UpdatePopupPosition()
+        If popup Is Nothing OrElse popup.IsDisposed Then Exit Sub
+
+        Dim pt As Point = Me.PointToScreen(
+        New Point(PnlSelectConn.Right, PnlSelectConn.Bottom)
+    )
+
+        popup.Location = pt
+    End Sub
+
+    Private Sub LblConnect_Click(sender As Object, e As EventArgs) Handles LblConnect.Click
+        If CbxSelectServer.Text = "" Then
+            MessageBox.Show("Please select Connection!", SystemTitle, MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Exit Sub
+        End If
+
+        SaveSetting(Application.ProductName, "profiles", "lastUsed", CbxSelectServer.SelectedItem.ToString())
+
+        If MsgBox("Restart program now?", MsgBoxStyle.Question + MsgBoxStyle.OkCancel) = MsgBoxResult.Ok Then
+            Application.Restart()
+        End If
+    End Sub
+
+    Private Sub LoadProfilesToComboBox()
+
+        ' Get the comma-separated profile names from registry
+        Dim profilesStr As String = GetSetting(Application.ProductName, "profiles", "list", "")
+
+        ' Convert the string into a list of profile names
+        Dim profileList As List(Of String) = profilesStr.Split(","c).Where(Function(p) Not String.IsNullOrWhiteSpace(p)).ToList()
+
+        ' Clear and load profiles into ComboBox1
+        CbxSelectServer.Items.Clear()
+        CbxSelectServer.Items.AddRange(profileList.ToArray())
+
+    End Sub
 End Class

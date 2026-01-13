@@ -22,9 +22,9 @@ Partial Class FrmLogin
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmLogin))
         Me.RPnlLeft = New LMCInsight360.RoundedPanel()
         Me.PnlSelectConn = New System.Windows.Forms.Panel()
-        Me.ComboBoxEdit1 = New DevExpress.XtraEditors.ComboBoxEdit()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.lblAddConnection = New System.Windows.Forms.Label()
+        Me.CbxSelectServer = New System.Windows.Forms.ComboBox()
+        Me.LblConnect = New System.Windows.Forms.Label()
+        Me.LblAddConnection = New System.Windows.Forms.Label()
         Me.ChkShowPass = New System.Windows.Forms.CheckBox()
         Me.LblLinkDatabase = New System.Windows.Forms.LinkLabel()
         Me.LblClose = New System.Windows.Forms.Label()
@@ -42,7 +42,6 @@ Partial Class FrmLogin
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.RPnlLeft.SuspendLayout()
         Me.PnlSelectConn.SuspendLayout()
-        CType(Me.ComboBoxEdit1.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
         CType(Me.TxtUsername.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TxtPassword.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -69,50 +68,47 @@ Partial Class FrmLogin
         '
         'PnlSelectConn
         '
-        Me.PnlSelectConn.Controls.Add(Me.ComboBoxEdit1)
-        Me.PnlSelectConn.Controls.Add(Me.Label1)
-        Me.PnlSelectConn.Controls.Add(Me.lblAddConnection)
+        Me.PnlSelectConn.Controls.Add(Me.CbxSelectServer)
+        Me.PnlSelectConn.Controls.Add(Me.LblConnect)
+        Me.PnlSelectConn.Controls.Add(Me.LblAddConnection)
         Me.PnlSelectConn.Location = New System.Drawing.Point(36, 409)
         Me.PnlSelectConn.Name = "PnlSelectConn"
         Me.PnlSelectConn.Size = New System.Drawing.Size(310, 43)
         Me.PnlSelectConn.TabIndex = 59
         '
-        'ComboBoxEdit1
+        'CbxSelectServer
         '
-        Me.ComboBoxEdit1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.ComboBoxEdit1.Location = New System.Drawing.Point(36, 0)
-        Me.ComboBoxEdit1.Name = "ComboBoxEdit1"
-        Me.ComboBoxEdit1.Properties.Appearance.Font = New System.Drawing.Font("Segoe UI", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ComboBoxEdit1.Properties.Appearance.Options.UseFont = True
-        Me.ComboBoxEdit1.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
-        Me.ComboBoxEdit1.Properties.EditValueChangedFiringMode = DevExpress.XtraEditors.Controls.EditValueChangedFiringMode.Buffered
-        Me.ComboBoxEdit1.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor
-        Me.ComboBoxEdit1.Size = New System.Drawing.Size(235, 30)
-        Me.ComboBoxEdit1.TabIndex = 29
+        Me.CbxSelectServer.Dock = System.Windows.Forms.DockStyle.Top
+        Me.CbxSelectServer.Font = New System.Drawing.Font("Segoe UI", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CbxSelectServer.FormattingEnabled = True
+        Me.CbxSelectServer.Location = New System.Drawing.Point(36, 0)
+        Me.CbxSelectServer.Name = "CbxSelectServer"
+        Me.CbxSelectServer.Size = New System.Drawing.Size(235, 31)
+        Me.CbxSelectServer.TabIndex = 60
         '
-        'Label1
+        'LblConnect
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Label1.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.ForeColor = System.Drawing.Color.LightSeaGreen
-        Me.Label1.Location = New System.Drawing.Point(271, 0)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(39, 28)
-        Me.Label1.TabIndex = 61
-        Me.Label1.Text = "🌐"
+        Me.LblConnect.AutoSize = True
+        Me.LblConnect.Dock = System.Windows.Forms.DockStyle.Right
+        Me.LblConnect.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LblConnect.ForeColor = System.Drawing.Color.LightSeaGreen
+        Me.LblConnect.Location = New System.Drawing.Point(271, 0)
+        Me.LblConnect.Name = "LblConnect"
+        Me.LblConnect.Size = New System.Drawing.Size(39, 28)
+        Me.LblConnect.TabIndex = 61
+        Me.LblConnect.Text = "🌐"
         '
-        'lblAddConnection
+        'LblAddConnection
         '
-        Me.lblAddConnection.AutoSize = True
-        Me.lblAddConnection.Dock = System.Windows.Forms.DockStyle.Left
-        Me.lblAddConnection.Font = New System.Drawing.Font("Segoe UI", 13.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblAddConnection.ForeColor = System.Drawing.Color.Red
-        Me.lblAddConnection.Location = New System.Drawing.Point(0, 0)
-        Me.lblAddConnection.Name = "lblAddConnection"
-        Me.lblAddConnection.Size = New System.Drawing.Size(36, 32)
-        Me.lblAddConnection.TabIndex = 28
-        Me.lblAddConnection.Text = "✚"
+        Me.LblAddConnection.AutoSize = True
+        Me.LblAddConnection.Dock = System.Windows.Forms.DockStyle.Left
+        Me.LblAddConnection.Font = New System.Drawing.Font("Segoe UI", 13.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LblAddConnection.ForeColor = System.Drawing.Color.Red
+        Me.LblAddConnection.Location = New System.Drawing.Point(0, 0)
+        Me.LblAddConnection.Name = "LblAddConnection"
+        Me.LblAddConnection.Size = New System.Drawing.Size(36, 32)
+        Me.LblAddConnection.TabIndex = 28
+        Me.LblAddConnection.Text = "✚"
         '
         'ChkShowPass
         '
@@ -314,7 +310,6 @@ Partial Class FrmLogin
         Me.RPnlLeft.PerformLayout()
         Me.PnlSelectConn.ResumeLayout(False)
         Me.PnlSelectConn.PerformLayout()
-        CType(Me.ComboBoxEdit1.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel1.ResumeLayout(False)
         CType(Me.TxtUsername.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TxtPassword.Properties, System.ComponentModel.ISupportInitialize).EndInit()
@@ -341,7 +336,7 @@ Partial Class FrmLogin
     Friend WithEvents ChkShowPass As CheckBox
     Friend WithEvents LblVersion As DevExpress.XtraEditors.LabelControl
     Friend WithEvents PnlSelectConn As Panel
-    Friend WithEvents lblAddConnection As Label
-    Friend WithEvents ComboBoxEdit1 As DevExpress.XtraEditors.ComboBoxEdit
-    Friend WithEvents Label1 As Label
+    Friend WithEvents LblAddConnection As Label
+    Friend WithEvents LblConnect As Label
+    Friend WithEvents CbxSelectServer As ComboBox
 End Class

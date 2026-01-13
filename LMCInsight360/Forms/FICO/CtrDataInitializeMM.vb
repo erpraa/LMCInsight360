@@ -1,11 +1,15 @@
 ﻿Imports System.Data.OleDb
 Imports System.Data.SqlClient
+Imports LMCInsight360.ClassFunction
+Imports LMCInsight360.SubClass
 Public Class CtrDataInitializeMM
 
     Private dt As New DataTable()
 
     Private Sub CtrDataInitializeMM_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        LoadData()
 
+        LoadComboBox(CbxPrfitCtr, "select distinct PRCTR from FI_BRANCH", "PRCTR")
     End Sub
 
     Private Sub BtnUpload_Click(sender As Object, e As EventArgs) Handles BtnUpload.Click
@@ -98,5 +102,46 @@ Public Class CtrDataInitializeMM
             TxtFilePath.Text = ofd.FileName
         End If
     End Sub
+    Private Sub GridView1_RowClick(
+        sender As Object,
+        e As DevExpress.XtraGrid.Views.Grid.RowClickEventArgs
+    ) Handles GridView1.RowClick
 
+        If e.RowHandle < 0 Then Exit Sub
+
+        CbxOrigin.Text = GridView1.GetRowCellValue(e.RowHandle, "SAP Source").ToString()
+        CbxPrfitCtr.Text = GridView1.GetRowCellValue(e.RowHandle, "Profit Center").ToString()
+        TxtAmt.Text = GridView1.GetRowCellValue(e.RowHandle, "Amount").ToString()
+        CbxMonth.Text = GridView1.GetRowCellValue(e.RowHandle, "Month").ToString()
+        TxtYear.Text = GridView1.GetRowCellValue(e.RowHandle, "Year").ToString()
+    End Sub
+
+    Private Sub LoadData()
+
+        GridControl1.DataSource = PopulateDataSQL("SELECT
+    CASE 
+        WHEN TRX_ORIGIN = 'L4P' THEN 'CAS'
+        WHEN TRX_ORIGIN = 'LRP' THEN 'Reserved'
+    END AS [SAP Source],
+    PRCTR AS [Profit Center],
+    DATENAME(MONTH, DATEFROMPARTS(RYEAR, POPER, 1)) AS [Month],
+    RYEAR AS [Year],
+    FORMAT(HSL, 'N2') AS [Amount]
+FROM FI_PURCHIST;
+")
+
+        GridView1.BestFitColumns()
+        GridView1.OptionsFind.AlwaysVisible = False
+        GridView1.OptionsBehavior.Editable = False
+        GridView1.OptionsView.ShowAutoFilterRow = False
+
+    End Sub
+
+    Private Sub TxtYear_EditValueChanged(sender As Object, e As EventArgs) Handles TxtYear.EditValueChanged
+
+    End Sub
+
+    Private Sub TxtYear_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TxtYear.KeyPress
+
+    End Sub
 End Class

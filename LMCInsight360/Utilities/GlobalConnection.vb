@@ -1,22 +1,39 @@
 ﻿Imports LMCInsight360.ClassFunction
 Imports LMCInsight360.CryptoEngine
+Imports System.Data.SqlClient
 Module GlobalConnection
 
-    'Public strServerName, strUser, strPassword, strDatabase, SqlConnect As String
+    Public strServerName, strUser, strPassword, strDatabase, SqlConnect As String
+    Public CasConnect, ResConnect, DispCasConnect, DispResConnect As String
 
-    'Temporary only
-    Public strServerName = "192.168.200.90"
-    Public strUser = "fa"
-    Public strPassword = "update1012225"
-    Public strDatabase = "LMCMSTRPT"
+    Public Sub GConnection(profileName As String)
+        Fetchsettings(profileName)
+        SqlConnect = $"Data Source='{strServerName}';User ID='{strUser}';password='{strPassword}';Initial Catalog='{strDatabase}';MultipleActiveResultSets=True"
 
-    Public SqlConnect = $"Data Source='{strServerName}';User ID='{strUser}';password='{strPassword}';Initial Catalog='{strDatabase}';MultipleActiveResultSets=True"
+        Using conn As New SqlConnection(SqlConnect)
+            Try
+                conn.Open()
+            Catch ex As Exception
+                MsgBox("Connection Failed: " & ex.Message)
+                FrmLogin.Show()
+            End Try
+        End Using
 
-    Public CasConnect As String = GetConnectionString("L4P")
-    Public ResConnect As String = GetConnectionString("LRP")
+        CasConnect = GetConnectionString("L4P")
+        ResConnect = GetConnectionString("LRP")
 
-    Public DispCasConnect As String = DispConnection("L4P")
-    Public DispResConnect As String = DispConnection("LRP")
+        DispCasConnect = DispConnection("L4P")
+        DispResConnect = DispConnection("LRP")
+
+    End Sub
+
+    Public Sub Fetchsettings(profileName As String)
+        Dim s As String = Application.ProductName
+        strServerName = GetSetting(s, "dbsection_" & profileName, "Data Source", "")
+        strUser = GetSetting(s, "dbsection_" & profileName, "User ID", "")
+        strPassword = GetSetting(s, "dbsection_" & profileName, "password", "")
+        strDatabase = GetSetting(s, "dbsection_" & profileName, "Initial Catalog", "")
+    End Sub
 
     Private Function GetConnectionString(ByVal sapCode As String) As String
         Dim data = GetMultiValues($"SELECT * FROM SAP_CONNECTION WHERE SAP = '{sapCode}'")
