@@ -39,7 +39,8 @@ Partial Class CtrDataInitializeMM
         Me.LabelControl2 = New DevExpress.XtraEditors.LabelControl()
         Me.LabelControl4 = New DevExpress.XtraEditors.LabelControl()
         Me.LabelControl5 = New DevExpress.XtraEditors.LabelControl()
-        Me.RoundedButton2 = New LMCInsight360.RoundedButton()
+        Me.BtnNew = New LMCInsight360.RoundedButton()
+        Me.BtnDelete = New LMCInsight360.RoundedButton()
         CType(Me.GridControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TxtYear.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -55,7 +56,7 @@ Partial Class CtrDataInitializeMM
         Me.BtnBrowse.FlatAppearance.BorderSize = 0
         Me.BtnBrowse.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BtnBrowse.ForeColor = System.Drawing.Color.White
-        Me.BtnBrowse.Location = New System.Drawing.Point(663, 520)
+        Me.BtnBrowse.Location = New System.Drawing.Point(683, 430)
         Me.BtnBrowse.Name = "BtnBrowse"
         Me.BtnBrowse.Size = New System.Drawing.Size(142, 30)
         Me.BtnBrowse.TabIndex = 55
@@ -68,7 +69,7 @@ Partial Class CtrDataInitializeMM
         Me.BtnUpload.FlatAppearance.BorderSize = 0
         Me.BtnUpload.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BtnUpload.ForeColor = System.Drawing.Color.White
-        Me.BtnUpload.Location = New System.Drawing.Point(811, 520)
+        Me.BtnUpload.Location = New System.Drawing.Point(831, 430)
         Me.BtnUpload.Name = "BtnUpload"
         Me.BtnUpload.Size = New System.Drawing.Size(140, 30)
         Me.BtnUpload.TabIndex = 57
@@ -77,10 +78,10 @@ Partial Class CtrDataInitializeMM
         '
         'GridControl1
         '
-        Me.GridControl1.Location = New System.Drawing.Point(17, 135)
+        Me.GridControl1.Location = New System.Drawing.Point(18, 80)
         Me.GridControl1.MainView = Me.GridView1
         Me.GridControl1.Name = "GridControl1"
-        Me.GridControl1.Size = New System.Drawing.Size(934, 379)
+        Me.GridControl1.Size = New System.Drawing.Size(953, 344)
         Me.GridControl1.TabIndex = 58
         Me.GridControl1.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GridView1})
         '
@@ -97,10 +98,10 @@ Partial Class CtrDataInitializeMM
         '
         'TxtFilePath
         '
-        Me.TxtFilePath.Location = New System.Drawing.Point(16, 520)
+        Me.TxtFilePath.Location = New System.Drawing.Point(18, 430)
         Me.TxtFilePath.Multiline = True
         Me.TxtFilePath.Name = "TxtFilePath"
-        Me.TxtFilePath.Size = New System.Drawing.Size(623, 30)
+        Me.TxtFilePath.Size = New System.Drawing.Size(659, 30)
         Me.TxtFilePath.TabIndex = 59
         '
         'OpenFileDialog1
@@ -113,16 +114,16 @@ Partial Class CtrDataInitializeMM
         Me.BtnSave.FlatAppearance.BorderSize = 0
         Me.BtnSave.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BtnSave.ForeColor = System.Drawing.Color.White
-        Me.BtnSave.Location = New System.Drawing.Point(780, 75)
+        Me.BtnSave.Location = New System.Drawing.Point(767, 32)
         Me.BtnSave.Name = "BtnSave"
-        Me.BtnSave.Size = New System.Drawing.Size(140, 30)
+        Me.BtnSave.Size = New System.Drawing.Size(100, 30)
         Me.BtnSave.TabIndex = 65
         Me.BtnSave.Text = "Save"
         Me.BtnSave.UseVisualStyleBackColor = False
         '
         'TxtYear
         '
-        Me.TxtYear.Location = New System.Drawing.Point(480, 54)
+        Me.TxtYear.Location = New System.Drawing.Point(416, 44)
         Me.TxtYear.Name = "TxtYear"
         Me.TxtYear.Properties.Appearance.BackColor = System.Drawing.Color.White
         Me.TxtYear.Properties.Appearance.BorderColor = System.Drawing.Color.FromArgb(CType(CType(10, Byte), Integer), CType(CType(53, Byte), Integer), CType(CType(121, Byte), Integer))
@@ -136,12 +137,12 @@ Partial Class CtrDataInitializeMM
         Me.TxtYear.Properties.Mask.EditMask = "d"
         Me.TxtYear.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric
         Me.TxtYear.Properties.MaxLength = 4
-        Me.TxtYear.Size = New System.Drawing.Size(125, 30)
+        Me.TxtYear.Size = New System.Drawing.Size(66, 30)
         Me.TxtYear.TabIndex = 68
         '
         'CbxMonth
         '
-        Me.CbxMonth.Location = New System.Drawing.Point(331, 54)
+        Me.CbxMonth.Location = New System.Drawing.Point(277, 44)
         Me.CbxMonth.Name = "CbxMonth"
         Me.CbxMonth.Properties.Appearance.BackColor = System.Drawing.Color.White
         Me.CbxMonth.Properties.Appearance.BorderColor = System.Drawing.Color.FromArgb(CType(CType(10, Byte), Integer), CType(CType(53, Byte), Integer), CType(CType(121, Byte), Integer))
@@ -155,12 +156,12 @@ Partial Class CtrDataInitializeMM
         Me.CbxMonth.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
         Me.CbxMonth.Properties.Items.AddRange(New Object() {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"})
         Me.CbxMonth.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor
-        Me.CbxMonth.Size = New System.Drawing.Size(134, 30)
+        Me.CbxMonth.Size = New System.Drawing.Size(128, 30)
         Me.CbxMonth.TabIndex = 70
         '
         'CbxOrigin
         '
-        Me.CbxOrigin.Location = New System.Drawing.Point(41, 54)
+        Me.CbxOrigin.Location = New System.Drawing.Point(18, 44)
         Me.CbxOrigin.Name = "CbxOrigin"
         Me.CbxOrigin.Properties.Appearance.BackColor = System.Drawing.Color.White
         Me.CbxOrigin.Properties.Appearance.BorderColor = System.Drawing.Color.FromArgb(CType(CType(10, Byte), Integer), CType(CType(53, Byte), Integer), CType(CType(121, Byte), Integer))
@@ -174,12 +175,12 @@ Partial Class CtrDataInitializeMM
         Me.CbxOrigin.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
         Me.CbxOrigin.Properties.Items.AddRange(New Object() {"CAS", "Reserved"})
         Me.CbxOrigin.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor
-        Me.CbxOrigin.Size = New System.Drawing.Size(122, 30)
+        Me.CbxOrigin.Size = New System.Drawing.Size(103, 30)
         Me.CbxOrigin.TabIndex = 71
         '
         'CbxPrfitCtr
         '
-        Me.CbxPrfitCtr.Location = New System.Drawing.Point(181, 54)
+        Me.CbxPrfitCtr.Location = New System.Drawing.Point(134, 44)
         Me.CbxPrfitCtr.Name = "CbxPrfitCtr"
         Me.CbxPrfitCtr.Properties.Appearance.BackColor = System.Drawing.Color.White
         Me.CbxPrfitCtr.Properties.Appearance.BorderColor = System.Drawing.Color.FromArgb(CType(CType(10, Byte), Integer), CType(CType(53, Byte), Integer), CType(CType(121, Byte), Integer))
@@ -197,7 +198,7 @@ Partial Class CtrDataInitializeMM
         '
         'TxtAmt
         '
-        Me.TxtAmt.Location = New System.Drawing.Point(181, 98)
+        Me.TxtAmt.Location = New System.Drawing.Point(492, 44)
         Me.TxtAmt.Name = "TxtAmt"
         Me.TxtAmt.Properties.Appearance.BackColor = System.Drawing.Color.White
         Me.TxtAmt.Properties.Appearance.BorderColor = System.Drawing.Color.FromArgb(CType(CType(10, Byte), Integer), CType(CType(53, Byte), Integer), CType(CType(121, Byte), Integer))
@@ -210,7 +211,7 @@ Partial Class CtrDataInitializeMM
         Me.TxtAmt.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple
         Me.TxtAmt.Properties.Mask.EditMask = "n2"
         Me.TxtAmt.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric
-        Me.TxtAmt.Size = New System.Drawing.Size(424, 30)
+        Me.TxtAmt.Size = New System.Drawing.Size(163, 30)
         Me.TxtAmt.TabIndex = 73
         '
         'LabelControl3
@@ -219,7 +220,7 @@ Partial Class CtrDataInitializeMM
         Me.LabelControl3.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.LabelControl3.Appearance.Options.UseFont = True
         Me.LabelControl3.Appearance.Options.UseForeColor = True
-        Me.LabelControl3.Location = New System.Drawing.Point(41, 25)
+        Me.LabelControl3.Location = New System.Drawing.Point(18, 15)
         Me.LabelControl3.Name = "LabelControl3"
         Me.LabelControl3.Size = New System.Drawing.Size(103, 23)
         Me.LabelControl3.TabIndex = 74
@@ -231,7 +232,7 @@ Partial Class CtrDataInitializeMM
         Me.LabelControl1.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.LabelControl1.Appearance.Options.UseFont = True
         Me.LabelControl1.Appearance.Options.UseForeColor = True
-        Me.LabelControl1.Location = New System.Drawing.Point(181, 25)
+        Me.LabelControl1.Location = New System.Drawing.Point(134, 15)
         Me.LabelControl1.Name = "LabelControl1"
         Me.LabelControl1.Size = New System.Drawing.Size(113, 23)
         Me.LabelControl1.TabIndex = 75
@@ -243,7 +244,7 @@ Partial Class CtrDataInitializeMM
         Me.LabelControl2.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.LabelControl2.Appearance.Options.UseFont = True
         Me.LabelControl2.Appearance.Options.UseForeColor = True
-        Me.LabelControl2.Location = New System.Drawing.Point(331, 25)
+        Me.LabelControl2.Location = New System.Drawing.Point(277, 15)
         Me.LabelControl2.Name = "LabelControl2"
         Me.LabelControl2.Size = New System.Drawing.Size(67, 23)
         Me.LabelControl2.TabIndex = 76
@@ -255,7 +256,7 @@ Partial Class CtrDataInitializeMM
         Me.LabelControl4.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.LabelControl4.Appearance.Options.UseFont = True
         Me.LabelControl4.Appearance.Options.UseForeColor = True
-        Me.LabelControl4.Location = New System.Drawing.Point(489, 25)
+        Me.LabelControl4.Location = New System.Drawing.Point(416, 15)
         Me.LabelControl4.Name = "LabelControl4"
         Me.LabelControl4.Size = New System.Drawing.Size(49, 23)
         Me.LabelControl4.TabIndex = 77
@@ -267,31 +268,45 @@ Partial Class CtrDataInitializeMM
         Me.LabelControl5.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.LabelControl5.Appearance.Options.UseFont = True
         Me.LabelControl5.Appearance.Options.UseForeColor = True
-        Me.LabelControl5.Location = New System.Drawing.Point(77, 102)
+        Me.LabelControl5.Location = New System.Drawing.Point(492, 15)
         Me.LabelControl5.Name = "LabelControl5"
         Me.LabelControl5.Size = New System.Drawing.Size(78, 23)
         Me.LabelControl5.TabIndex = 78
         Me.LabelControl5.Text = "Amount: *"
         '
-        'RoundedButton2
+        'BtnNew
         '
-        Me.RoundedButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(184, Byte), Integer))
-        Me.RoundedButton2.FlatAppearance.BorderSize = 0
-        Me.RoundedButton2.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.RoundedButton2.ForeColor = System.Drawing.Color.White
-        Me.RoundedButton2.Location = New System.Drawing.Point(620, 75)
-        Me.RoundedButton2.Name = "RoundedButton2"
-        Me.RoundedButton2.Size = New System.Drawing.Size(140, 30)
-        Me.RoundedButton2.TabIndex = 79
-        Me.RoundedButton2.Text = "Add New"
-        Me.RoundedButton2.UseVisualStyleBackColor = False
+        Me.BtnNew.BackColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(167, Byte), Integer), CType(CType(69, Byte), Integer))
+        Me.BtnNew.FlatAppearance.BorderSize = 0
+        Me.BtnNew.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnNew.ForeColor = System.Drawing.Color.White
+        Me.BtnNew.Location = New System.Drawing.Point(663, 32)
+        Me.BtnNew.Name = "BtnNew"
+        Me.BtnNew.Size = New System.Drawing.Size(100, 30)
+        Me.BtnNew.TabIndex = 79
+        Me.BtnNew.Text = "Add New"
+        Me.BtnNew.UseVisualStyleBackColor = False
+        '
+        'BtnDelete
+        '
+        Me.BtnDelete.BackColor = System.Drawing.Color.FromArgb(CType(CType(220, Byte), Integer), CType(CType(53, Byte), Integer), CType(CType(69, Byte), Integer))
+        Me.BtnDelete.FlatAppearance.BorderSize = 0
+        Me.BtnDelete.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnDelete.ForeColor = System.Drawing.Color.White
+        Me.BtnDelete.Location = New System.Drawing.Point(873, 32)
+        Me.BtnDelete.Name = "BtnDelete"
+        Me.BtnDelete.Size = New System.Drawing.Size(100, 30)
+        Me.BtnDelete.TabIndex = 80
+        Me.BtnDelete.Text = "Delete"
+        Me.BtnDelete.UseVisualStyleBackColor = False
         '
         'CtrDataInitializeMM
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(234, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(246, Byte), Integer))
-        Me.Controls.Add(Me.RoundedButton2)
+        Me.Controls.Add(Me.BtnDelete)
+        Me.Controls.Add(Me.BtnNew)
         Me.Controls.Add(Me.LabelControl5)
         Me.Controls.Add(Me.LabelControl4)
         Me.Controls.Add(Me.LabelControl2)
@@ -308,7 +323,7 @@ Partial Class CtrDataInitializeMM
         Me.Controls.Add(Me.BtnUpload)
         Me.Controls.Add(Me.BtnBrowse)
         Me.Name = "CtrDataInitializeMM"
-        Me.Size = New System.Drawing.Size(996, 581)
+        Me.Size = New System.Drawing.Size(993, 481)
         CType(Me.GridControl1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridView1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TxtYear.Properties, System.ComponentModel.ISupportInitialize).EndInit()
@@ -338,5 +353,6 @@ Partial Class CtrDataInitializeMM
     Friend WithEvents LabelControl2 As DevExpress.XtraEditors.LabelControl
     Friend WithEvents LabelControl4 As DevExpress.XtraEditors.LabelControl
     Friend WithEvents LabelControl5 As DevExpress.XtraEditors.LabelControl
-    Friend WithEvents RoundedButton2 As RoundedButton
+    Friend WithEvents BtnNew As RoundedButton
+    Friend WithEvents BtnDelete As RoundedButton
 End Class

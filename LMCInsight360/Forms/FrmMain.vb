@@ -172,7 +172,7 @@ Public Class FrmMain
 
     Private Sub ShowUserInfo()
         Dim popup As New FrmAdminInfo With {
-            .Size = New Size(309, 270)
+            .Size = New Size(345, 300)
         }
         Dim pt As Point = Me.PointToScreen(New Point(PnlBRight.Right - popup.Width, PnlTopHeader.Bottom))
         popup.StartPosition = FormStartPosition.Manual

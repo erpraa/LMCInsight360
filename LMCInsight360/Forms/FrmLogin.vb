@@ -16,7 +16,6 @@ Public Class FrmLogin
 
         PnlSelectConn.Hide()
 
-
         ' Get the last used profile name
         LoadProfilesToComboBox()
         Dim lastUsedProfile = GetSetting(Application.ProductName, "profiles", "lastUsed", "")
@@ -142,7 +141,6 @@ Public Class FrmLogin
 
                 MessageBox.Show("Access Granted. Welcome " & StrConv(GstrUselogin, VbStrConv.ProperCase), SystemTitle, MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-
                 UpdateLoginStatus(GstrUseID, True)
 
                 FrmMain.Show()
@@ -156,7 +154,6 @@ Public Class FrmLogin
             MsgBox(ex.Message, vbCritical)
         End Try
     End Sub
-
 
     Private Sub RPnlLeft_MouseDown(sender As Object, e As MouseEventArgs) Handles RPnlLeft.MouseDown
         RoundedCornersForm_MouseDown(e)
@@ -222,6 +219,7 @@ Public Class FrmLogin
     Private Sub LblLinkDatabase_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LblLinkDatabase.LinkClicked
         m_blnConn = Not m_blnConn
         PnlSelectConn.Visible = m_blnConn
+
     End Sub
 
     Private popup As FrmAddConnection

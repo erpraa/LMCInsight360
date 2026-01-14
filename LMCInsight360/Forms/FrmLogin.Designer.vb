@@ -71,9 +71,9 @@ Partial Class FrmLogin
         Me.PnlSelectConn.Controls.Add(Me.CbxSelectServer)
         Me.PnlSelectConn.Controls.Add(Me.LblConnect)
         Me.PnlSelectConn.Controls.Add(Me.LblAddConnection)
-        Me.PnlSelectConn.Location = New System.Drawing.Point(36, 409)
+        Me.PnlSelectConn.Location = New System.Drawing.Point(36, 412)
         Me.PnlSelectConn.Name = "PnlSelectConn"
-        Me.PnlSelectConn.Size = New System.Drawing.Size(310, 43)
+        Me.PnlSelectConn.Size = New System.Drawing.Size(310, 39)
         Me.PnlSelectConn.TabIndex = 59
         '
         'CbxSelectServer
@@ -126,7 +126,7 @@ Partial Class FrmLogin
         Me.LblLinkDatabase.ActiveLinkColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(184, Byte), Integer))
         Me.LblLinkDatabase.Font = New System.Drawing.Font("Century Gothic", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblLinkDatabase.LinkColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(184, Byte), Integer))
-        Me.LblLinkDatabase.Location = New System.Drawing.Point(92, 360)
+        Me.LblLinkDatabase.Location = New System.Drawing.Point(93, 365)
         Me.LblLinkDatabase.Name = "LblLinkDatabase"
         Me.LblLinkDatabase.Size = New System.Drawing.Size(189, 24)
         Me.LblLinkDatabase.TabIndex = 56

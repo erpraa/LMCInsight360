@@ -6,7 +6,7 @@ Public Class FrmAdminInfo
 
     Private Sub FrmAdminInfo_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        LblUser.Text = GstrUsername
+        LblUser.Text = "● User:  " & GstrUsername
         LblDatabase.Text = strDatabase
         LblReportServer.Text = strServerName
         LblCasServer.Text = DispCasConnect

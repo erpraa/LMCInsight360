@@ -126,22 +126,126 @@ Public Class CtrDataInitializeMM
     PRCTR AS [Profit Center],
     DATENAME(MONTH, DATEFROMPARTS(RYEAR, POPER, 1)) AS [Month],
     RYEAR AS [Year],
-    FORMAT(HSL, 'N2') AS [Amount]
-FROM FI_PURCHIST;
-")
+    FORMAT(HSL, 'N2') AS [Amount] FROM FI_PURCHIST ORDER BY RYEAR,POPER,PRCTR,TRX_ORIGIN;")
 
         GridView1.BestFitColumns()
         GridView1.OptionsFind.AlwaysVisible = False
         GridView1.OptionsBehavior.Editable = False
-        GridView1.OptionsView.ShowAutoFilterRow = False
+        GridView1.OptionsView.ShowAutoFilterRow = True
 
     End Sub
 
-    Private Sub TxtYear_EditValueChanged(sender As Object, e As EventArgs) Handles TxtYear.EditValueChanged
 
+    Private Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
+        If String.IsNullOrWhiteSpace(CbxOrigin.Text) OrElse
+      String.IsNullOrWhiteSpace(CbxPrfitCtr.Text) OrElse
+      String.IsNullOrWhiteSpace(CbxMonth.Text) OrElse
+      String.IsNullOrWhiteSpace(TxtYear.Text) OrElse
+      String.IsNullOrWhiteSpace(TxtAmt.Text) Then
+
+            MessageBox.Show("Please enter all required fields.", SystemTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        End If
+
+        Dim ChkDataExist As String = GetValue($"select count(*) from FI_PURCHIST 
+                                                where TRX_ORIGIN='{If(Convert.ToString(CbxOrigin.EditValue) = "CAS", "L4P", "LRP")}' 
+                                                and PRCTR='{CbxPrfitCtr.EditValue}' 
+                                                and POPER={GetMonthNumber(CbxMonth.EditValue)}
+                                                and RYEAR={TxtYear.EditValue}")
+        Try
+
+            Dim params As New Dictionary(Of String, Object) From {
+                              {"@TRX_ORIGIN", If(Convert.ToString(CbxOrigin.EditValue) = "CAS", "L4P", "LRP")},
+                              {"@PRCTR", CbxPrfitCtr.EditValue},
+                              {"@POPER", GetMonthNumber(CbxMonth.EditValue)},
+                              {"@RYEAR", TxtYear.EditValue},
+                              {"@HSL", TxtAmt.EditValue}
+                }
+
+            If ChkDataExist = 0 Then
+                Dim Insqry As String = "INSERT INTO FI_PURCHIST (TRX_ORIGIN,PRCTR,POPER,RYEAR,HSL) VALUES (@TRX_ORIGIN,@PRCTR,@POPER,@RYEAR,@HSL);"
+                ExecuteInsert(Insqry, params)
+                MessageBox.Show("Successfully saved!")
+            Else
+
+                Dim Amt As String = GetValue($"select FORMAT(HSL, 'N2') from FI_PURCHIST 
+                                                where TRX_ORIGIN='{If(Convert.ToString(CbxOrigin.EditValue) = "CAS", "L4P", "LRP")}' 
+                                                and PRCTR='{CbxPrfitCtr.EditValue}' 
+                                                and POPER={GetMonthNumber(CbxMonth.EditValue)}
+                                                and RYEAR={TxtYear.EditValue}")
+
+
+                Dim result As DialogResult = MessageBox.Show("Data already exist. Do you want to override the Amount: " & Amt, SystemTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+
+                If result = DialogResult.No Then
+                    Exit Sub
+                End If
+
+                Dim Updqry As String = "UPDATE FI_PURCHIST SET HSL = @HSL 
+                                         WHERE TRX_ORIGIN = @TRX_ORIGIN 
+                                         AND PRCTR= @PRCTR
+                                         AND POPER = @POPER
+                                         AND RYEAR = @RYEAR;"
+                ExecuteUpdate(Updqry, params)
+
+                MessageBox.Show("Successfully saved!")
+            End If
+
+            LoadData()
+
+        Catch ex As Exception
+            MsgBox(ex.Message, vbExclamation)
+
+        End Try
     End Sub
 
-    Private Sub TxtYear_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TxtYear.KeyPress
+    Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
+        If String.IsNullOrWhiteSpace(CbxOrigin.Text) OrElse
+String.IsNullOrWhiteSpace(CbxPrfitCtr.Text) OrElse
+String.IsNullOrWhiteSpace(CbxMonth.Text) OrElse
+String.IsNullOrWhiteSpace(TxtYear.Text) OrElse
+String.IsNullOrWhiteSpace(TxtAmt.Text) Then
 
+            MessageBox.Show("Please enter all required fields.", SystemTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        End If
+
+
+        Dim result As DialogResult = MessageBox.Show("Are you sure you want to delete this data?", SystemTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+
+        If result = DialogResult.No Then
+            Exit Sub
+        End If
+
+        Dim params As New Dictionary(Of String, Object) From {
+                  {"@TRX_ORIGIN", If(Convert.ToString(CbxOrigin.EditValue) = "CAS", "L4P", "LRP")},
+                  {"@PRCTR", CbxPrfitCtr.EditValue},
+                  {"@POPER", GetMonthNumber(CbxMonth.EditValue)},
+                  {"@RYEAR", TxtYear.EditValue},
+                  {"@HSL", TxtAmt.EditValue}
+    }
+
+        Dim Delqry As String = "DELETE FROM FI_PURCHIST WHERE TRX_ORIGIN = @TRX_ORIGIN 
+                                         AND PRCTR= @PRCTR
+                                         AND POPER = @POPER
+                                         AND RYEAR = @RYEAR;"
+        ExecuteDelete(Delqry, params)
+        MessageBox.Show("Successfully Deleted!")
+
+        CbxOrigin.Text = ""
+        CbxPrfitCtr.Text = ""
+        CbxMonth.Text = ""
+        TxtYear.Text = ""
+        TxtAmt.Text = ""
+
+        LoadData()
+    End Sub
+
+    Private Sub BtnNew_Click(sender As Object, e As EventArgs) Handles BtnNew.Click
+        CbxOrigin.Text = ""
+        CbxPrfitCtr.Text = ""
+        CbxMonth.Text = ""
+        TxtYear.Text = ""
+        TxtAmt.Text = ""
     End Sub
 End Class
