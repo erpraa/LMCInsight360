@@ -126,7 +126,12 @@ Public Class CtrDataInitializeMM
     PRCTR AS [Profit Center],
     DATENAME(MONTH, DATEFROMPARTS(RYEAR, POPER, 1)) AS [Month],
     RYEAR AS [Year],
-    FORMAT(HSL, 'N2') AS [Amount] FROM FI_PURCHIST ORDER BY RYEAR,POPER,PRCTR,TRX_ORIGIN;")
+    FORMAT(HSL, 'N2') AS [Amount],
+    CreatedDate,
+    CreatedBy,
+    UpdateDate,
+    UpdateBy
+    FROM FI_PURCHIST ORDER BY RYEAR,POPER,PRCTR,TRX_ORIGIN;")
 
         GridView1.BestFitColumns()
         GridView1.OptionsFind.AlwaysVisible = False
@@ -159,11 +164,15 @@ Public Class CtrDataInitializeMM
                               {"@PRCTR", CbxPrfitCtr.EditValue},
                               {"@POPER", GetMonthNumber(CbxMonth.EditValue)},
                               {"@RYEAR", TxtYear.EditValue},
-                              {"@HSL", TxtAmt.EditValue}
+                              {"@HSL", TxtAmt.EditValue},
+                              {"@CreatedDate", GetServerDate()},
+                              {"@CreatedBy", GstrUselogin},
+                              {"@UpdateDate", GetServerDate()},
+                              {"@UpdateBy", GstrUselogin}
                 }
 
             If ChkDataExist = 0 Then
-                Dim Insqry As String = "INSERT INTO FI_PURCHIST (TRX_ORIGIN,PRCTR,POPER,RYEAR,HSL) VALUES (@TRX_ORIGIN,@PRCTR,@POPER,@RYEAR,@HSL);"
+                Dim Insqry As String = "INSERT INTO FI_PURCHIST (TRX_ORIGIN,PRCTR,POPER,RYEAR,HSL,CreatedDate,CreatedBy) VALUES (@TRX_ORIGIN,@PRCTR,@POPER,@RYEAR,@HSL,@CreatedDate,@CreatedBy);"
                 ExecuteInsert(Insqry, params)
                 MessageBox.Show("Successfully saved!")
             Else
@@ -181,7 +190,7 @@ Public Class CtrDataInitializeMM
                     Exit Sub
                 End If
 
-                Dim Updqry As String = "UPDATE FI_PURCHIST SET HSL = @HSL 
+                Dim Updqry As String = "UPDATE FI_PURCHIST SET HSL = @HSL, UpdateDate = @UpdateDate,UpdateBy = @UpdateBy
                                          WHERE TRX_ORIGIN = @TRX_ORIGIN 
                                          AND PRCTR= @PRCTR
                                          AND POPER = @POPER

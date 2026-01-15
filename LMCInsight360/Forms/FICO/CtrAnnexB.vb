@@ -59,6 +59,16 @@ Public Class CtrAnnexB
                 LblCompPrd.Hide()
                 CbxCompMonth.Hide()
                 TxtCompYear.Hide()
+
+            Case 4
+                LblTypeReport.Hide()
+                CbxStatementType.Hide()
+                CbxRptSheet.Hide()
+                CbxRptSheet1.Hide()
+                LblCompPrd.Hide()
+                CbxCompMonth.Hide()
+                TxtCompYear.Hide()
+                PnlReportType.Hide()
         End Select
     End Sub
 #End Region
@@ -99,12 +109,98 @@ Public Class CtrAnnexB
                 Case 3
                     Generate_RUFx_GainLoss()
                 Case 4
-                    ShowMaintenance()
+                    Generate_AnnexB()
             End Select
 
         End If
 
     End Sub
+
+    Private Sub Generate_AnnexB()
+
+        Dim sapSource As String
+
+        If CbxSapSource.EditValue = "CAS" Then
+            sapSource = "L4P"
+        ElseIf CbxSapSource.EditValue = "Reserved" Then
+            sapSource = "LRP"
+        Else
+            sapSource = Nothing
+        End If
+
+        ' Create Excel only once
+        Dim excelApp As New Excel.Application()
+        Dim wbook As Excel.Workbook = excelApp.Workbooks.Add()
+
+        ' Delete extra sheets, keep only Sheet1
+        For i As Integer = wbook.Sheets.Count To 2 Step -1
+            wbook.Sheets(i).Delete()
+        Next
+
+        Dim fmonth, fyear As String
+        fmonth = GetMonthNumber(CbxMonth.EditValue)
+        fyear = TxtYear.Text
+
+
+        If CbxBusinessType.EditValue = "FOODSTUFF" Then
+            FS_IncomeStatementComp(fmonth, fyear, If(fmonth = 1, 12, fmonth - 1), If(fmonth = 1, fyear - 1, fyear), sapSource, "FOODSTUFF", "MTM", Nothing, wbook, True)
+            FS_IncomeStatementComp(fmonth, fyear, fmonth, fyear - 1, sapSource, "FOODSTUFF", "YTY", "Monthly", wbook, False)
+            FS_IncomeStatementComp(fmonth, fyear, fmonth, fyear - 1, sapSource, "FOODSTUFF", "YTY", "Accum", wbook, False)
+
+            FS_SEGAAE(fmonth, fyear, If(fmonth = 1, 12, fmonth - 1), If(fmonth = 1, fyear - 1, fyear), sapSource, "Selling Exp", "FOODSTUFF", wbook, False)
+            FS_SEGAAE(fmonth, fyear, If(fmonth = 1, 12, fmonth - 1), If(fmonth = 1, fyear - 1, fyear), sapSource, "Admin Exp", "FOODSTUFF", wbook, False)
+
+            FS_RealizedFx(fmonth, fyear, sapSource, "FOODSTUFF", wbook, False)
+            FS_UnrealizedFx(fmonth, fyear, sapSource, "FOODSTUFF", wbook, False)
+
+        ElseIf CbxBusinessType.EditValue = "OVERALL" Then
+
+            FS_IncomeStatementComp(fmonth, fyear, If(fmonth = 1, 12, fmonth - 1), If(fmonth = 1, fyear - 1, fyear), sapSource, "OVERALL", "MTM", Nothing, wbook, True)
+            FS_IncomeStatementComp(fmonth, fyear, fmonth, fyear - 1, sapSource, "OVERALL", "YTY", "Monthly", wbook, False)
+            FS_IncomeStatementComp(fmonth, fyear, fmonth, fyear - 1, sapSource, "OVERALL", "YTY", "Accum", wbook, False)
+
+            FS_SEGAAE(fmonth, fyear, If(fmonth = 1, 12, fmonth - 1), If(fmonth = 1, fyear - 1, fyear), sapSource, "Selling Exp", "OVERALL", wbook, False)
+            FS_SEGAAE(fmonth, fyear, If(fmonth = 1, 12, fmonth - 1), If(fmonth = 1, fyear - 1, fyear), sapSource, "Admin Exp", "OVERALL", wbook, False)
+
+            FS_RealizedFx(fmonth, fyear, sapSource, "OVERALL", wbook, False)
+            FS_UnrealizedFx(fmonth, fyear, sapSource, "OVERALL", wbook, False)
+
+        Else
+
+            FS_IncomeStatementComp(fmonth, fyear, If(fmonth = 1, 12, fmonth - 1), If(fmonth = 1, fyear - 1, fyear), sapSource, "FOODSTUFF", "MTM", Nothing, wbook, True)
+            FS_IncomeStatementComp(fmonth, fyear, fmonth, fyear - 1, sapSource, "FOODSTUFF", "YTY", "Monthly", wbook, False)
+            FS_IncomeStatementComp(fmonth, fyear, fmonth, fyear - 1, sapSource, "FOODSTUFF", "YTY", "Accum", wbook, False)
+
+            FS_IncomeStatementComp(fmonth, fyear, If(fmonth = 1, 12, fmonth - 1), If(fmonth = 1, fyear - 1, fyear), sapSource, "OVERALL", "MTM", Nothing, wbook, False)
+            FS_IncomeStatementComp(fmonth, fyear, fmonth, fyear - 1, sapSource, "OVERALL", "YTY", "Monthly", wbook, False)
+            FS_IncomeStatementComp(fmonth, fyear, fmonth, fyear - 1, sapSource, "OVERALL", "YTY", "Accum", wbook, False)
+
+            FS_SEGAAE(fmonth, fyear, If(fmonth = 1, 12, fmonth - 1), If(fmonth = 1, fyear - 1, fyear), sapSource, "Selling Exp", "FOODSTUFF", wbook, False)
+            FS_SEGAAE(fmonth, fyear, If(fmonth = 1, 12, fmonth - 1), If(fmonth = 1, fyear - 1, fyear), sapSource, "Selling Exp", "OVERALL", wbook, False)
+            FS_SEGAAE(fmonth, fyear, If(fmonth = 1, 12, fmonth - 1), If(fmonth = 1, fyear - 1, fyear), sapSource, "Admin Exp", "FOODSTUFF", wbook, False)
+            FS_SEGAAE(fmonth, fyear, If(fmonth = 1, 12, fmonth - 1), If(fmonth = 1, fyear - 1, fyear), sapSource, "Admin Exp", "OVERALL", wbook, False)
+
+            FS_RealizedFx(fmonth, fyear, sapSource, "FOODSTUFF", wbook, False)
+            FS_UnrealizedFx(fmonth, fyear, sapSource, "FOODSTUFF", wbook, False)
+            FS_RealizedFx(fmonth, fyear, sapSource, "OVERALL", wbook, False)
+            FS_UnrealizedFx(fmonth, fyear, sapSource, "OVERALL", wbook, False)
+
+        End If
+
+        wbook.Sheets(1).Activate()
+        excelApp.Visible = True
+
+        ' Cleanup COM
+        If wbook IsNot Nothing Then Marshal.ReleaseComObject(wbook)
+        If excelApp IsNot Nothing Then Marshal.ReleaseComObject(excelApp)
+
+        wbook = Nothing
+        excelApp = Nothing
+        GC.Collect()
+        GC.WaitForPendingFinalizers()
+
+    End Sub
+
 
 #End Region
 

@@ -37,8 +37,8 @@ Partial Class CtrAnnexB
         Me.CbxStatementType = New DevExpress.XtraEditors.ComboBoxEdit()
         Me.LblTypeReport = New DevExpress.XtraEditors.LabelControl()
         Me.CbxRptSheet = New DevExpress.XtraEditors.ComboBoxEdit()
-        Me.BtnGenerate = New LMCInsight360.RoundedButton()
         Me.CbxRptSheet1 = New DevExpress.XtraEditors.ComboBoxEdit()
+        Me.BtnGenerate = New LMCInsight360.RoundedButton()
         Me.PnlReportType.SuspendLayout()
         CType(Me.CbxBusinessType.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TxtYear.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -321,19 +321,6 @@ Partial Class CtrAnnexB
         Me.CbxRptSheet.Size = New System.Drawing.Size(210, 30)
         Me.CbxRptSheet.TabIndex = 58
         '
-        'BtnGenerate
-        '
-        Me.BtnGenerate.BackColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(184, Byte), Integer))
-        Me.BtnGenerate.FlatAppearance.BorderSize = 0
-        Me.BtnGenerate.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BtnGenerate.ForeColor = System.Drawing.Color.White
-        Me.BtnGenerate.Location = New System.Drawing.Point(410, 270)
-        Me.BtnGenerate.Name = "BtnGenerate"
-        Me.BtnGenerate.Size = New System.Drawing.Size(210, 33)
-        Me.BtnGenerate.TabIndex = 51
-        Me.BtnGenerate.Text = "📥 Generate Report"
-        Me.BtnGenerate.UseVisualStyleBackColor = False
-        '
         'CbxRptSheet1
         '
         Me.CbxRptSheet1.Location = New System.Drawing.Point(405, 91)
@@ -352,6 +339,19 @@ Partial Class CtrAnnexB
         Me.CbxRptSheet1.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor
         Me.CbxRptSheet1.Size = New System.Drawing.Size(210, 30)
         Me.CbxRptSheet1.TabIndex = 59
+        '
+        'BtnGenerate
+        '
+        Me.BtnGenerate.BackColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(184, Byte), Integer))
+        Me.BtnGenerate.FlatAppearance.BorderSize = 0
+        Me.BtnGenerate.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnGenerate.ForeColor = System.Drawing.Color.White
+        Me.BtnGenerate.Location = New System.Drawing.Point(410, 270)
+        Me.BtnGenerate.Name = "BtnGenerate"
+        Me.BtnGenerate.Size = New System.Drawing.Size(210, 33)
+        Me.BtnGenerate.TabIndex = 51
+        Me.BtnGenerate.Text = "📥 Generate Report"
+        Me.BtnGenerate.UseVisualStyleBackColor = False
         '
         'CtrAnnexB
         '

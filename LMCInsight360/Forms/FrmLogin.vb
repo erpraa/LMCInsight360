@@ -219,7 +219,7 @@ Public Class FrmLogin
     Private Sub LblLinkDatabase_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LblLinkDatabase.LinkClicked
         m_blnConn = Not m_blnConn
         PnlSelectConn.Visible = m_blnConn
-
+        ClosePopup()
     End Sub
 
     Private popup As FrmAddConnection
@@ -234,6 +234,14 @@ Public Class FrmLogin
                 popup.Close()
             End If
         End If
+    End Sub
+
+    Private Sub ClosePopup()
+        If popup IsNot Nothing AndAlso Not popup.IsDisposed Then
+            popup.Close()
+        End If
+        popup = Nothing
+        m_blnAddCon = False
     End Sub
 
     Private Sub ShowAddConn()
@@ -284,6 +292,10 @@ Public Class FrmLogin
         ' Clear and load profiles into ComboBox1
         CbxSelectServer.Items.Clear()
         CbxSelectServer.Items.AddRange(profileList.ToArray())
+
+    End Sub
+
+    Private Sub RPnlLeft_Paint(sender As Object, e As PaintEventArgs) Handles RPnlLeft.Paint
 
     End Sub
 End Class
