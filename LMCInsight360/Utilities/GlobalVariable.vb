@@ -2,9 +2,7 @@
     Public AppSecurity As String = "R@z4ña"
     Public SystemTitle As String = "LMC Insight360"
 
-
     'Global String
-
     Public GstrUseID As String = Nothing
     Public GstrUselogin As String = Nothing
     Public GstrUsername As String = Nothing
@@ -12,7 +10,6 @@
     Public GstrIsActive As String = Nothing
     Public GstrIsLoggedIn As String = Nothing
     Public GstrIsResetPass As String = Nothing
-
 
     'Report Excel Format
     Public Const NumericFormat As String = "#,##0.00;(#,##0.00)"
@@ -25,9 +22,6 @@
     Public Const DollarFormat As String = "\$#,##0.00"
 
     Public Gbl_ReportTag As Integer = Nothing
-
-
-
 
 
     Public Sub ShowMaintenance(Optional message As String = Nothing)

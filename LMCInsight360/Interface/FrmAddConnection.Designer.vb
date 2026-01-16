@@ -198,7 +198,7 @@ Partial Class FrmAddConnection
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 17.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(350, 248)
+        Me.ClientSize = New System.Drawing.Size(340, 245)
         Me.Controls.Add(Me.BtnSave)
         Me.Controls.Add(Me.BtnDelete)
         Me.Controls.Add(Me.BtnNew)

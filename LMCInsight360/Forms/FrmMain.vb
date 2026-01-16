@@ -231,15 +231,61 @@ Public Class FrmMain
         TabMenu(Me, New CtrAnnexB, "Generate Annex B")
     End Sub
 
+#End Region
+
+
+#Region "Maintenance Module"
+
     Private Sub CreateAccount_Click(sender As Object, e As EventArgs) Handles CreateAccount.Click
         TabMenu(Me, New CtrCreateAccount, "Create Account")
     End Sub
 
-    Private Sub AccordionControlElement19_Click(sender As Object, e As EventArgs) Handles AccordionControlElement19.Click
-        ShowMaintenance()
+    Private Sub BtnAbout_Click(sender As Object, e As EventArgs) Handles BtnAbout.Click
+        ' About Us section
+        Dim aboutMsg As String = "About Us" & Environment.NewLine & Environment.NewLine &
+                             "LMC Insight360 is a powerful reporting system designed to consolidate CAS and Reserved data into accurate and comprehensive reports. We provide tools that simplify the generation of complex Financial Statements and Sales Reports, helping organizations save time and reduce manual effort." & Environment.NewLine & Environment.NewLine &
+                             "Our Purpose" & Environment.NewLine & Environment.NewLine &
+                             "Our goal is to streamline the reporting process, improve data accuracy, and enhance decision making by delivering fast, reliable, and automated report generation. With LMC Insight360, users can focus on insights rather than manual data compilation." & Environment.NewLine & Environment.NewLine
+
+        ' What's New section
+        Dim updatesMsg As String = "What's New:" & Environment.NewLine & Environment.NewLine
+        For Each u In AppUpdates.Updates
+            updatesMsg &= $"Version {u.Version} ({u.ReleaseDate:MM/dd/yyyy})" & Environment.NewLine
+            For Each desc In u.Descriptions
+                updatesMsg &= $"• {desc}" & Environment.NewLine
+            Next
+            updatesMsg &= Environment.NewLine
+        Next
+
+        ' Combine both messages
+        Dim fullMsg As String = aboutMsg & updatesMsg
+
+        ' Show in scrollable form
+        Dim frm As New FrmUpdates(fullMsg)
+        frm.ShowDialog()
     End Sub
 
-    Private Sub AccordionControlElement20_Click(sender As Object, e As EventArgs) Handles AccordionControlElement20.Click
+#End Region
+
+    Private Sub FrmMain_Disposed(sender As Object, e As EventArgs) Handles Me.Disposed
+        UpdateLoginStatus(GstrUseID, False)
+        FrmLogin.Close()
+    End Sub
+
+    Private Sub FrmMain_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+
+        Dim result = MessageBox.Show("Are you sure you want to exit?", "Confirm Exit",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            )
+
+        If result = DialogResult.No Then
+            e.Cancel = True
+        End If
+    End Sub
+
+
+    Private Sub AccordionControlElement19_Click(sender As Object, e As EventArgs) Handles AccordionControlElement19.Click
         ShowMaintenance()
     End Sub
 
@@ -279,24 +325,5 @@ Public Class FrmMain
         ShowMaintenance()
     End Sub
 
-    Private Sub FrmMain_Disposed(sender As Object, e As EventArgs) Handles Me.Disposed
-        UpdateLoginStatus(GstrUseID, False)
-        FrmLogin.Close()
-    End Sub
-
-    Private Sub FrmMain_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-
-        Dim result = MessageBox.Show("Are you sure you want to exit?", "Confirm Exit",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question
-            )
-
-        If result = DialogResult.No Then
-            e.Cancel = True
-        End If
-    End Sub
-
-
-#End Region
 
 End Class

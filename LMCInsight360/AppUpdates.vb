@@ -1,0 +1,28 @@
+﻿Module AppUpdates
+
+    Public ReadOnly Updates As New List(Of UpdateInfo) From {
+        New UpdateInfo With {
+            .Version = "1.0.0.1",
+            .Descriptions = New List(Of String) From {"Initial release"},
+            .ReleaseDate = #12/16/2025#
+        },
+        New UpdateInfo With {
+            .Version = "1.0.0.2",
+            .Descriptions = New List(Of String) From {
+                "Bug fixes in Data initialization"
+            },
+            .ReleaseDate = #12/23/2025#
+        },
+        New UpdateInfo With {
+            .Version = "1.0.0.3",
+            .Descriptions = New List(Of String) From {
+                "Updated the database connection settings in the Login Module",
+                "Implemented a new feature for encoding purchase transactions",
+                "The Consolidated Annex B button is now functioning properly",
+                "Fixed the Amount polarity in the Detail Schedule Report in Annex A"
+            },
+            .ReleaseDate = #01/16/2026#
+        }
+    }
+
+End Module

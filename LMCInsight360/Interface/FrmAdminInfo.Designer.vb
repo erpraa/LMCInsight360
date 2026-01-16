@@ -19,7 +19,6 @@ Partial Class FrmAdminInfo
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
         Me.LblUser = New DevExpress.XtraEditors.LabelControl()
         Me.LabelControl3 = New DevExpress.XtraEditors.LabelControl()
         Me.LabelControl4 = New DevExpress.XtraEditors.LabelControl()
@@ -30,10 +29,8 @@ Partial Class FrmAdminInfo
         Me.LblReportServer = New DevExpress.XtraEditors.LabelControl()
         Me.LblCasServer = New DevExpress.XtraEditors.LabelControl()
         Me.LblResServer = New DevExpress.XtraEditors.LabelControl()
-        Me.BehaviorManager1 = New DevExpress.Utils.Behaviors.BehaviorManager(Me.components)
         Me.LblVersion = New DevExpress.XtraEditors.LabelControl()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        CType(Me.BehaviorManager1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -224,7 +221,6 @@ Partial Class FrmAdminInfo
         Me.Name = "FrmAdminInfo"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
         Me.TopMost = True
-        CType(Me.BehaviorManager1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.ResumeLayout(False)
@@ -240,7 +236,6 @@ Partial Class FrmAdminInfo
     Friend WithEvents LblReportServer As DevExpress.XtraEditors.LabelControl
     Friend WithEvents LblCasServer As DevExpress.XtraEditors.LabelControl
     Friend WithEvents LblResServer As DevExpress.XtraEditors.LabelControl
-    Friend WithEvents BehaviorManager1 As DevExpress.Utils.Behaviors.BehaviorManager
     Friend WithEvents LblVersion As DevExpress.XtraEditors.LabelControl
     Friend WithEvents GroupBox1 As GroupBox
 End Class

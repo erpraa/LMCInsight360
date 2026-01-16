@@ -126,6 +126,13 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppUpdates.vb" />
+    <Compile Include="Forms\ACCOUNT\FrmUpdates.Designer.vb">
+      <DependentUpon>FrmUpdates.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ACCOUNT\FrmUpdates.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\FICO\CtrDataInitializeFI.Designer.vb">
       <DependentUpon>CtrDataInitializeFI.vb</DependentUpon>
     </Compile>
@@ -221,8 +228,12 @@
     <Compile Include="Utilities\GlobalVariable.vb" />
     <Compile Include="Utilities\SubClass.vb" />
     <Compile Include="Utilities\SubQuery.vb" />
+    <Compile Include="Utilities\UpdateInfo.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\ACCOUNT\FrmUpdates.resx">
+      <DependentUpon>FrmUpdates.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FICO\CtrAnnexA.resx">
       <DependentUpon>CtrAnnexA.vb</DependentUpon>
     </EmbeddedResource>

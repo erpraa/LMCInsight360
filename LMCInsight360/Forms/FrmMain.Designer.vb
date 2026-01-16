@@ -60,7 +60,7 @@ Partial Class FrmMain
         Me.SideBarMaintenace = New DevExpress.XtraBars.Navigation.AccordionControl()
         Me.CreateAccount = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.AccordionControlElement19 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
-        Me.AccordionControlElement20 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
+        Me.BtnAbout = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.SideBarSD = New DevExpress.XtraBars.Navigation.AccordionControl()
         Me.AccordionControlElement10 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.AccordionControlElement12 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
@@ -354,9 +354,9 @@ Partial Class FrmMain
         Me.PnlLeftBody.Appearance.BackColor = System.Drawing.Color.Transparent
         Me.PnlLeftBody.Appearance.Options.UseBackColor = True
         Me.PnlLeftBody.BorderThickness = 0
-        Me.PnlLeftBody.Controls.Add(Me.SideBarFICO)
         Me.PnlLeftBody.Controls.Add(Me.SideBarMaintenace)
         Me.PnlLeftBody.Controls.Add(Me.SideBarSD)
+        Me.PnlLeftBody.Controls.Add(Me.SideBarFICO)
         Me.PnlLeftBody.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PnlLeftBody.Location = New System.Drawing.Point(15, 128)
         Me.PnlLeftBody.Name = "PnlLeftBody"
@@ -480,7 +480,7 @@ Partial Class FrmMain
         Me.SideBarMaintenace.Appearance.AccordionControl.BackColor = System.Drawing.Color.FromArgb(CType(CType(185, Byte), Integer), CType(CType(206, Byte), Integer), CType(CType(223, Byte), Integer))
         Me.SideBarMaintenace.Appearance.AccordionControl.Options.UseBackColor = True
         Me.SideBarMaintenace.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SideBarMaintenace.Elements.AddRange(New DevExpress.XtraBars.Navigation.AccordionControlElement() {Me.CreateAccount, Me.AccordionControlElement19, Me.AccordionControlElement20})
+        Me.SideBarMaintenace.Elements.AddRange(New DevExpress.XtraBars.Navigation.AccordionControlElement() {Me.CreateAccount, Me.AccordionControlElement19, Me.BtnAbout})
         Me.SideBarMaintenace.Location = New System.Drawing.Point(0, 0)
         Me.SideBarMaintenace.Name = "SideBarMaintenace"
         Me.SideBarMaintenace.OptionsMinimizing.AllowMinimizeMode = DevExpress.Utils.DefaultBoolean.[False]
@@ -493,17 +493,20 @@ Partial Class FrmMain
         'CreateAccount
         '
         Me.CreateAccount.Name = "CreateAccount"
+        Me.CreateAccount.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item
         Me.CreateAccount.Text = "🔐  Create Account"
         '
         'AccordionControlElement19
         '
         Me.AccordionControlElement19.Name = "AccordionControlElement19"
+        Me.AccordionControlElement19.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item
         Me.AccordionControlElement19.Text = "👤  User Access"
         '
-        'AccordionControlElement20
+        'BtnAbout
         '
-        Me.AccordionControlElement20.Name = "AccordionControlElement20"
-        Me.AccordionControlElement20.Text = "💡  About"
+        Me.BtnAbout.Name = "BtnAbout"
+        Me.BtnAbout.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item
+        Me.BtnAbout.Text = "💡  About"
         '
         'SideBarSD
         '
@@ -696,7 +699,7 @@ Partial Class FrmMain
     Friend WithEvents AccordionControlElement17 As DevExpress.XtraBars.Navigation.AccordionControlElement
     Friend WithEvents AccordionControlElement18 As DevExpress.XtraBars.Navigation.AccordionControlElement
     Friend WithEvents AccordionControlElement19 As DevExpress.XtraBars.Navigation.AccordionControlElement
-    Friend WithEvents AccordionControlElement20 As DevExpress.XtraBars.Navigation.AccordionControlElement
+    Friend WithEvents BtnAbout As DevExpress.XtraBars.Navigation.AccordionControlElement
     Friend WithEvents DocumentManager1 As DevExpress.XtraBars.Docking2010.DocumentManager
     Friend WithEvents TabbedView1 As DevExpress.XtraBars.Docking2010.Views.Tabbed.TabbedView
     Friend WithEvents PnlBRight As DevExpress.XtraEditors.SidePanel
