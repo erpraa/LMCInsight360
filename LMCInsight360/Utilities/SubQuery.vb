@@ -168,7 +168,8 @@
                     INNER JOIN vwFI_GETGLGRP g ON LEFT(LTRIM(RTRIM(f.SGTXT)), 6) = CAST(g.SAKNR AS VARCHAR(20))
                     LEFT JOIN FI_BRANCH b ON f.PRCTR = b.PRCTR 
                     WHERE 
-                    f.AUGDT IS NULL
+                    GKONT IN ('721002','721006')
+                    AND f.AUGDT IS NULL
                     AND f.GJAHR = {FiscalYear} AND f.POPER = {PostingPeriod}
 	                AND g.CTM1 = '{FSItem}'
                     {pTrxOrigin} {pbusinessType}"

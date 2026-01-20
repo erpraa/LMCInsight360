@@ -957,7 +957,7 @@ Skip:
                                 allData(glDesc) = New Decimal(fiscalMonth - 1) {}
                                 glOrder.Add(glDesc)
                             End If
-                            allData(glDesc)(period - 1) = amt
+                            allData(glDesc)(period - 1) = amt * -1 '* -1 added by RAA 01/16/2026
                         End While
                     End Using
                 End Using
