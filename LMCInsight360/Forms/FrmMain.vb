@@ -171,15 +171,30 @@ Public Class FrmMain
     End Sub
 
     Private Sub ShowUserInfo()
-        Dim popup As New FrmAdminInfo With {
-            .Size = New Size(345, 300)
-        }
-        Dim pt As Point = Me.PointToScreen(New Point(PnlBRight.Right - popup.Width, PnlTopHeader.Bottom))
-        popup.StartPosition = FormStartPosition.Manual
-        popup.Location = pt
 
+        Dim popup As New FrmAdminInfo()
+
+        popup.StartPosition = FormStartPosition.Manual
+
+        ' Force DPI scaling and layout
+        popup.AutoScaleMode = AutoScaleMode.Dpi
+        popup.PerformLayout()
+
+        ' Ensure handle is created so Width is correct
+        popup.CreateControl()
+
+        ' Now Width is DPI-correct
+        Dim pt As Point = Me.PointToScreen(
+        New Point(PnlBRight.Right - popup.Width, PnlTopHeader.Bottom)
+    )
+
+        popup.Location = pt
         popup.Show(Me)
+
     End Sub
+
+
+
 #End Region
 
 #Region "Finacial Statement"

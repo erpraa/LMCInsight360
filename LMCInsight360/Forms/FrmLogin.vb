@@ -245,27 +245,37 @@ Public Class FrmLogin
     End Sub
 
     Private Sub ShowAddConn()
+
         If popup Is Nothing OrElse popup.IsDisposed Then
-            popup = New FrmAddConnection With {
-            .Size = New Size(350, 250),
-            .StartPosition = FormStartPosition.Manual,
-            .ShowInTaskbar = False
-        }
+
+            popup = New FrmAddConnection()
+            popup.StartPosition = FormStartPosition.Manual
+            popup.ShowInTaskbar = False
             popup.Owner = Me
+
+            ' Ensure DPI scaling is applied
+            popup.AutoScaleMode = AutoScaleMode.Dpi
+            popup.CreateControl()
+
             popup.Show(Me)
+
         End If
 
         UpdatePopupPosition()
+
     End Sub
 
     Private Sub UpdatePopupPosition()
+
         If popup Is Nothing OrElse popup.IsDisposed Then Exit Sub
 
+        ' Position popup relative to panel (bottom-right)
         Dim pt As Point = Me.PointToScreen(
         New Point(PnlSelectConn.Right, PnlSelectConn.Bottom)
     )
 
         popup.Location = pt
+
     End Sub
 
     Private Sub LblConnect_Click(sender As Object, e As EventArgs) Handles LblConnect.Click
