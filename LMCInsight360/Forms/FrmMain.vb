@@ -255,6 +255,10 @@ Public Class FrmMain
         TabMenu(Me, New CtrCreateAccount, "Create Account")
     End Sub
 
+    Private Sub ResetPassword_Click(sender As Object, e As EventArgs) Handles ResetPassword.Click
+        TabMenu(Me, New CtrResetPassword, "Reset Password")
+    End Sub
+
     Private Sub BtnAbout_Click(sender As Object, e As EventArgs) Handles BtnAbout.Click
         ' About Us section
         Dim aboutMsg As String = "About Us" & Environment.NewLine & Environment.NewLine &

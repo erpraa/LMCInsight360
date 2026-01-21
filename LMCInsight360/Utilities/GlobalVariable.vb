@@ -7,9 +7,9 @@
     Public GstrUselogin As String = Nothing
     Public GstrUsername As String = Nothing
     Public GstrPassword As String = Nothing
-    Public GstrIsActive As String = Nothing
-    Public GstrIsLoggedIn As String = Nothing
-    Public GstrIsResetPass As String = Nothing
+    Public GstrIsActive As Boolean
+    Public GstrIsLoggedIn As Boolean
+    Public GstrIsResetPass As Boolean
 
     'Report Excel Format
     Public Const NumericFormat As String = "#,##0.00;(#,##0.00)"

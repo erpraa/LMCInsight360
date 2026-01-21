@@ -22,6 +22,15 @@
                 "Fixed the Amount polarity in the Detail Schedule Report in Annex A"
             },
             .ReleaseDate = #01/16/2026#
+        },
+                New UpdateInfo With {
+            .Version = "1.0.0.4",
+            .Descriptions = New List(Of String) From {
+                "Minor update in Annex B - Unrealize peso amount",
+                "Fixed GUI auto-scaling according to user settings",
+                "Implemented a new feature for Reset Password"
+            },
+            .ReleaseDate = #01/21/2026#
         }
     }
 

@@ -174,7 +174,7 @@ Partial Class CtrCreateAccount
         Me.BtnSave.FlatAppearance.BorderSize = 0
         Me.BtnSave.Font = New System.Drawing.Font("Segoe UI Semibold", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BtnSave.ForeColor = System.Drawing.Color.White
-        Me.BtnSave.Location = New System.Drawing.Point(331, 269)
+        Me.BtnSave.Location = New System.Drawing.Point(343, 253)
         Me.BtnSave.Name = "BtnSave"
         Me.BtnSave.Size = New System.Drawing.Size(150, 29)
         Me.BtnSave.TabIndex = 59

@@ -36,7 +36,7 @@ Public Class CtrCreateAccount
             Exit Sub
         End If
 
-        Dim ChkUserExist As String = GetValue("select COUNT(*) UserExist from MSTR_USERS where UserName='" & TxtUser.Text.Trim() & "'")
+        Dim ChkUserExist As String = GetValue($"select COUNT(*) UserExist from MSTR_USERS where UserName='{TxtUser.Text.Trim()}'")
 
         If ChkUserExist <> 0 Then
             MsgBox("That username is already taken!", vbExclamation)

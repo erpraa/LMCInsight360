@@ -127,40 +127,46 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppUpdates.vb" />
-    <Compile Include="Forms\ACCOUNT\FrmUpdates.Designer.vb">
+    <Compile Include="Forms\AccountFrm\CtrResetPassword.Designer.vb">
+      <DependentUpon>CtrResetPassword.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AccountFrm\CtrResetPassword.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\AccountFrm\FrmUpdates.Designer.vb">
       <DependentUpon>FrmUpdates.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ACCOUNT\FrmUpdates.vb">
+    <Compile Include="Forms\AccountFrm\FrmUpdates.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FICO\CtrDataInitializeFI.Designer.vb">
+    <Compile Include="Forms\FicoFrm\CtrDataInitializeFI.Designer.vb">
       <DependentUpon>CtrDataInitializeFI.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FICO\CtrDataInitializeFI.vb">
+    <Compile Include="Forms\FicoFrm\CtrDataInitializeFI.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\FICO\CtrAnnexA.Designer.vb">
+    <Compile Include="Forms\FicoFrm\CtrAnnexA.Designer.vb">
       <DependentUpon>CtrAnnexA.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FICO\CtrAnnexA.vb">
+    <Compile Include="Forms\FicoFrm\CtrAnnexA.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\FICO\CtrAnnexB.Designer.vb">
+    <Compile Include="Forms\FicoFrm\CtrAnnexB.Designer.vb">
       <DependentUpon>CtrAnnexB.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FICO\CtrAnnexB.vb">
+    <Compile Include="Forms\FicoFrm\CtrAnnexB.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\FICO\CtrDataInitializeMM.Designer.vb">
+    <Compile Include="Forms\FicoFrm\CtrDataInitializeMM.Designer.vb">
       <DependentUpon>CtrDataInitializeMM.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FICO\CtrDataInitializeMM.vb">
+    <Compile Include="Forms\FicoFrm\CtrDataInitializeMM.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\FICO\FrmViewGL.Designer.vb">
+    <Compile Include="Forms\FicoFrm\FrmViewGL.Designer.vb">
       <DependentUpon>FrmViewGL.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FICO\FrmViewGL.vb">
+    <Compile Include="Forms\FicoFrm\FrmViewGL.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\FrmLogin.Designer.vb">
@@ -175,32 +181,38 @@
     <Compile Include="Forms\FrmMain.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\ACCOUNT\CtrCreateAccount.Designer.vb">
+    <Compile Include="Forms\AccountFrm\CtrCreateAccount.Designer.vb">
       <DependentUpon>CtrCreateAccount.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ACCOUNT\CtrCreateAccount.vb">
+    <Compile Include="Forms\AccountFrm\CtrCreateAccount.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Interface\FrmAddConnection.Designer.vb">
+    <Compile Include="Forms\OtherFrm\FrmAddConnection.Designer.vb">
       <DependentUpon>FrmAddConnection.vb</DependentUpon>
     </Compile>
-    <Compile Include="Interface\FrmAddConnection.vb">
+    <Compile Include="Forms\OtherFrm\FrmAddConnection.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Interface\FrmAdminInfo.Designer.vb">
+    <Compile Include="Forms\OtherFrm\FrmAdminInfo.Designer.vb">
       <DependentUpon>FrmAdminInfo.vb</DependentUpon>
     </Compile>
-    <Compile Include="Interface\FrmAdminInfo.vb">
+    <Compile Include="Forms\OtherFrm\FrmAdminInfo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\OtherFrm\FrmLookup.Designer.vb">
+      <DependentUpon>FrmLookup.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\OtherFrm\FrmLookup.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Interface\ClassDesign.vb" />
     <Compile Include="Interface\RoundedButton.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Interface\WaitFrm.Designer.vb">
+    <Compile Include="Forms\OtherFrm\WaitFrm.Designer.vb">
       <DependentUpon>WaitFrm.vb</DependentUpon>
     </Compile>
-    <Compile Include="Interface\WaitFrm.vb">
+    <Compile Include="Forms\OtherFrm\WaitFrm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -231,22 +243,25 @@
     <Compile Include="Utilities\UpdateInfo.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Forms\ACCOUNT\FrmUpdates.resx">
+    <EmbeddedResource Include="Forms\AccountFrm\CtrResetPassword.resx">
+      <DependentUpon>CtrResetPassword.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AccountFrm\FrmUpdates.resx">
       <DependentUpon>FrmUpdates.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FICO\CtrAnnexA.resx">
+    <EmbeddedResource Include="Forms\FicoFrm\CtrAnnexA.resx">
       <DependentUpon>CtrAnnexA.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FICO\CtrDataInitializeFI.resx">
+    <EmbeddedResource Include="Forms\FicoFrm\CtrDataInitializeFI.resx">
       <DependentUpon>CtrDataInitializeFI.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FICO\CtrAnnexB.resx">
+    <EmbeddedResource Include="Forms\FicoFrm\CtrAnnexB.resx">
       <DependentUpon>CtrAnnexB.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FICO\CtrDataInitializeMM.resx">
+    <EmbeddedResource Include="Forms\FicoFrm\CtrDataInitializeMM.resx">
       <DependentUpon>CtrDataInitializeMM.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FICO\FrmViewGL.resx">
+    <EmbeddedResource Include="Forms\FicoFrm\FrmViewGL.resx">
       <DependentUpon>FrmViewGL.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FrmLogin.resx">
@@ -255,16 +270,19 @@
     <EmbeddedResource Include="Forms\FrmMain.resx">
       <DependentUpon>FrmMain.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ACCOUNT\CtrCreateAccount.resx">
+    <EmbeddedResource Include="Forms\AccountFrm\CtrCreateAccount.resx">
       <DependentUpon>CtrCreateAccount.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Interface\FrmAddConnection.resx">
+    <EmbeddedResource Include="Forms\OtherFrm\FrmAddConnection.resx">
       <DependentUpon>FrmAddConnection.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Interface\FrmAdminInfo.resx">
+    <EmbeddedResource Include="Forms\OtherFrm\FrmAdminInfo.resx">
       <DependentUpon>FrmAdminInfo.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Interface\WaitFrm.resx">
+    <EmbeddedResource Include="Forms\OtherFrm\FrmLookup.resx">
+      <DependentUpon>FrmLookup.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\OtherFrm\WaitFrm.resx">
       <DependentUpon>WaitFrm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\licenses.licx" />
@@ -288,7 +306,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Forms\SD\" />
+    <Folder Include="Forms\SDFrm\" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">

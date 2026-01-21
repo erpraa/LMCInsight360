@@ -169,8 +169,6 @@ Public Class ClassFunction
         Return dvcv
     End Function
 
-
-
     Public Shared Function GetCurrencyFormat(currency As String) As String
         Select Case currency.ToUpper()
 
@@ -204,6 +202,13 @@ Public Class ClassFunction
 
     End Function
 
+    Public Shared Function IsFormOpen(ByVal frm As Form) As Boolean
+        If Application.OpenForms.OfType(Of Form).Contains(frm) Then
+            Return True
+        Else
+            Return False
+        End If
+    End Function
 
 #End Region
 

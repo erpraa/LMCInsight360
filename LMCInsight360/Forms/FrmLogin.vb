@@ -1,6 +1,7 @@
 ﻿Imports DevExpress.XtraEditors
 Imports LMCInsight360.ClassFunction
 Imports LMCInsight360.CryptoEngine
+Imports System.Data.SqlClient
 
 Public Class FrmLogin
 
@@ -43,43 +44,50 @@ Public Class FrmLogin
             '    MessageBox.Show($"Your version ({GetPublishVersion()}) is outdated. The current version is ({record("Version")}). Please update before continuing.", SystemTitle, MessageBoxButtons.OK, MessageBoxIcon.Error)
             '    Exit Sub
             'End If
-
         Next
 
         Try
-            Dim found As Boolean = False
+            Dim Found As Boolean = False
 
-            Dim dataUser As List(Of Dictionary(Of String, String)) = GetMultiValues("select * from MSTR_USERS")
+            Using conn As New SqlConnection(SqlConnect)
+                conn.Open()
 
-            For Each record In dataUser
+                Using cmd As New SqlCommand("select * from MSTR_USERS WHERE UserName = @Username", conn)
+                    cmd.Parameters.AddWithValue("@Username", TxtUsername.Text)
 
-                If TxtPassword.Text = DataDecrypt(record("Password").ToString, AppSecurity) Then
-                    found = True
-                    GstrUseID = record("UserID").ToString
-                    GstrUselogin = record("FullName").ToString
-                    GstrUsername = record("UserName").ToString
-                    GstrPassword = DataDecrypt(record("Password").ToString, AppSecurity)
+                    Using dr As SqlDataReader = cmd.ExecuteReader()
+                        While dr.Read()
 
-                    GstrIsActive = record("IsActive").ToString
-                    GstrIsLoggedIn = record("IsLoggedIn").ToString
-                    GstrIsResetPass = record("IsResetPass").ToString
-                End If
+                            If TxtPassword.Text = DataDecrypt(dr.Item("Password").ToString, AppSecurity) Then
+                                Found = True
 
-            Next
+                                GstrUseID = dr.Item("UserID").ToString
+                                GstrUselogin = dr.Item("FullName").ToString
+                                GstrUsername = dr.Item("UserName").ToString
+                                GstrPassword = DataDecrypt(dr.Item("Password").ToString, AppSecurity)
 
-            If found Then
+                                GstrIsActive = dr.Item("IsActive").ToString
+                                GstrIsLoggedIn = dr.Item("IsLoggedIn").ToString
+                                GstrIsResetPass = dr.Item("IsResetPass").ToString
+                            End If
+
+                        End While
+                    End Using
+                End Using
+            End Using
+
+            If Found Then
 
                 If GstrIsActive = False Then
                     MessageBox.Show("Contact the Administrator to activate your account.", SystemTitle, MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
                     Exit Sub
                 End If
 
-                ' Check if user is already logged in
                 If GstrIsLoggedIn = True Then
                     Dim response As Integer
                     response = MsgBox("This user is already logged in on another device." & vbCrLf & vbCrLf & " Do you want to continue?" & vbCrLf & vbCrLf & "(Continuing will log them out, and any unsaved data will be lost.)", vbYesNo + vbQuestion, SystemTitle)
                     If response = vbYes Then
-                        ExecuteUpdate($"Update MSTR_USERS set isLoggedIn='False' where UserID='{GstrUseID}'")
+                        ExecuteUpdate($"Update MSTR_USERS set isLoggedIn=0 where UserID='{GstrUseID}'")
                     Else
                         Exit Sub
                     End If
@@ -142,17 +150,19 @@ Public Class FrmLogin
                 MessageBox.Show("Access Granted. Welcome " & StrConv(GstrUselogin, VbStrConv.ProperCase), SystemTitle, MessageBoxButtons.OK, MessageBoxIcon.Information)
 
                 UpdateLoginStatus(GstrUseID, True)
-
                 FrmMain.Show()
-
                 Me.Hide()
+
             Else
                 MessageBox.Show("Access Denied. Invalid Username or Password!", SystemTitle, MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             End If
 
+        Catch ex As SqlException
+            MessageBox.Show("Database connection failed: " & ex.Message, "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Catch ex As Exception
             MsgBox(ex.Message, vbCritical)
         End Try
+
     End Sub
 
     Private Sub RPnlLeft_MouseDown(sender As Object, e As MouseEventArgs) Handles RPnlLeft.MouseDown
