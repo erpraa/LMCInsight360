@@ -243,5 +243,4 @@ Public Class SubClass
         MessageBox.Show(message, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
 
-
 End Class

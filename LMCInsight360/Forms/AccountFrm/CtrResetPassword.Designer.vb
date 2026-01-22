@@ -64,6 +64,7 @@ Partial Class CtrResetPassword
         Me.BtnEdtUserID.Properties.AppearanceReadOnly.Options.UseBorderColor = True
         Me.BtnEdtUserID.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple
         Me.BtnEdtUserID.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton()})
+        Me.BtnEdtUserID.Properties.ReadOnly = True
         Me.BtnEdtUserID.Size = New System.Drawing.Size(294, 30)
         Me.BtnEdtUserID.TabIndex = 41
         '
@@ -82,6 +83,7 @@ Partial Class CtrResetPassword
         Me.TxtRePassword.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple
         Me.TxtRePassword.Properties.Mask.ShowPlaceHolders = False
         Me.TxtRePassword.Properties.MaxLength = 50
+        Me.TxtRePassword.Properties.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.TxtRePassword.Size = New System.Drawing.Size(294, 30)
         Me.TxtRePassword.TabIndex = 65
         '
@@ -100,6 +102,7 @@ Partial Class CtrResetPassword
         Me.TxtNewPassword.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple
         Me.TxtNewPassword.Properties.Mask.ShowPlaceHolders = False
         Me.TxtNewPassword.Properties.MaxLength = 50
+        Me.TxtNewPassword.Properties.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.TxtNewPassword.Size = New System.Drawing.Size(294, 30)
         Me.TxtNewPassword.TabIndex = 64
         '
@@ -119,6 +122,7 @@ Partial Class CtrResetPassword
         Me.TxtUserName.Properties.Mask.EditMask = "\d{0,4}"
         Me.TxtUserName.Properties.Mask.ShowPlaceHolders = False
         Me.TxtUserName.Properties.MaxLength = 50
+        Me.TxtUserName.Properties.ReadOnly = True
         Me.TxtUserName.Size = New System.Drawing.Size(294, 30)
         Me.TxtUserName.TabIndex = 63
         '
@@ -186,6 +190,7 @@ Partial Class CtrResetPassword
         Me.TxtName.Properties.Mask.EditMask = "\d{0,4}"
         Me.TxtName.Properties.Mask.ShowPlaceHolders = False
         Me.TxtName.Properties.MaxLength = 50
+        Me.TxtName.Properties.ReadOnly = True
         Me.TxtName.Size = New System.Drawing.Size(294, 30)
         Me.TxtName.TabIndex = 67
         '

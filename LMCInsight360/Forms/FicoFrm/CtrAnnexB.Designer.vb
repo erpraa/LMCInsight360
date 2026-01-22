@@ -39,6 +39,9 @@ Partial Class CtrAnnexB
         Me.CbxRptSheet = New DevExpress.XtraEditors.ComboBoxEdit()
         Me.CbxRptSheet1 = New DevExpress.XtraEditors.ComboBoxEdit()
         Me.BtnGenerate = New LMCInsight360.RoundedButton()
+        Me.PnlFooter = New System.Windows.Forms.Panel()
+        Me.LblStatus = New DevExpress.XtraEditors.LabelControl()
+        Me.LblLoadDate = New DevExpress.XtraEditors.LabelControl()
         Me.PnlReportType.SuspendLayout()
         CType(Me.CbxBusinessType.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TxtYear.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -49,6 +52,7 @@ Partial Class CtrAnnexB
         CType(Me.CbxStatementType.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.CbxRptSheet.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.CbxRptSheet1.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.PnlFooter.SuspendLayout()
         Me.SuspendLayout()
         '
         'PnlReportType
@@ -353,12 +357,51 @@ Partial Class CtrAnnexB
         Me.BtnGenerate.Text = "📥 Generate Report"
         Me.BtnGenerate.UseVisualStyleBackColor = False
         '
+        'PnlFooter
+        '
+        Me.PnlFooter.Controls.Add(Me.LblStatus)
+        Me.PnlFooter.Controls.Add(Me.LblLoadDate)
+        Me.PnlFooter.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.PnlFooter.Location = New System.Drawing.Point(0, 684)
+        Me.PnlFooter.Name = "PnlFooter"
+        Me.PnlFooter.Size = New System.Drawing.Size(1233, 36)
+        Me.PnlFooter.TabIndex = 60
+        '
+        'LblStatus
+        '
+        Me.LblStatus.Appearance.Font = New System.Drawing.Font("Segoe UI Semibold", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LblStatus.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.LblStatus.Appearance.Options.UseFont = True
+        Me.LblStatus.Appearance.Options.UseForeColor = True
+        Me.LblStatus.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.Horizontal
+        Me.LblStatus.Dock = System.Windows.Forms.DockStyle.Left
+        Me.LblStatus.Location = New System.Drawing.Point(112, 0)
+        Me.LblStatus.Name = "LblStatus"
+        Me.LblStatus.Size = New System.Drawing.Size(51, 23)
+        Me.LblStatus.TabIndex = 27
+        Me.LblStatus.Text = "Status:"
+        '
+        'LblLoadDate
+        '
+        Me.LblLoadDate.Appearance.Font = New System.Drawing.Font("Segoe UI Semibold", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LblLoadDate.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.LblLoadDate.Appearance.Options.UseFont = True
+        Me.LblLoadDate.Appearance.Options.UseForeColor = True
+        Me.LblLoadDate.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.Horizontal
+        Me.LblLoadDate.Dock = System.Windows.Forms.DockStyle.Left
+        Me.LblLoadDate.Location = New System.Drawing.Point(0, 0)
+        Me.LblLoadDate.Name = "LblLoadDate"
+        Me.LblLoadDate.Size = New System.Drawing.Size(112, 23)
+        Me.LblLoadDate.TabIndex = 25
+        Me.LblLoadDate.Text = "Date and Time"
+        '
         'CtrAnnexB
         '
         Me.Appearance.BackColor = System.Drawing.Color.FromArgb(CType(CType(234, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(246, Byte), Integer))
         Me.Appearance.Options.UseBackColor = True
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 17.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.PnlFooter)
         Me.Controls.Add(Me.CbxRptSheet1)
         Me.Controls.Add(Me.CbxRptSheet)
         Me.Controls.Add(Me.CbxStatementType)
@@ -388,6 +431,8 @@ Partial Class CtrAnnexB
         CType(Me.CbxStatementType.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.CbxRptSheet.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.CbxRptSheet1.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.PnlFooter.ResumeLayout(False)
+        Me.PnlFooter.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -413,4 +458,7 @@ Partial Class CtrAnnexB
     Friend WithEvents LblTypeReport As DevExpress.XtraEditors.LabelControl
     Friend WithEvents CbxRptSheet As DevExpress.XtraEditors.ComboBoxEdit
     Friend WithEvents CbxRptSheet1 As DevExpress.XtraEditors.ComboBoxEdit
+    Friend WithEvents PnlFooter As Panel
+    Friend WithEvents LblStatus As DevExpress.XtraEditors.LabelControl
+    Friend WithEvents LblLoadDate As DevExpress.XtraEditors.LabelControl
 End Class

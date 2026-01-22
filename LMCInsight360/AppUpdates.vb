@@ -28,9 +28,10 @@
             .Descriptions = New List(Of String) From {
                 "Minor update in Annex B - Unrealize peso amount",
                 "Fixed GUI auto-scaling according to user settings",
-                "Implemented a new feature for Reset Password"
+                "Implemented a new feature for Reset Password",
+                "Apply data loading lock to prevent other users from loading data"
             },
-            .ReleaseDate = #01/21/2026#
+            .ReleaseDate = #01/22/2026#
         }
     }
 

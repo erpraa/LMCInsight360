@@ -14,7 +14,8 @@ Public Class CtrAnnexA
     Private Sub CtrFtr_AnnexA_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         BtnAnnexA = Gbl_ReportTag
         LastDateLoad()
-        TxtYear.Text = Date.Now.Year.ToString()
+
+        TxtYear.Text = GetDefaultYear()
 
         PnlReportType.Show()
 
@@ -1096,37 +1097,39 @@ Skip:
 
     Sub LastDateLoad()
 
+        ResetLabels()
+
+        If CbxMonth.EditValue = "" Or TxtYear.EditValue = "" Then Exit Sub
+
+        Dim result = GetPeriodStatus(CbxMonth.EditValue.ToString(), TxtYear.EditValue.ToString())
+
+        If Not result.HasData Then
+            LblLoadDate.Text = "No data found. Please reload the data first in Data Management."
+            LblLoadDate.ForeColor = Color.Red
+            LblStatus.Text = Nothing
+            Exit Sub
+        End If
+
+        ' Status
+        If result.IsClosed.Value Then
+            LblStatus.Text = "  Closed Period"
+            LblStatus.ForeColor = Color.Green
+        Else
+            LblStatus.Text = "  Open Period"
+            LblStatus.ForeColor = Color.Red
+        End If
+
+        ' Load Date
+        LblLoadDate.Text = "This data was last updated on: " & result.LastLoadDate
+
+    End Sub
+
+    Private Sub ResetLabels()
         LblLoadDate.Text = Nothing
         LblStatus.Text = Nothing
         LblLoadDate.ForeColor = Color.FromArgb(64, 64, 64)
-
-        If CbxMonth.EditValue <> "" And TxtYear.EditValue <> "" Then
-
-            Dim dataList As List(Of Dictionary(Of String, String)) = GetMultiValues($"Select LDDATE, PSTATS from FI_PSTNGPRD where POPER ={GetMonthNumber(CbxMonth.EditValue.ToString())} and RYEAR={TxtYear.EditValue}")
-
-            For Each record In dataList
-
-                If record("PSTATS") = True Then
-                    LblStatus.Text = "  Closed Period"
-                    LblStatus.ForeColor = Color.Green
-                Else
-                    LblStatus.Text = "  Open Period"
-                    LblStatus.ForeColor = Color.Red
-                End If
-
-                LblLoadDate.Text = "Last Load Date: " & record("LDDATE")
-
-            Next
-
-            If GetValue($"Select count(*) from FI_TRXDATA where RYEAR={TxtYear.Text} and POPER={GetMonthNumber(CbxMonth.EditValue)}") = 0 Then
-                LblLoadDate.Text = "No data found. Please reload the data first in Data Management."
-                LblLoadDate.ForeColor = Color.Red
-                LblStatus.Text = Nothing
-            End If
-
-
-        End If
     End Sub
+
 
     Private Sub CbxMonth_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CbxMonth.SelectedIndexChanged
         LastDateLoad()
@@ -1135,9 +1138,6 @@ Skip:
     Private Sub TxtYear_EditValueChanged(sender As Object, e As EventArgs) Handles TxtYear.EditValueChanged
         LastDateLoad()
     End Sub
-
-
-
 
 #End Region
 

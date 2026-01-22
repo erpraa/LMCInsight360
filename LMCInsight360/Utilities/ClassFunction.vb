@@ -41,6 +41,13 @@ Public Class ClassFunction
         Return serverDate
     End Function
 
+    Public Shared Function GetDefaultYear() As String
+        Dim serverDate As Date = GetServerDate()
+        Return If(serverDate.Month = 1,
+              (serverDate.Year - 1).ToString(),
+              serverDate.Year.ToString())
+    End Function
+
     Public Shared Sub UpdateLoginStatus(userID As String, isLoggedIn As Boolean)
         Dim query As String = "UPDATE MSTR_USERS SET IsLoggedIn = @IsLoggedIn WHERE UserID = @UserID"
 
@@ -48,6 +55,20 @@ Public Class ClassFunction
             Using cmd As New SqlCommand(query, conn)
                 cmd.Parameters.AddWithValue("@UserID", userID)
                 cmd.Parameters.AddWithValue("@IsLoggedIn", isLoggedIn)
+
+                conn.Open()
+                cmd.ExecuteNonQuery()
+            End Using
+        End Using
+    End Sub
+
+    Public Shared Sub UpdateLoadStatus(userID As String, isLoggedIn As Boolean)
+        Dim query As String = "UPDATE MSTR_USERS SET IsLoadData = @IsLoadData WHERE UserID = @UserID"
+
+        Using conn As New SqlConnection(SqlConnect)
+            Using cmd As New SqlCommand(query, conn)
+                cmd.Parameters.AddWithValue("@UserID", userID)
+                cmd.Parameters.AddWithValue("@IsLoadData", isLoggedIn)
 
                 conn.Open()
                 cmd.ExecuteNonQuery()
@@ -202,13 +223,7 @@ Public Class ClassFunction
 
     End Function
 
-    Public Shared Function IsFormOpen(ByVal frm As Form) As Boolean
-        If Application.OpenForms.OfType(Of Form).Contains(frm) Then
-            Return True
-        Else
-            Return False
-        End If
-    End Function
+
 
 #End Region
 
@@ -424,7 +439,51 @@ Public Class ClassFunction
 
 #End Region
 
+#Region "Other Function"
 
+    Public Shared Function IsFormOpen(ByVal frm As Form) As Boolean
+        If Application.OpenForms.OfType(Of Form).Contains(frm) Then
+            Return True
+        Else
+            Return False
+        End If
+    End Function
 
+    Public Shared Function GetPeriodStatus(monthValue As String, yearValue As String) As PeriodStatusResult
+
+        Dim result As New PeriodStatusResult With {
+        .HasData = False,
+        .IsClosed = Nothing,
+        .LastLoadDate = Nothing
+    }
+
+        If String.IsNullOrEmpty(monthValue) OrElse String.IsNullOrEmpty(yearValue) Then
+            Return result
+        End If
+
+        Dim monthNo As Integer = GetMonthNumber(monthValue)
+
+        ' Check transaction data
+        Dim trxCount As Integer = GetValue($"SELECT COUNT(*) FROM FI_TRXDATA WHERE RYEAR={yearValue} AND POPER={monthNo}")
+
+        If trxCount = 0 Then
+            Return result
+        End If
+
+        ' Get period status
+        Dim dataList = GetMultiValues($"SELECT TOP 1 LDDATE, PSTATS FROM FI_PSTNGPRD WHERE POPER={monthNo} AND RYEAR={yearValue}")
+
+        If dataList.Count > 0 Then
+            Dim record = dataList(0)
+
+            result.HasData = True
+            result.IsClosed = Convert.ToBoolean(record("PSTATS"))
+            result.LastLoadDate = record("LDDATE").ToString()
+        End If
+
+        Return result
+    End Function
+
+#End Region
 
 End Class

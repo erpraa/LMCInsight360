@@ -10,6 +10,8 @@ Public Class CtrDataInitializeMM
         LoadData()
 
         LoadComboBox(CbxPrfitCtr, "select distinct PRCTR from FI_BRANCH", "PRCTR")
+
+        TxtYear.Text = GetDefaultYear()
     End Sub
 
     Private Sub BtnUpload_Click(sender As Object, e As EventArgs) Handles BtnUpload.Click
@@ -257,4 +259,5 @@ String.IsNullOrWhiteSpace(TxtAmt.Text) Then
         TxtYear.Text = ""
         TxtAmt.Text = ""
     End Sub
+
 End Class

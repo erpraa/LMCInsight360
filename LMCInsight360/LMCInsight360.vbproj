@@ -238,6 +238,7 @@
     <Compile Include="Utilities\CryptoEngine.vb" />
     <Compile Include="Utilities\GlobalConnection.vb" />
     <Compile Include="Utilities\GlobalVariable.vb" />
+    <Compile Include="Utilities\PeriodStatusResult.vb" />
     <Compile Include="Utilities\SubClass.vb" />
     <Compile Include="Utilities\SubQuery.vb" />
     <Compile Include="Utilities\UpdateInfo.vb" />

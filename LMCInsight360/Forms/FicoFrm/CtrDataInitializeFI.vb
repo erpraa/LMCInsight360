@@ -13,6 +13,14 @@ Public Class CtrDataInitializeFI
 
     Private Sub BtnLoadData_Click(sender As Object, e As EventArgs) Handles BtnLoadData.Click
 
+        Dim cnt As Integer = CInt(GetValue("SELECT COUNT(*) FROM MSTR_USERS WHERE IsLoadData = 1"))
+        If cnt > 0 Then
+            Dim userCurrentlyLoad As String = GetValue("SELECT TOP 1 FullName FROM MSTR_USERS WHERE IsLoadData = 1")
+
+            MessageBox.Show($"Data Loading is currently in progress by {StrConv(userCurrentlyLoad, VbStrConv.ProperCase)}. Please wait", SystemTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        End If
+
         If String.IsNullOrWhiteSpace(TxtMonth.Text) Then
             MessageBox.Show("Please Select Period", "Missing Information", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Exit Sub
@@ -21,6 +29,8 @@ Public Class CtrDataInitializeFI
         Dim result As DialogResult
         result = MessageBox.Show("This may take several minutes to load data....", SystemTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
         If result = DialogResult.Yes Then
+
+            UpdateLoadStatus(GstrUseID, True)
 
             Dim sql As String = $"select * from FI_PSTNGPRD where RYEAR={TxtYear.Text} and POPER={GetMonthNumber(TxtMonth.Text)}"
             Dim data As List(Of Dictionary(Of String, String)) = GetMultiValues(sql)
@@ -86,6 +96,7 @@ Public Class CtrDataInitializeFI
             Next
 
             LoadData()
+            UpdateLoadStatus(GstrUseID, False)
 
             MessageBox.Show("Data has been successfully reloaded", SystemTitle, MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
