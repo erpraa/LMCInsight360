@@ -29,7 +29,7 @@
     <ProductName>Lmc Insight360</ProductName>
     <PublisherName>Liwayway Marketing Corporation</PublisherName>
     <SuiteName>ERP Projects</SuiteName>
-    <ApplicationRevision>4</ApplicationRevision>
+    <ApplicationRevision>5</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -138,6 +138,12 @@
     </Compile>
     <Compile Include="Forms\AccountFrm\FrmUpdates.vb">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FicoFrm\CtrAnnexC.Designer.vb">
+      <DependentUpon>CtrAnnexC.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FicoFrm\CtrAnnexC.vb">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Forms\FicoFrm\CtrDataInitializeFI.Designer.vb">
       <DependentUpon>CtrDataInitializeFI.vb</DependentUpon>
@@ -252,6 +258,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FicoFrm\CtrAnnexA.resx">
       <DependentUpon>CtrAnnexA.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FicoFrm\CtrAnnexC.resx">
+      <DependentUpon>CtrAnnexC.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FicoFrm\CtrDataInitializeFI.resx">
       <DependentUpon>CtrDataInitializeFI.vb</DependentUpon>

@@ -1,15 +1,4 @@
-﻿' **********************************************************************
-' Project Name      : LMC FS/SR Automation System
-' Prepared By       : ERP Department
-' Commencement Date : August 20, 2025
-' Programmer        : Raymart Azaña
-' Project Lead      : Dennis Becina
-' Version           : 1.0
-' Status            : In Progress
-' Last Modified     : [Insert Date]
-' **********************************************************************
-
-Imports LMCInsight360.ClassDesign
+﻿Imports LMCInsight360.ClassDesign
 Imports LMCInsight360.SubClass
 Imports LMCInsight360.ClassFunction
 Public Class FrmMain
@@ -21,8 +10,6 @@ Public Class FrmMain
         ApplyFlatStyle(SideBarSD.Elements)
         ApplyFlatStyle(SideBarFICO.Elements)
         ApplyFlatStyle(SideBarMaintenace.Elements)
-
-
 
         Lbluser.Text = StrConv(GstrUselogin, VbStrConv.ProperCase)
     End Sub
@@ -219,13 +206,6 @@ Public Class FrmMain
         TabMenu(Me, New CtrAnnexA, "Generate Annex A")
     End Sub
 
-    Private Sub BtnDataInitializedFI_Click(sender As Object, e As EventArgs) Handles BtnDataInitializedFI.Click
-        TabMenu(Me, New CtrDataInitializeFI, "Data Initialization-FI")
-    End Sub
-    Private Sub BtnDataInitializedMM_Click(sender As Object, e As EventArgs) Handles BtnDataInitializedMM.Click
-        TabMenu(Me, New CtrDataInitializeMM, "Data Initialization-MM")
-    End Sub
-
     Private Sub BtnAnnxB_IScomp_Click(sender As Object, e As EventArgs) Handles BtnAnnxB_IScomp.Click
         Gbl_ReportTag = 1
         TabMenu(Me, New CtrAnnexB, "IS Comparative")
@@ -246,8 +226,19 @@ Public Class FrmMain
         TabMenu(Me, New CtrAnnexB, "Generate Annex B")
     End Sub
 
-#End Region
+    Private Sub BtnAnnxC_CosRatio_Click(sender As Object, e As EventArgs) Handles BtnAnnxC_CosRatio.Click
+        Gbl_ReportTag = 1
+        TabMenu(Me, New CtrAnnexC, "Cost of Sales Ratio")
+    End Sub
 
+    Private Sub BtnDataInitializedFI_Click(sender As Object, e As EventArgs) Handles BtnDataInitializedFI.Click
+        TabMenu(Me, New CtrDataInitializeFI, "Data Initialization-FI")
+    End Sub
+    Private Sub BtnDataInitializedMM_Click(sender As Object, e As EventArgs) Handles BtnDataInitializedMM.Click
+        TabMenu(Me, New CtrDataInitializeMM, "Data Initialization-MM")
+    End Sub
+
+#End Region
 
 #Region "Maintenance Module"
 
@@ -339,10 +330,5 @@ Public Class FrmMain
     Private Sub AccordionControlElement18_Click(sender As Object, e As EventArgs) Handles AccordionControlElement18.Click
         ShowMaintenance()
     End Sub
-
-    Private Sub AccordionControlElement6_Click(sender As Object, e As EventArgs) Handles AccordionControlElement6.Click
-        ShowMaintenance()
-    End Sub
-
 
 End Class

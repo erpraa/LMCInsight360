@@ -437,6 +437,20 @@ Public Class ClassFunction
         End Try
     End Function
 
+    Public Shared Function GetSapSource(source As Object) As String
+        If source Is Nothing Then Return Nothing
+
+        Select Case source.ToString()
+            Case "CAS"
+                Return "L4P"
+            Case "Reserved"
+                Return "LRP"
+            Case Else
+                Return Nothing
+        End Select
+    End Function
+
+
 #End Region
 
 #Region "Other Function"

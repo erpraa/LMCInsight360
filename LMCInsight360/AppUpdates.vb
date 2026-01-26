@@ -1,4 +1,12 @@
-﻿Module AppUpdates
+﻿' **********************************************************************
+' Project Name      : LMC Insight360 (FS/SR Automation System)
+' Prepared By       : ERP Department
+' Commencement Date : August 20, 2025
+' Project Lead      : Dennis Becina
+' Programmer        : Raymart Azaña
+' Status            : In Progress
+' **********************************************************************
+Module AppUpdates
 
     Public ReadOnly Updates As New List(Of UpdateInfo) From {
         New UpdateInfo With {
@@ -27,11 +35,19 @@
             .Version = "1.0.0.4",
             .Descriptions = New List(Of String) From {
                 "Minor update in Annex B - Unrealize peso amount",
-                "Fixed GUI auto-scaling according to user settings",
+                "Fixed GUI auto scaling according to user settings",
                 "Implemented a new feature for Reset Password",
                 "Apply data loading lock to prevent other users from loading data"
             },
             .ReleaseDate = #01/22/2026#
+         },
+                New UpdateInfo With {
+            .Version = "1.0.0.5",
+            .Descriptions = New List(Of String) From {
+                "Implemented a new feature Annex C",
+                 "Cost of Sales Ratio Report"
+            },
+            .ReleaseDate = #01/26/2026#
         }
     }
 

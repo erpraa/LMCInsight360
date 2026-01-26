@@ -6,7 +6,6 @@
 
 #End Region
 
-
 #Region "Annex A Report"
     Public Shared Function RptQueryIS(FiscalYear As String, PostingPeriod As String, TrxOrigin As String, busUnit As String, FSItem As String, PurcH As Boolean, businessType As String) As String
 
@@ -94,7 +93,6 @@
         Return Gresult
     End Function
 
-
     Public Shared Function RptQueryGaae(FiscalYear As String, PostingPeriod As String, FSItem As String, GLaccnt As Integer, TrxOrigin As String, businessType As String) As String
         Dim Gresult As String
         Dim pTrxOrigin As String = Nothing
@@ -114,8 +112,6 @@
 
         Return Gresult
     End Function
-
-
 
     Public Shared Function RptQueryUnFxF(FiscalYear As String, PostingPeriod As String, FSItem As String, TCurrency As String, TrxOrigin As String, businessType As String) As String
         Dim Gresult As String
@@ -177,7 +173,28 @@
         Return Gresult
     End Function
 
+#End Region
 
+#Region "Annex C Report"
+    Public Shared Function RptQueryCOSR(FiscalYear As String, PostingPeriod As String, TrxOrigin As String, FSItem As String, busUnit As String) As String
+
+        Dim GscriptBS As String
+        Dim pTrxOrigin As String = Nothing
+        Dim pFSItem As String = Nothing
+
+        If TrxOrigin <> Nothing Then
+            pTrxOrigin = $"and TrxOrigin='{TrxOrigin}'"
+        End If
+
+        If FSItem <> Nothing Then
+            pFSItem = $"and FSItem='{FSItem}'"
+        End If
+
+
+        GscriptBS = $"select SUM(Amount) from vwFI_GLREPORT where FiscalYear IN ({FiscalYear}) and PostingPeriod IN ({PostingPeriod}) and BusUnit1='{busUnit}' {pTrxOrigin} {pFSItem} "
+
+        Return GscriptBS
+    End Function
 #End Region
 
 
@@ -202,13 +219,13 @@
 
         Public Shared ReadOnly Property UpdatePostDate As String
             Get
-                Return "UPDATE FI_PSTNGPRD SET PSTDATE=@postdate, PSTBY=@postby, PSTATS=@poststat WHERE POPER=@PostingPeriod AND RYEAR=@FiscalYear"
+                Return "UPDATE FI_PSTNGPRD SET PSTDATE=@postdate, PSTATS=@poststat WHERE POPER=@PostingPeriod AND RYEAR=@FiscalYear"
             End Get
         End Property
 
         Public Shared ReadOnly Property UpdatePostStatus As String
             Get
-                Return "UPDATE FI_PSTNGPRD SET PSTDATE=@postdate, PSTBY=@postby, PSTATS=@poststat WHERE POPER=@PostingPeriod AND RYEAR=@FiscalYear"
+                Return "UPDATE FI_PSTNGPRD SET PSTDATE=@postdate, PSTATS=@poststat WHERE POPER=@PostingPeriod AND RYEAR=@FiscalYear"
             End Get
         End Property
 

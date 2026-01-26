@@ -138,7 +138,6 @@ Public Class CtrDataInitializeFI
 
                 Dim upparams As New Dictionary(Of String, Object) From {
                     {"@postdate", GetServerDate()},
-                    {"@postby", GstrUselogin},
                     {"@poststat", True},
                     {"@PostingPeriod", postingperiod},
                     {"@FiscalYear", fiscalyear}
@@ -188,7 +187,6 @@ Public Class CtrDataInitializeFI
 
                 Dim upparams As New Dictionary(Of String, Object) From {
                     {"@postdate", DBNull.Value},
-                    {"@postby", GstrUselogin},
                     {"@poststat", False},
                     {"@PostingPeriod", postingperiod},
                     {"@FiscalYear", fiscalyear}

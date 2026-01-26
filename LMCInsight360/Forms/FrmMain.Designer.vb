@@ -54,11 +54,13 @@ Partial Class FrmMain
         Me.BtnAnnxB_RUGainLoss = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.BtnAnnxB_Gen = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.AccordionControlElement6 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
+        Me.BtnAnnxC_CosRatio = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.AccordionControlElement2 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.BtnDataInitializedFI = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.BtnDataInitializedMM = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.SideBarMaintenace = New DevExpress.XtraBars.Navigation.AccordionControl()
         Me.CreateAccount = New DevExpress.XtraBars.Navigation.AccordionControlElement()
+        Me.ResetPassword = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.AccordionControlElement19 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.BtnAbout = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.SideBarSD = New DevExpress.XtraBars.Navigation.AccordionControl()
@@ -76,7 +78,6 @@ Partial Class FrmMain
         Me.MenuSilde = New System.Windows.Forms.Timer(Me.components)
         Me.DocumentManager1 = New DevExpress.XtraBars.Docking2010.DocumentManager(Me.components)
         Me.TabbedView1 = New DevExpress.XtraBars.Docking2010.Views.Tabbed.TabbedView(Me.components)
-        Me.ResetPassword = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.PnlMiddle.SuspendLayout()
         Me.PnlHeader.SuspendLayout()
         Me.PnlTopHeader.SuspendLayout()
@@ -358,9 +359,9 @@ Partial Class FrmMain
         Me.PnlLeftBody.Appearance.BackColor = System.Drawing.Color.Transparent
         Me.PnlLeftBody.Appearance.Options.UseBackColor = True
         Me.PnlLeftBody.BorderThickness = 0
+        Me.PnlLeftBody.Controls.Add(Me.SideBarFICO)
         Me.PnlLeftBody.Controls.Add(Me.SideBarMaintenace)
         Me.PnlLeftBody.Controls.Add(Me.SideBarSD)
-        Me.PnlLeftBody.Controls.Add(Me.SideBarFICO)
         Me.PnlLeftBody.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PnlLeftBody.Location = New System.Drawing.Point(15, 128)
         Me.PnlLeftBody.Name = "PnlLeftBody"
@@ -395,7 +396,6 @@ Partial Class FrmMain
         'AccordionControlElement4
         '
         Me.AccordionControlElement4.Elements.AddRange(New DevExpress.XtraBars.Navigation.AccordionControlElement() {Me.BtnAnnxA_IS, Me.BtnAnnxA_BS, Me.BtnAnnxA_DS, Me.BtnAnnxA_Gen})
-        Me.AccordionControlElement4.Expanded = True
         Me.AccordionControlElement4.Name = "AccordionControlElement4"
         Me.AccordionControlElement4.Text = "📑 Annex A Report"
         '
@@ -456,8 +456,16 @@ Partial Class FrmMain
         '
         'AccordionControlElement6
         '
+        Me.AccordionControlElement6.Elements.AddRange(New DevExpress.XtraBars.Navigation.AccordionControlElement() {Me.BtnAnnxC_CosRatio})
+        Me.AccordionControlElement6.Expanded = True
         Me.AccordionControlElement6.Name = "AccordionControlElement6"
         Me.AccordionControlElement6.Text = "📑 Annex C Report"
+        '
+        'BtnAnnxC_CosRatio
+        '
+        Me.BtnAnnxC_CosRatio.Name = "BtnAnnxC_CosRatio"
+        Me.BtnAnnxC_CosRatio.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item
+        Me.BtnAnnxC_CosRatio.Text = "Cost of Sales Ratio"
         '
         'AccordionControlElement2
         '
@@ -499,6 +507,12 @@ Partial Class FrmMain
         Me.CreateAccount.Name = "CreateAccount"
         Me.CreateAccount.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item
         Me.CreateAccount.Text = "🔐  Create Account"
+        '
+        'ResetPassword
+        '
+        Me.ResetPassword.Name = "ResetPassword"
+        Me.ResetPassword.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item
+        Me.ResetPassword.Text = "🗘  Reset Password"
         '
         'AccordionControlElement19
         '
@@ -631,12 +645,6 @@ Partial Class FrmMain
         Me.TabbedView1.AppearancePage.Header.Options.UseForeColor = True
         Me.TabbedView1.Style = DevExpress.XtraBars.Docking2010.Views.DockingViewStyle.Light
         '
-        'ResetPassword
-        '
-        Me.ResetPassword.Name = "ResetPassword"
-        Me.ResetPassword.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item
-        Me.ResetPassword.Text = "🗘  Reset Password"
-        '
         'FrmMain
         '
         Me.Appearance.BackColor = System.Drawing.Color.White
@@ -724,4 +732,5 @@ Partial Class FrmMain
     Friend WithEvents BtnAnnxB_Gen As DevExpress.XtraBars.Navigation.AccordionControlElement
     Friend WithEvents BtnDataInitializedMM As DevExpress.XtraBars.Navigation.AccordionControlElement
     Friend WithEvents ResetPassword As DevExpress.XtraBars.Navigation.AccordionControlElement
+    Friend WithEvents BtnAnnxC_CosRatio As DevExpress.XtraBars.Navigation.AccordionControlElement
 End Class
