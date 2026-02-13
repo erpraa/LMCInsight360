@@ -65,7 +65,21 @@
         End If
 
 
-        GscriptBS = $"select SUM(Amount) from vwFI_GLREPORT where FiscalYear IN ({FiscalYear}) and PostingPeriod IN ({PostingPeriod}) {pTrxOrigin} {pFSItem} {pbusUnit}"
+        If (FSItem = "29" OrElse FSItem = "34") Then
+            GscriptBS = $"select SUM(Amount) from vwFI_GLREPORT where GLAccount<>299000 AND FiscalYear IN ({FiscalYear}) and PostingPeriod IN ({PostingPeriod}) {pTrxOrigin} {pFSItem} {pbusUnit}"
+        Else
+            GscriptBS = $"select SUM(Amount) from vwFI_GLREPORT where FiscalYear IN ({FiscalYear}) and PostingPeriod IN ({PostingPeriod}) {pTrxOrigin} {pFSItem} {pbusUnit}"
+        End If
+
+
+        Return GscriptBS
+    End Function
+
+    Public Shared Function RptQueryBS_IBU(FiscalYear As String, PostingPeriod As String, TrxOrigin As String) As String
+
+        Dim GscriptBS As String
+
+        GscriptBS = $"select SUM(Amount) from vwFI_GLREPORT where GLAccount=299000 and BusType='Foodstuff Only' and FSItem='34' and FiscalYear={FiscalYear} and PostingPeriod IN ({PostingPeriod}) and TrxOrigin='{TrxOrigin}'"
 
         Return GscriptBS
     End Function

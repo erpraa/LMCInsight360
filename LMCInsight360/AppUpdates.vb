@@ -45,9 +45,10 @@ Module AppUpdates
             .Version = "1.0.0.5",
             .Descriptions = New List(Of String) From {
                 "Implemented a new feature Annex C",
-                 "Cost of Sales Ratio Report"
+                 "Cost of Sales Ratio Report",
+                 "Fix Bug in IBU Clearing – Balance Sheet (Annex A)"
             },
-            .ReleaseDate = #01/26/2026#
+            .ReleaseDate = #02/13/2026#
         }
     }
 

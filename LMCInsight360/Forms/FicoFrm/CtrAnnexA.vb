@@ -688,13 +688,41 @@ Public Class CtrAnnexA
 
                                             If fsItem <> "" Then
 
-                                                If businessType <> "FOODSTUFF" Then
-                                                    If fsItem = "29" OrElse fsItem = "34" Then
-                                                        GoTo Skip
+                                                Dim monthRange As String = String.Join(",", Enumerable.Range(1, CInt(monthValue)))
+
+                                                ' FOODSTUFF special handling
+                                                If businessType = "FOODSTUFF" AndAlso (fsItem = "29" OrElse fsItem = "34") Then
+
+                                                    Dim IBU_CAS As Double = Val(GetAmount(RptQueryBS_IBU(yearValue, monthRange, "L4P")))
+                                                    Dim IBU_RES As Double = Val(GetAmount(RptQueryBS_IBU(yearValue, monthRange, "LRP")))
+
+                                                    Dim baseValue As Double = Val(GetAmount(RptQueryBS(yearValue, monthRange, sapSource, fsItem, businessType)))
+
+                                                    Dim finalValue As Double = baseValue
+
+                                                    ' CAS LOGIC
+                                                    ' ===============================
+                                                    If fsItem = "29" AndAlso IBU_CAS > 0 Then
+                                                        finalValue += IBU_CAS
+                                                    ElseIf fsItem = "34" AndAlso IBU_CAS < 0 Then
+                                                        finalValue += IBU_CAS
                                                     End If
+
+                                                    ' RESERVED LOGIC
+                                                    ' ===============================
+                                                    If fsItem = "29" AndAlso IBU_RES > 0 Then
+                                                        finalValue += IBU_RES
+                                                    ElseIf fsItem = "34" AndAlso IBU_RES < 0 Then
+                                                        finalValue += IBU_RES
+                                                    End If
+
+                                                    .Cells(row, col) = AdjustValue(finalValue, reader("DCFLG").ToString())
+
                                                 End If
-                                                .Cells(row, col) = AdjustValue(Val(GetAmount(RptQueryBS(yearValue, String.Join(",", Enumerable.Range(1, CInt(monthValue))), sapSource, fsItem, businessType))), reader("DCFLG").ToString())
-Skip:
+
+                                                If Not (fsItem = "29" OrElse fsItem = "34") Then
+                                                    .Cells(row, col) = AdjustValue(Val(GetAmount(RptQueryBS(yearValue, monthRange, sapSource, fsItem, businessType))), reader("DCFLG").ToString())
+                                                End If
 
                                             End If
 
