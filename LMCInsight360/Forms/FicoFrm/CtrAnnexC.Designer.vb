@@ -22,7 +22,6 @@ Partial Class CtrAnnexC
         Me.LblCompPrd = New DevExpress.XtraEditors.LabelControl()
         Me.TxtEndYear = New DevExpress.XtraEditors.TextEdit()
         Me.CbxEndMonth = New DevExpress.XtraEditors.ComboBoxEdit()
-        Me.BtnGenerate = New LMCInsight360.RoundedButton()
         Me.LabelControl4 = New DevExpress.XtraEditors.LabelControl()
         Me.CbxBusinessType = New DevExpress.XtraEditors.ComboBoxEdit()
         Me.TxtStrYear = New DevExpress.XtraEditors.TextEdit()
@@ -30,12 +29,15 @@ Partial Class CtrAnnexC
         Me.CbxSapSource = New DevExpress.XtraEditors.ComboBoxEdit()
         Me.LabelControl1 = New DevExpress.XtraEditors.LabelControl()
         Me.CbxStrMonth = New DevExpress.XtraEditors.ComboBoxEdit()
+        Me.ChkBusUnit = New DevExpress.XtraEditors.CheckEdit()
+        Me.BtnGenerate = New LMCInsight360.RoundedButton()
         CType(Me.TxtEndYear.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.CbxEndMonth.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.CbxBusinessType.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TxtStrYear.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.CbxSapSource.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.CbxStrMonth.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.ChkBusUnit.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'LblCompPrd
@@ -88,19 +90,6 @@ Partial Class CtrAnnexC
         Me.CbxEndMonth.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor
         Me.CbxEndMonth.Size = New System.Drawing.Size(134, 30)
         Me.CbxEndMonth.TabIndex = 70
-        '
-        'BtnGenerate
-        '
-        Me.BtnGenerate.BackColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(184, Byte), Integer))
-        Me.BtnGenerate.FlatAppearance.BorderSize = 0
-        Me.BtnGenerate.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BtnGenerate.ForeColor = System.Drawing.Color.White
-        Me.BtnGenerate.Location = New System.Drawing.Point(270, 235)
-        Me.BtnGenerate.Name = "BtnGenerate"
-        Me.BtnGenerate.Size = New System.Drawing.Size(210, 33)
-        Me.BtnGenerate.TabIndex = 67
-        Me.BtnGenerate.Text = "📥 Generate Report"
-        Me.BtnGenerate.UseVisualStyleBackColor = False
         '
         'LabelControl4
         '
@@ -213,12 +202,36 @@ Partial Class CtrAnnexC
         Me.CbxStrMonth.Size = New System.Drawing.Size(134, 30)
         Me.CbxStrMonth.TabIndex = 65
         '
+        'ChkBusUnit
+        '
+        Me.ChkBusUnit.Location = New System.Drawing.Point(410, 84)
+        Me.ChkBusUnit.Name = "ChkBusUnit"
+        Me.ChkBusUnit.Properties.Appearance.Font = New System.Drawing.Font("Segoe UI", 10.2!)
+        Me.ChkBusUnit.Properties.Appearance.Options.UseFont = True
+        Me.ChkBusUnit.Properties.Caption = "Business Unit"
+        Me.ChkBusUnit.Size = New System.Drawing.Size(132, 27)
+        Me.ChkBusUnit.TabIndex = 72
+        '
+        'BtnGenerate
+        '
+        Me.BtnGenerate.BackColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(184, Byte), Integer))
+        Me.BtnGenerate.FlatAppearance.BorderSize = 0
+        Me.BtnGenerate.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnGenerate.ForeColor = System.Drawing.Color.White
+        Me.BtnGenerate.Location = New System.Drawing.Point(270, 235)
+        Me.BtnGenerate.Name = "BtnGenerate"
+        Me.BtnGenerate.Size = New System.Drawing.Size(210, 33)
+        Me.BtnGenerate.TabIndex = 67
+        Me.BtnGenerate.Text = "📥 Generate Report"
+        Me.BtnGenerate.UseVisualStyleBackColor = False
+        '
         'CtrAnnexC
         '
         Me.Appearance.BackColor = System.Drawing.Color.FromArgb(CType(CType(234, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(246, Byte), Integer))
         Me.Appearance.Options.UseBackColor = True
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 17.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.ChkBusUnit)
         Me.Controls.Add(Me.LblCompPrd)
         Me.Controls.Add(Me.TxtEndYear)
         Me.Controls.Add(Me.CbxEndMonth)
@@ -238,6 +251,7 @@ Partial Class CtrAnnexC
         CType(Me.TxtStrYear.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.CbxSapSource.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.CbxStrMonth.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ChkBusUnit.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -254,4 +268,5 @@ Partial Class CtrAnnexC
     Friend WithEvents CbxSapSource As DevExpress.XtraEditors.ComboBoxEdit
     Friend WithEvents LabelControl1 As DevExpress.XtraEditors.LabelControl
     Friend WithEvents CbxStrMonth As DevExpress.XtraEditors.ComboBoxEdit
+    Friend WithEvents ChkBusUnit As DevExpress.XtraEditors.CheckEdit
 End Class

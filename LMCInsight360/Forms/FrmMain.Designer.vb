@@ -78,6 +78,7 @@ Partial Class FrmMain
         Me.MenuSilde = New System.Windows.Forms.Timer(Me.components)
         Me.DocumentManager1 = New DevExpress.XtraBars.Docking2010.DocumentManager(Me.components)
         Me.TabbedView1 = New DevExpress.XtraBars.Docking2010.Views.Tabbed.TabbedView(Me.components)
+        Me.BtnAnnxC_MFGCost = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.PnlMiddle.SuspendLayout()
         Me.PnlHeader.SuspendLayout()
         Me.PnlTopHeader.SuspendLayout()
@@ -456,7 +457,7 @@ Partial Class FrmMain
         '
         'AccordionControlElement6
         '
-        Me.AccordionControlElement6.Elements.AddRange(New DevExpress.XtraBars.Navigation.AccordionControlElement() {Me.BtnAnnxC_CosRatio})
+        Me.AccordionControlElement6.Elements.AddRange(New DevExpress.XtraBars.Navigation.AccordionControlElement() {Me.BtnAnnxC_CosRatio, Me.BtnAnnxC_MFGCost})
         Me.AccordionControlElement6.Expanded = True
         Me.AccordionControlElement6.Name = "AccordionControlElement6"
         Me.AccordionControlElement6.Text = "📑 Annex C Report"
@@ -645,6 +646,12 @@ Partial Class FrmMain
         Me.TabbedView1.AppearancePage.Header.Options.UseForeColor = True
         Me.TabbedView1.Style = DevExpress.XtraBars.Docking2010.Views.DockingViewStyle.Light
         '
+        'BtnAnnxC_MFGCost
+        '
+        Me.BtnAnnxC_MFGCost.Name = "BtnAnnxC_MFGCost"
+        Me.BtnAnnxC_MFGCost.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item
+        Me.BtnAnnxC_MFGCost.Text = "MFG Cost"
+        '
         'FrmMain
         '
         Me.Appearance.BackColor = System.Drawing.Color.White
@@ -733,4 +740,5 @@ Partial Class FrmMain
     Friend WithEvents BtnDataInitializedMM As DevExpress.XtraBars.Navigation.AccordionControlElement
     Friend WithEvents ResetPassword As DevExpress.XtraBars.Navigation.AccordionControlElement
     Friend WithEvents BtnAnnxC_CosRatio As DevExpress.XtraBars.Navigation.AccordionControlElement
+    Friend WithEvents BtnAnnxC_MFGCost As DevExpress.XtraBars.Navigation.AccordionControlElement
 End Class

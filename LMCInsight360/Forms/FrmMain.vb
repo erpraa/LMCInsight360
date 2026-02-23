@@ -181,16 +181,15 @@ Public Class FrmMain
     End Sub
 
 
-
 #End Region
 
 #Region "Finacial Statement"
 
+#Region "Annex A Button"
     Private Sub BtnAnnxA_IS_Click(sender As Object, e As EventArgs) Handles BtnAnnxA_IS.Click
         Gbl_ReportTag = 1
         TabMenu(Me, New CtrAnnexA, "Income Statement")
     End Sub
-
     Private Sub BtnAnnxA_BS_Click(sender As Object, e As EventArgs) Handles BtnAnnxA_BS.Click
         Gbl_ReportTag = 2
         TabMenu(Me, New CtrAnnexA, "Balance Sheet")
@@ -205,7 +204,9 @@ Public Class FrmMain
         Gbl_ReportTag = 4
         TabMenu(Me, New CtrAnnexA, "Generate Annex A")
     End Sub
+#End Region
 
+#Region "Annex B Button"
     Private Sub BtnAnnxB_IScomp_Click(sender As Object, e As EventArgs) Handles BtnAnnxB_IScomp.Click
         Gbl_ReportTag = 1
         TabMenu(Me, New CtrAnnexB, "IS Comparative")
@@ -225,18 +226,28 @@ Public Class FrmMain
         Gbl_ReportTag = 4
         TabMenu(Me, New CtrAnnexB, "Generate Annex B")
     End Sub
+#End Region
 
+#Region "Annex C Button"
     Private Sub BtnAnnxC_CosRatio_Click(sender As Object, e As EventArgs) Handles BtnAnnxC_CosRatio.Click
         Gbl_ReportTag = 1
         TabMenu(Me, New CtrAnnexC, "Cost of Sales Ratio")
     End Sub
 
+    Private Sub BtnAnnxC_MFGCost_Click(sender As Object, e As EventArgs) Handles BtnAnnxC_MFGCost.Click
+        Gbl_ReportTag = 2
+        TabMenu(Me, New CtrAnnexC, "Mfg Cost")
+    End Sub
+#End Region
+
+#Region "Data Management Button"
     Private Sub BtnDataInitializedFI_Click(sender As Object, e As EventArgs) Handles BtnDataInitializedFI.Click
         TabMenu(Me, New CtrDataInitializeFI, "Data Initialization-FI")
     End Sub
     Private Sub BtnDataInitializedMM_Click(sender As Object, e As EventArgs) Handles BtnDataInitializedMM.Click
         TabMenu(Me, New CtrDataInitializeMM, "Data Initialization-MM")
     End Sub
+#End Region
 
 #End Region
 
@@ -330,5 +341,6 @@ Public Class FrmMain
     Private Sub AccordionControlElement18_Click(sender As Object, e As EventArgs) Handles AccordionControlElement18.Click
         ShowMaintenance()
     End Sub
+
 
 End Class

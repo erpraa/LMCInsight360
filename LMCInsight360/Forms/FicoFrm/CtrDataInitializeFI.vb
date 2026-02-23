@@ -61,7 +61,7 @@ Public Class CtrDataInitializeFI
                 LoadDataDetails("L4P", CasConnect, fiscalyear, postingperiod)
                 LoadDataDetails("LRP", ResConnect, fiscalyear, postingperiod)
                 ExecuteProcedure("INS_FI_TRXDATA", params, False)
-                ExecuteProcedure("UPD_FI_TRXDATA", params, False)
+                'ExecuteProcedure("UPD_FI_TRXDATA", params, False)
 
                 Dim upparams As New Dictionary(Of String, Object) From {
                     {"@loaddate", GetServerDate()},
