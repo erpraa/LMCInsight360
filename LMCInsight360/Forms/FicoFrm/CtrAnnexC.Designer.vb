@@ -204,12 +204,12 @@ Partial Class CtrAnnexC
         '
         'ChkBusUnit
         '
-        Me.ChkBusUnit.Location = New System.Drawing.Point(410, 84)
+        Me.ChkBusUnit.Location = New System.Drawing.Point(405, 82)
         Me.ChkBusUnit.Name = "ChkBusUnit"
         Me.ChkBusUnit.Properties.Appearance.Font = New System.Drawing.Font("Segoe UI", 10.2!)
         Me.ChkBusUnit.Properties.Appearance.Options.UseFont = True
-        Me.ChkBusUnit.Properties.Caption = "Business Unit"
-        Me.ChkBusUnit.Size = New System.Drawing.Size(132, 27)
+        Me.ChkBusUnit.Properties.Caption = "Gen. Per Business Unit"
+        Me.ChkBusUnit.Size = New System.Drawing.Size(219, 27)
         Me.ChkBusUnit.TabIndex = 72
         '
         'BtnGenerate

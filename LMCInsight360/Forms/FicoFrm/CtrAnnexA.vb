@@ -693,28 +693,28 @@ Public Class CtrAnnexA
                                                 ' FOODSTUFF special handling
                                                 If businessType = "FOODSTUFF" AndAlso (fsItem = "29" OrElse fsItem = "34") Then
 
-                                                    Dim IBU_CAS As Double = Val(GetAmount(RptQueryBS_IBU(yearValue, monthRange, "L4P")))
-                                                    Dim IBU_RES As Double = Val(GetAmount(RptQueryBS_IBU(yearValue, monthRange, "LRP")))
+                                                    Dim IBU_CAS As Double = 0
+                                                    Dim IBU_RES As Double = 0
+                                                    Dim finalValue As Double = 0
 
-                                                    Dim baseValue As Double = Val(GetAmount(RptQueryBS(yearValue, monthRange, sapSource, fsItem, businessType)))
-
-                                                    Dim finalValue As Double = baseValue
-
-                                                    ' CAS LOGIC
-                                                    ' ===============================
-                                                    If fsItem = "29" AndAlso IBU_CAS > 0 Then
-                                                        finalValue += IBU_CAS
-                                                    ElseIf fsItem = "34" AndAlso IBU_CAS < 0 Then
-                                                        finalValue += IBU_CAS
+                                                    If sapSource = "L4P" Then
+                                                        IBU_CAS = Val(GetAmount(RptQueryBS_IBU(yearValue, monthRange, fsItem, "L4P")))
+                                                    ElseIf sapSource = "LRP" Then
+                                                        IBU_RES = Val(GetAmount(RptQueryBS_IBU(yearValue, monthRange, fsItem, "LRP")))
+                                                    Else
+                                                        IBU_CAS = Val(GetAmount(RptQueryBS_IBU(yearValue, monthRange, fsItem, "L4P")))
+                                                        IBU_RES = Val(GetAmount(RptQueryBS_IBU(yearValue, monthRange, fsItem, "LRP")))
                                                     End If
 
-                                                    ' RESERVED LOGIC
-                                                    ' ===============================
-                                                    If fsItem = "29" AndAlso IBU_RES > 0 Then
-                                                        finalValue += IBU_RES
-                                                    ElseIf fsItem = "34" AndAlso IBU_RES < 0 Then
-                                                        finalValue += IBU_RES
-                                                    End If
+                                                    Dim values() As Double = {IBU_CAS, IBU_RES}
+
+                                                    For Each val As Double In values
+                                                        If (fsItem = "29" AndAlso val > 0) OrElse
+                                                           (fsItem = "34" AndAlso val < 0) Then
+
+                                                            finalValue += val
+                                                        End If
+                                                    Next
 
                                                     .Cells(row, col) = AdjustValue(finalValue, reader("DCFLG").ToString())
 
@@ -754,13 +754,14 @@ Public Class CtrAnnexA
                 .UsedRange.Columns.AutoFit()
 
                 ' Hide previous months if there’s more than one
-                Dim lastMonthCol As Integer = baseCol + HeaderName.Count - 1
-                If HeaderName.Count > 1 Then
-                    Dim firstMonthCol As Integer = baseCol + 1
-                    Dim hideRange As Excel.Range = .Range(.Cells(7, firstMonthCol), .Cells(7, lastMonthCol - 1))
+                If fiscalMonth <> 1 Then
+                    Dim lastMonthCol As Integer = baseCol + HeaderName.Count - 1
+                    If HeaderName.Count > 1 Then
+                        Dim firstMonthCol As Integer = baseCol + 1
+                        Dim hideRange As Excel.Range = .Range(.Cells(7, firstMonthCol), .Cells(7, lastMonthCol - 1))
                         hideRange.EntireColumn.Hidden = True
                     End If
-
+                End If
             End With
 
         Catch ex As Exception

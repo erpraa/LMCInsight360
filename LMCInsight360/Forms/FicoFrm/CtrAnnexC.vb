@@ -12,6 +12,13 @@ Public Class CtrAnnexC
     Private Sub CtrAnnexC_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         BtnAnnexC = Gbl_ReportTag
 
+        Select Case BtnAnnexC
+            Case 1
+                ChkBusUnit.Hide()
+            Case 2
+                ChkBusUnit.Show()
+        End Select
+
         TxtStrYear.Text = GetDefaultYear()
         TxtEndYear.Text = GetDefaultYear()
     End Sub
@@ -19,6 +26,13 @@ Public Class CtrAnnexC
 #Region "Annex C Report"
 
     Private Sub BtnGenerate_Click(sender As Object, e As EventArgs) Handles BtnGenerate.Click
+
+        If CbxStrMonth.EditValue = CbxEndMonth.EditValue AndAlso TxtStrYear.Text = TxtEndYear.Text Then
+            MessageBox.Show("Year and month must not be the same.", "Invalid Year or Month", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Exit Sub
+        End If
+
+
         If String.IsNullOrWhiteSpace(CbxEndMonth.Text) Then
             MessageBox.Show("Please input Month", "Missing Information", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Exit Sub
@@ -459,7 +473,7 @@ Public Class CtrAnnexC
                     col += 1
                 Next
 
-                .Cells(row - 2, col).Value = $"Difference ({MonthName(EfiscalMonth - 1, True)} & {MonthName(EfiscalMonth, True)})"
+                .Cells(row - 2, col).Value = $"Difference ({MonthName(If(EfiscalMonth = 1, 12, EfiscalMonth - 1), True)} & {MonthName(EfiscalMonth, True)})"
                 SetSquareBorder(wsheet, row - 2, col, Excel.XlBorderWeight.xlThin)
                 SetBackFontColor(wsheet, row - 2, col, "", "169,169,169")
 
@@ -569,7 +583,7 @@ Public Class CtrAnnexC
 
 
         Catch ex As Exception
-            MessageBox.Show("An error occurred while generating the Income Statement: " & ex.Message,
+            MessageBox.Show("An error occurred while generating Manufacturing Cost Report: " & ex.Message,
                         "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
 

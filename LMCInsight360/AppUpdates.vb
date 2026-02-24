@@ -49,7 +49,7 @@ Module AppUpdates
                  "Manufacturing Cost Report",
                  "Fix Bug in IBU Clearing – Balance Sheet (Annex A)"
             },
-            .ReleaseDate = #02/23/2026#
+            .ReleaseDate = #02/24/2026#
         }
     }
 
