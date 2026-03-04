@@ -234,8 +234,43 @@
         If FSItem = "GA" Then
             GscriptBS = $"SELECT SUM(CASE WHEN FSItem = '61' THEN Amount WHEN FSItem IN ('61-1','61-2') THEN -Amount END) AS NetAmount FROM vwFI_GLREPORT WHERE FSItem IN ('61','61-1','61-2')  AND FiscalYear IN ({FiscalYear}) and PostingPeriod IN ({PostingPeriod}) {pTrxOrigin} {pbusType} {pbusUnit}"
         Else
-            GscriptBS = $"select SUM(Amount) from vwFI_GLREPORT where FiscalYear IN ({FiscalYear}) and PostingPeriod IN ({PostingPeriod}) {pTrxOrigin} {pFSItem} {pbusType} {pbusUnit} "
+            GscriptBS = $"select SUM(Amount) from vwFI_GLREPORT where FiscalYear= ({FiscalYear}) and PostingPeriod IN ({PostingPeriod}) {pTrxOrigin} {pFSItem} {pbusType} {pbusUnit} "
         End If
+
+        Return GscriptBS
+    End Function
+
+    Public Shared Function RptQueryMOH(FiscalYear As String, PostingPeriod As String, TrxOrigin As String, FSItem As String, businessType As String, busUnit As String, glaccount As Integer) As String
+
+        Dim GscriptBS As String
+        Dim pTrxOrigin As String = Nothing
+        Dim pFSItem As String = Nothing
+        Dim pbusType As String = Nothing
+        Dim pbusUnit As String = Nothing
+        Dim pglaccount As String = Nothing
+
+
+        If TrxOrigin <> Nothing Then
+            pTrxOrigin = $"and TrxOrigin='{TrxOrigin}'"
+        End If
+
+        If FSItem <> Nothing Then
+            pFSItem = $"and FSItem='{FSItem}'"
+        End If
+
+        If businessType = "FOODSTUFF" Then
+            pbusType = $"and BusType='Foodstuff Only'"
+        End If
+
+        If busUnit <> Nothing Then
+            pbusUnit = $"and BusUnit1='{busUnit}'"
+        End If
+
+        If glaccount <> Nothing Then
+            pglaccount = $"and GLAccount='{glaccount}'"
+        End If
+
+        GscriptBS = $"select SUM(Amount) from vwFI_GLREPORT where FiscalYear IN ({FiscalYear}) and PostingPeriod IN ({PostingPeriod}) {pglaccount} {pTrxOrigin} {pFSItem} {pbusType} {pbusUnit}"
 
         Return GscriptBS
     End Function

@@ -17,7 +17,7 @@ Module AppUpdates
         New UpdateInfo With {
             .Version = "1.0.0.2",
             .Descriptions = New List(Of String) From {
-                "Bug fixes in Data initialization"
+                "Applied fixes to improve data initialization stability and accuracy"
             },
             .ReleaseDate = #12/23/2025#
         },
@@ -47,9 +47,17 @@ Module AppUpdates
                 "Implemented a new feature Annex C",
                  "Cost of Sales Ratio Report",
                  "Manufacturing Cost Report",
-                 "Fix Bug in IBU Clearing – Balance Sheet (Annex A)"
+                 "IBU clearing logic correction in the Balance Sheet (Annex A)"
             },
             .ReleaseDate = #02/24/2026#
+            },
+                New UpdateInfo With {
+            .Version = "1.0.0.6",
+            .Descriptions = New List(Of String) From {
+                "Implemented Manufacturing Overhead Report",
+                "Consolidated Annex C Report"
+            },
+            .ReleaseDate = #02/27/2026#
         }
     }
 

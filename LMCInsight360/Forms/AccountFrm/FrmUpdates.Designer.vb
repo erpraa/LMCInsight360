@@ -37,7 +37,7 @@ Partial Class FrmUpdates
         Me.RtbUpdates.Name = "RtbUpdates"
         Me.RtbUpdates.ReadOnly = True
         Me.RtbUpdates.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical
-        Me.RtbUpdates.Size = New System.Drawing.Size(383, 424)
+        Me.RtbUpdates.Size = New System.Drawing.Size(483, 524)
         Me.RtbUpdates.TabIndex = 1
         Me.RtbUpdates.Text = ""
         '
@@ -47,7 +47,7 @@ Partial Class FrmUpdates
         Me.SidePanel1.Dock = System.Windows.Forms.DockStyle.Left
         Me.SidePanel1.Location = New System.Drawing.Point(0, 0)
         Me.SidePanel1.Name = "SidePanel1"
-        Me.SidePanel1.Size = New System.Drawing.Size(15, 474)
+        Me.SidePanel1.Size = New System.Drawing.Size(15, 574)
         Me.SidePanel1.TabIndex = 2
         Me.SidePanel1.Text = "SidePanel1"
         '
@@ -58,7 +58,7 @@ Partial Class FrmUpdates
         Me.SidePanel2.Dock = System.Windows.Forms.DockStyle.Top
         Me.SidePanel2.Location = New System.Drawing.Point(15, 0)
         Me.SidePanel2.Name = "SidePanel2"
-        Me.SidePanel2.Size = New System.Drawing.Size(383, 50)
+        Me.SidePanel2.Size = New System.Drawing.Size(483, 50)
         Me.SidePanel2.TabIndex = 3
         Me.SidePanel2.Text = "SidePanel2"
         '
@@ -77,7 +77,7 @@ Partial Class FrmUpdates
         Me.Appearance.Options.UseBackColor = True
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 17.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(398, 474)
+        Me.ClientSize = New System.Drawing.Size(498, 574)
         Me.Controls.Add(Me.RtbUpdates)
         Me.Controls.Add(Me.SidePanel2)
         Me.Controls.Add(Me.SidePanel1)

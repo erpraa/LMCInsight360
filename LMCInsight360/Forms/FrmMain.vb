@@ -236,8 +236,19 @@ Public Class FrmMain
 
     Private Sub BtnAnnxC_MFGCost_Click(sender As Object, e As EventArgs) Handles BtnAnnxC_MFGCost.Click
         Gbl_ReportTag = 2
-        TabMenu(Me, New CtrAnnexC, "Mfg Cost")
+        TabMenu(Me, New CtrAnnexC, "Manufacturing Cost")
     End Sub
+
+    Private Sub BtnAnnxC_MOHCost_Click(sender As Object, e As EventArgs) Handles BtnAnnxC_MOHCost.Click
+        Gbl_ReportTag = 3
+        TabMenu(Me, New CtrAnnexC, "Manufacturing Overhead")
+    End Sub
+
+    Private Sub BtnAnnxC_Gen_Click(sender As Object, e As EventArgs) Handles BtnAnnxC_Gen.Click
+        Gbl_ReportTag = 4
+        TabMenu(Me, New CtrAnnexC, "Generate Annex C")
+    End Sub
+
 #End Region
 
 #Region "Data Management Button"
@@ -341,6 +352,5 @@ Public Class FrmMain
     Private Sub AccordionControlElement18_Click(sender As Object, e As EventArgs) Handles AccordionControlElement18.Click
         ShowMaintenance()
     End Sub
-
 
 End Class

@@ -17,6 +17,8 @@ Public Class CtrAnnexC
                 ChkBusUnit.Hide()
             Case 2
                 ChkBusUnit.Show()
+            Case 3
+                ChkBusUnit.Show()
         End Select
 
         TxtStrYear.Text = GetDefaultYear()
@@ -67,9 +69,126 @@ Public Class CtrAnnexC
                     Generate_COSRatio()
                 Case 2
                     Generate_MfgCost()
+                Case 3
+                    Generate_MOH()
+                Case 4
+                    Generate_AnnexC()
             End Select
 
         End If
+    End Sub
+
+    Private Sub Generate_AnnexC()
+
+        SplashScreenManager.ShowForm(Me, GetType(WaitFrm), True, True, False)
+
+        Dim sapSource As String = GetSapSource(CbxSapSource.EditValue)
+
+        ' Create Excel only once
+        Dim excelApp As New Excel.Application()
+        Dim wbook As Excel.Workbook = excelApp.Workbooks.Add()
+
+        ' Delete extra sheets, keep only Sheet1
+        For i As Integer = wbook.Sheets.Count To 2 Step -1
+            wbook.Sheets(i).Delete()
+        Next
+
+        Dim SfiscalYear, EfiscalYear, SfiscalMonth, EfiscalMonth As Integer
+
+        SfiscalYear = If(GetMonthNumber(CbxStrMonth.EditValue) = 1, TxtStrYear.EditValue - 1, TxtStrYear.EditValue)
+        SfiscalMonth = If(GetMonthNumber(CbxStrMonth.EditValue) = 1, 12, GetMonthNumber(CbxStrMonth.EditValue) - 1)
+
+        EfiscalYear = TxtEndYear.EditValue
+        EfiscalMonth = GetMonthNumber(CbxEndMonth.EditValue)
+
+        If CbxBusinessType.EditValue = "FOODSTUFF" Then
+
+            FS_Generate_MfgCost(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, True)
+            If ChkBusUnit.Checked = True Then
+                FS_Generate_MfgCost(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Cavite")
+                FS_Generate_MfgCost(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "CDO")
+                FS_Generate_MfgCost(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Cebu")
+                FS_Generate_MfgCost(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Tarlac")
+                FS_Generate_MfgCost(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Iloilo")
+                FS_Generate_MfgCost(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Pangasinan")
+                FS_Generate_MfgCost(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Laguna")
+                FS_Generate_MfgCost(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Ready to Drink")
+                FS_Generate_MfgCost(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Marshmallows")
+                FS_Generate_COSRatio(TxtStrYear.EditValue, GetMonthNumber(CbxStrMonth.EditValue), EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False)
+            End If
+
+            FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False)
+            If ChkBusUnit.Checked = True Then
+                FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Cavite")
+                FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "CDO")
+                FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Cebu")
+                FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Tarlac")
+                FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Iloilo")
+                FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Pangasinan")
+                FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Laguna")
+                FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Ready to Drink")
+                FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Marshmallows")
+            End If
+
+        ElseIf CbxBusinessType.EditValue = "OVERALL" Then
+            FS_Generate_MfgCost(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "OVERALL", wbook, True)
+            FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "OVERALL", wbook, False)
+
+        Else
+
+            FS_Generate_MfgCost(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, True)
+            FS_Generate_MfgCost(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "OVERALL", wbook, False)
+            If ChkBusUnit.Checked = True Then
+                FS_Generate_MfgCost(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Cavite")
+                FS_Generate_MfgCost(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "CDO")
+                FS_Generate_MfgCost(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Cebu")
+                FS_Generate_MfgCost(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Tarlac")
+                FS_Generate_MfgCost(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Iloilo")
+                FS_Generate_MfgCost(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Pangasinan")
+                FS_Generate_MfgCost(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Laguna")
+                FS_Generate_MfgCost(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Ready to Drink")
+                FS_Generate_MfgCost(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Marshmallows")
+                FS_Generate_COSRatio(TxtStrYear.EditValue, GetMonthNumber(CbxStrMonth.EditValue), EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False)
+            End If
+
+            FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False)
+            FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "OVERALL", wbook, False)
+            If ChkBusUnit.Checked = True Then
+                FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Cavite")
+                FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "CDO")
+                FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Cebu")
+                FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Tarlac")
+                FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Iloilo")
+                FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Pangasinan")
+                FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Laguna")
+                FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Ready to Drink")
+                FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Marshmallows")
+            End If
+
+
+        End If
+
+        wbook.Sheets(1).Activate()
+        excelApp.Visible = True
+
+        ' Move COS Ratio - Food to first tab
+        Dim wsCOS As Excel.Worksheet = Nothing
+        Try
+            wsCOS = CType(wbook.Sheets("COS Ratio - Food"), Excel.Worksheet)
+            wsCOS.Move(Before:=wbook.Sheets(1))
+        Catch ex As Exception
+        End Try
+
+        ' Cleanup COM
+        If wbook IsNot Nothing Then Marshal.ReleaseComObject(wbook)
+        If excelApp IsNot Nothing Then Marshal.ReleaseComObject(excelApp)
+
+        wbook = Nothing
+        excelApp = Nothing
+        GC.Collect()
+        GC.WaitForPendingFinalizers()
+
+        SplashScreenManager.CloseDefaultWaitForm()
     End Sub
 
 #End Region
@@ -280,10 +399,10 @@ Public Class CtrAnnexC
                     row += 1
 
                     .Cells(row, 1) = "Increase (Decrease) in Manufacturing Cost"
-                    .Cells(row, col).Value = $"={GetExcelColName(col)}{row - 3}*{GetExcelColName(col)}{row - 1}"
+                    .Cells(row, col).Value = $"={GetExcelColName(col)}{row - 13}*{GetExcelColName(col)}{row - 1}"
                     .Cells(row, col).NumberFormat = NumericFormat
 
-                    .Cells(row, lastCol).Value = $"={GetExcelColName(lastCol)}{row - 3}*{GetExcelColName(lastCol)}{row - 1}"
+                    .Cells(row, lastCol).Value = $"={GetExcelColName(lastCol)}{row - 13}*{GetExcelColName(lastCol)}{row - 1}"
                     .Cells(row, lastCol).NumberFormat = NumericFormat
 
                     row += 1
@@ -296,16 +415,33 @@ Public Class CtrAnnexC
                     .Cells(row + 5, 1) = "Total"
                     .Cells(row + 6, 1) = "Difference"
 
-                    .Cells(row + 5, col).Value = $"=SUM({GetExcelColName(col)}{row + 2}:{GetExcelColName(col)}{row + 4})"
-                    .Cells(row + 5, lastCol).Value = $"=SUM({GetExcelColName(lastCol)}{row + 2}:{GetExcelColName(lastCol)}{row + 4})"
+                    .Cells(row + 5, col).Formula = $"=SUM({GetExcelColName(col)}{row + 2}:{GetExcelColName(col)}{row + 4})"
+                    .Cells(row + 5, lastCol).Formula = $"=SUM({GetExcelColName(lastCol)}{row + 2}:{GetExcelColName(lastCol)}{row + 4})"
+                    .Cells(row + 5, col).NumberFormat = NumericFormat
 
-                    .Cells(row + 6, col).Value = $"={GetExcelColName(col)}{row - 1}-{GetExcelColName(col)}{row + 5}"
-                    .Cells(row + 6, lastCol).Value = $"={GetExcelColName(lastCol)}{row - 1}-{GetExcelColName(lastCol)}{row + 5}"
+                    .Cells(row + 6, col).Formula = $"={GetExcelColName(col)}{row - 1}-{GetExcelColName(col)}{row + 5}"
+                    .Cells(row + 6, lastCol).Formula = $"={GetExcelColName(lastCol)}{row - 1}-{GetExcelColName(lastCol)}{row + 5}"
 
 
                     SetBorderStyle(wsheet, row + 5, 1, "D", "B")
                     SetBorderStyle(wsheet, row + 5, col, "D", "B")
                     SetBorderStyle(wsheet, row + 5, lastCol, "D", "B")
+
+                    .Cells(row + 2, col).Formula = $"='Mfg Cost - {br("HDESC1")}'!E25"
+                    .Cells(row + 3, col).Formula = $"='Mfg Cost - {br("HDESC1")}'!E26"
+                    .Cells(row + 4, col).Formula = $"='Mfg Cost - {br("HDESC1")}'!E27"
+
+                    .Cells(row + 2, col).NumberFormat = NumericFormat
+                    .Cells(row + 3, col).NumberFormat = NumericFormat
+                    .Cells(row + 4, col).NumberFormat = NumericFormat
+
+                    .Cells(row + 2, lastCol).Formula = $"=SUM(B{row + 2}:{GetExcelColName(lastCol - 1)}{row + 2})"
+                    .Cells(row + 3, lastCol).Formula = $"=SUM(B{row + 3}:{GetExcelColName(lastCol - 1)}{row + 3})"
+                    .Cells(row + 4, lastCol).Formula = $"=SUM(B{row + 4}:{GetExcelColName(lastCol - 1)}{row + 4})"
+
+                    .Cells(row + 2, lastCol).NumberFormat = NumericFormat
+                    .Cells(row + 3, lastCol).NumberFormat = NumericFormat
+                    .Cells(row + 4, lastCol).NumberFormat = NumericFormat
 
                     col += 1
                     row = baseRow
@@ -326,6 +462,7 @@ Public Class CtrAnnexC
         End Try
 
     End Sub
+
 
 #End Region
 
@@ -417,7 +554,7 @@ Public Class CtrAnnexC
             Dim col, row As Integer
             Dim baseCol As Integer = 2
             Dim baseRow As Integer = 6
-            Dim colT As Integer = 2
+            Dim colT As Integer = 0
             With wsheet
 
                 Dim reportDate = New Date(CInt(EfiscalYear), EfiscalMonth, Date.DaysInMonth(CInt(EfiscalYear), EfiscalMonth))
@@ -471,6 +608,12 @@ Public Class CtrAnnexC
                     SetSquareBorder(wsheet, row - 2, col, Excel.XlBorderWeight.xlThin)
                     SetBackFontColor(wsheet, row - 2, col, "", "169,169,169")
                     col += 1
+
+                    Dim monthYear As String = HdrMnth("MonthNameYear").ToString()
+                    Dim parts() As String = monthYear.Split(" "c)
+                    If CInt(parts(1)) = EfiscalYear Then
+                        colT += 1
+                    End If
                 Next
 
                 .Cells(row - 2, col).Value = $"Difference ({MonthName(If(EfiscalMonth = 1, 12, EfiscalMonth - 1), True)} & {MonthName(EfiscalMonth, True)})"
@@ -498,10 +641,6 @@ Public Class CtrAnnexC
                             Dim monthYear As String = HdrMnth("MonthNameYear").ToString()
                             Dim parts() As String = monthYear.Split(" "c)
 
-                            If parts(0) = "January" AndAlso CInt(parts(1)) = EfiscalYear Then
-                                colT = col
-                            End If
-
                             If pFS_ITEM = "C13" Then
                                 fiscalMonth = String.Join(",", Enumerable.Range(1, CInt(GetMonthNumber(parts(0)))))
                             Else
@@ -509,12 +648,12 @@ Public Class CtrAnnexC
                             End If
 
                             .Cells(row, col).Value = AdjustValue(Val(GetAmount(RptQueryMFG(parts(1), fiscalMonth, sapSource, pFS_ITEM, businessType, busUnit))), rowDesc("DCFLG").ToString())
-                                .Cells(row, col).NumberFormat = NumericFormat
-                                ApplyCellFormat(.Cells(row, col), rowDesc)
-                            End If
+                            .Cells(row, col).NumberFormat = NumericFormat
+                            ApplyCellFormat(.Cells(row, col), rowDesc)
+                        End If
 
-                            ' Apply formulas
-                            If rowDesc("FRMLA").ToString() <> "" Then
+                        ' Apply formulas
+                        If rowDesc("FRMLA").ToString() <> "" Then
                             .Cells(row, col).Formula = GetExcelFormula(rowDesc("FRMLA").ToString(), col)
                         End If
 
@@ -541,11 +680,7 @@ Public Class CtrAnnexC
 
                     Next
 
-                    .Cells(21, col).Formula = $"=AVERAGE({ .Cells(21, colT).Address}:{ .Cells(21, col - 1).Address})"
                     SetBorderStyle(wsheet, row, col, rowDesc("ULINE").ToString(), rowDesc("PLINE").ToString())
-                    ApplyCellFormat(.Cells(row, col), rowDesc)
-
-                    .Cells(24, col).Value = "Inc(Dec)in Value"
 
                     Select Case row
                         Case 6, 8, 10, 12, 14
@@ -555,6 +690,10 @@ Public Class CtrAnnexC
                             .Cells(row, col).NumberFormat = PercentageFormat
                         Case 16
                             .Cells(row, col).Formula = $"={ .Cells(row, col - 1).Address}-{ .Cells(row, col - 2).Address}"
+                        Case 21
+                            .Cells(row, col).Formula = $"=AVERAGE({ .Cells(row, col - colT).Address}:{ .Cells(row, col - 1).Address})"
+                        Case 24
+                            .Cells(row, col).Value = "Inc(Dec)in Value"
                         Case 25
                             .Cells(row, col).Formula = $"={ .Cells(8, col - 1).Address}-{ .Cells(row, col - 1).Address}"
                         Case 26
@@ -589,6 +728,340 @@ Public Class CtrAnnexC
 
     End Sub
 
+#End Region
+
+#Region "MOH"
+    Sub Generate_MOH()
+        SplashScreenManager.ShowForm(Me, GetType(WaitFrm), True, True, False)
+
+        Dim sapSource As String = GetSapSource(CbxSapSource.EditValue)
+
+        ' Create Excel only once
+        Dim excelApp As New Excel.Application()
+        Dim wbook As Excel.Workbook = excelApp.Workbooks.Add()
+
+        ' Delete extra sheets, keep only Sheet1
+        For i As Integer = wbook.Sheets.Count To 2 Step -1
+            wbook.Sheets(i).Delete()
+        Next
+
+        Dim SfiscalYear, EfiscalYear, SfiscalMonth, EfiscalMonth As Integer
+
+        SfiscalYear = If(GetMonthNumber(CbxStrMonth.EditValue) = 1, TxtStrYear.EditValue - 1, TxtStrYear.EditValue)
+        SfiscalMonth = If(GetMonthNumber(CbxStrMonth.EditValue) = 1, 12, GetMonthNumber(CbxStrMonth.EditValue) - 1)
+        EfiscalYear = TxtEndYear.EditValue
+        EfiscalMonth = GetMonthNumber(CbxEndMonth.EditValue)
+
+        If CbxBusinessType.EditValue = "FOODSTUFF" Then
+            FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, True)
+
+            If ChkBusUnit.Checked = True Then
+                FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Cavite")
+                FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "CDO")
+                FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Cebu")
+                FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Tarlac")
+                FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Iloilo")
+                FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Pangasinan")
+                FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Laguna")
+                FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Ready to Drink")
+                FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Marshmallows")
+            End If
+
+        ElseIf CbxBusinessType.EditValue = "OVERALL" Then
+            FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "OVERALL", wbook, True)
+        Else
+            FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, True)
+            FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "OVERALL", wbook, False)
+
+            If ChkBusUnit.Checked = True Then
+                FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Cavite")
+                FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "CDO")
+                FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Cebu")
+                FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Tarlac")
+                FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Iloilo")
+                FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Pangasinan")
+                FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Laguna")
+                FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Ready to Drink")
+                FS_Generate_MOH(SfiscalYear, SfiscalMonth, EfiscalYear, EfiscalMonth, sapSource, "FOODSTUFF", wbook, False, "Marshmallows")
+            End If
+
+        End If
+
+        wbook.Sheets(1).Activate()
+        excelApp.Visible = True
+
+        ' Cleanup COM
+        If wbook IsNot Nothing Then Marshal.ReleaseComObject(wbook)
+        If excelApp IsNot Nothing Then Marshal.ReleaseComObject(excelApp)
+
+        wbook = Nothing
+        excelApp = Nothing
+        GC.Collect()
+        GC.WaitForPendingFinalizers()
+
+        SplashScreenManager.CloseDefaultWaitForm()
+    End Sub
+
+
+    Private Sub FS_Generate_MOH(SfiscalYear As Integer, SfiscalMonth As Integer, EfiscalYear As Integer, EfiscalMonth As Integer, sapSource As String, businessType As String, wbook As Excel.Workbook, useFirstSheet As Boolean, Optional busUnit As String = Nothing)
+        Dim wsheet As Excel.Worksheet = Nothing
+
+        Try
+            If useFirstSheet Then
+                wsheet = CType(wbook.Sheets(1), Excel.Worksheet)
+            Else
+                wsheet = CType(wbook.Sheets.Add(After:=wbook.Sheets(wbook.Sheets.Count)), Excel.Worksheet)
+            End If
+
+            ' Column & Row tracking
+            Dim col, row As Integer
+            Dim baseCol As Integer = 2
+            Dim baseRow As Integer = 8
+            Dim rowT As Integer = 0
+
+            Dim pbusUnit As String = Nothing
+
+            With wsheet
+
+                Dim reportDate = New Date(CInt(EfiscalYear), EfiscalMonth, Date.DaysInMonth(CInt(EfiscalYear), EfiscalMonth))
+
+                'Report Title
+                Dim saptitle As String = Nothing
+                If sapSource = "L4P" Then
+                    saptitle = "(CAS)"
+                ElseIf sapSource = "LRP" Then
+                    saptitle = "(Reserved)"
+                End If
+
+                .Cells(1, 1).Value = "Liwayway Marketing Corporation"
+
+                If businessType = "FOODSTUFF" Then
+                    .Cells(2, 1).Value = $"Cost of Sales Analysis - {busUnit} Foodstuff {saptitle}"
+
+                    If busUnit = Nothing Then
+                        .Name = "MOH - Food"
+                    Else
+                        .Name = $"MOH - {busUnit}"
+                    End If
+                Else
+                    .Cells(2, 1).Value = $"Cost of Sales Analysis - Overall {saptitle}"
+                    .Name = "MOH - Overall"
+                End If
+                .Cells(3, 1).Value = "For the Period Ending " & reportDate.ToString("MMMM dd, yyyy")
+
+                .Cells(1, 1).Font.Size = 11
+                .Cells(2, 1).Font.Size = 11
+                .Cells(3, 1).Font.Size = 11
+
+                Dim HeaderMonths As List(Of Dictionary(Of String, String)) = GetMultiValues($"WITH MonthRange AS (
+                                                                                        SELECT DATEFROMPARTS({SfiscalYear}, {SfiscalMonth}, 1) AS MonthDate
+                                                                                        UNION ALL
+                                                                                        SELECT DATEADD(MONTH, 1, MonthDate)
+                                                                                        FROM MonthRange
+                                                                                        WHERE MonthDate < DATEFROMPARTS({EfiscalYear}, {EfiscalMonth}, 1))                                  
+                                                                                        SELECT DATENAME(MONTH, MonthDate) + ' ' + CAST(YEAR(MonthDate) AS VARCHAR(4)) AS MonthNameYear
+                                                                                        FROM MonthRange ORDER BY MonthDate OPTION (MAXRECURSION 100);")
+                col = baseCol
+                row = baseRow
+
+                'Monthly sections Header
+                .Cells(6, 1).Value = "Net Sales"
+
+                For cntloop As Integer = 1 To 2
+
+                    Dim fsitem As String = Nothing
+                    Dim nameloop As String = Nothing
+
+                    If cntloop = 1 Then
+
+                        nameloop = "Manufacturing Overhead"
+                        fsitem = "61-2"
+                    Else
+                        nameloop = "Labor"
+                        fsitem = "61-1"
+                    End If
+
+                    If busUnit <> Nothing Then
+                        pbusUnit = $"and BusUnit1='{busUnit}'"
+                    End If
+
+                    Dim RowDesc As List(Of Dictionary(Of String, String)) = GetMultiValues($"select distinct GLAccount,GLLngDesc, CONCAT(GLAccount,' ',GLLngDesc) as RPTDISPLY from vwFI_GLREPORT where FSItem='{fsitem}' {pbusUnit} order by GLAccount,GLLngDesc")
+
+                    .Cells(row, 1).Value = nameloop
+                    .Cells(row, 1).Font.Size = 10
+                    SetBackFontColor(wsheet, row, 1, "", "169,169,169")
+                    SetSquareBorder(wsheet, row, 1, Excel.XlBorderWeight.xlThin)
+
+                    For Each HdrMnth In HeaderMonths
+
+                        If cntloop = 1 Then
+                            Dim monthYear As String = HdrMnth("MonthNameYear").ToString()
+                            Dim parts() As String = monthYear.Split(" "c)
+                            .Cells(6, col).Value = Val(GetAmount(RptQueryMOH(parts(1), GetMonthNumber(parts(0)), sapSource, "60", businessType, busUnit, Nothing))) * -1
+                            .Cells(6, col).NumberFormat = NumericFormat
+                        End If
+
+                        .Cells(row, col).Value = "'" & HdrMnth("MonthNameYear").ToString()
+                        col += 1
+                        .Cells(row, col).Value = "% to Sales"
+                        col += 1
+                    Next
+
+                    If cntloop = 1 Then
+                        MOHDifferenceFormula(wsheet, 6, col)
+                    End If
+
+                    .Cells(row, col).Value = $"Difference ({MonthName(If(EfiscalMonth = 1, 12, EfiscalMonth - 1), True)} & {MonthName(EfiscalMonth, True)})"
+                    .Cells(row, col + 1).Value = "% Difference"
+                    .Cells(row, col + 2).Value = "Remarks"
+
+                    For i As Integer = 0 To (HeaderMonths.Count + 1) * 2
+                        SetBackFontColor(wsheet, row, baseCol + i, "", "169,169,169")
+                        SetSquareBorder(wsheet, row, baseCol + i, Excel.XlBorderWeight.xlThin)
+                        .Cells(row, baseCol + i).Font.Size = 10
+                    Next
+
+                    col = baseCol
+                    row += 1
+
+                    For Each reader In RowDesc
+
+                        .Cells(row, 1).Value = reader("RPTDISPLY").ToString()
+
+                        For Each HdrMnth In HeaderMonths
+                            Dim monthYear As String = HdrMnth("MonthNameYear").ToString()
+                            Dim parts() As String = monthYear.Split(" "c)
+                            .Cells(row, col).Value = Val(GetAmount(RptQueryMOH(parts(1), GetMonthNumber(parts(0)), sapSource, fsitem, businessType, busUnit, CInt(reader("GLAccount")))))
+                            .Cells(row, col).NumberFormat = NumericFormat
+                            col += 1
+                            .Cells(row, col).Formula = $"=IFERROR({ .Cells(row, col - 1).Address}/{ .Cells(6, col - 1).Address},0)"
+                            .Cells(row, col).NumberFormat = PercentageFormatS
+                            col += 1
+                        Next
+
+                        MOHDifferenceFormula(wsheet, row, col)
+
+                        col = baseCol
+                        row += 1
+
+                        For i As Integer = 0 To (HeaderMonths.Count + 1) * 2
+                            .Cells(row - 1, 1 + i).Font.Size = 9
+                            .Cells(row - 1, col + i).Borders(Excel.XlBordersIndex.xlEdgeTop).LineStyle = Excel.XlLineStyle.xlContinuous
+                            .Cells(row - 1, col + i).Borders(Excel.XlBordersIndex.xlEdgeTop).Weight = Excel.XlBorderWeight.xlThin
+
+                            .Cells(row - 1, col + i).Borders(Excel.XlBordersIndex.xlEdgeRight).LineStyle = Excel.XlLineStyle.xlContinuous
+                            .Cells(row - 1, col + i).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlThin
+                        Next
+
+
+                    Next
+
+                    .Cells(row, 1).Value = "Total"
+                    SetSquareBorder(wsheet, row, 1, Excel.XlBorderWeight.xlThin)
+                    SetBackFontColor(wsheet, row, 1, "", "217,217,217")
+
+                    For Each HdrMnth In HeaderMonths
+                        .Cells(row, col).Formula = $"=SUM({ .Cells(row - RowDesc.Count, col).Address}:{ .Cells(row - 1, col).Address})"
+                        .Cells(row, col).NumberFormat = NumericFormat
+                        col += 1
+                        .Cells(row, col).Formula = $"=IFERROR({ .Cells(row, col - 1).Address}/{ .Cells(6, col - 1).Address},0)"
+                        .Cells(row, col).NumberFormat = PercentageFormatS
+                        col += 1
+                    Next
+
+                    MOHDifferenceFormula(wsheet, row, col)
+
+                    For i As Integer = 0 To (HeaderMonths.Count + 1) * 2
+                        .Cells(row, 1 + i).Font.Size = 9
+                        SetSquareBorder(wsheet, row, baseCol + i, Excel.XlBorderWeight.xlThin)
+                        SetBackFontColor(wsheet, row, baseCol + i, "", "217,217,217")
+                    Next
+
+                    row += 2
+
+                    .Cells(row, 1).Value = "Percentage to Sales"
+                    .Cells(row + 1, 1).Value = "MOH Value Using Previous Month's Percentage"
+                    .Cells(row + 2, 1).Value = "Increase(Decrease) in MOH"
+
+                    For c As Integer = 0 To (HeaderMonths.Count + 1) * 2
+                        For r As Integer = 0 To 2
+                            .Cells(row + r, 1 + c).Font.Size = 9
+                            .Cells(row + r, 1 + c).Font.Bold = True
+                        Next
+                    Next
+
+
+                    col = baseCol
+
+                    For Each HdrMnth In HeaderMonths
+                        .Cells(row, col).Formula = $"=IFERROR({ .Cells(row - 2, col).Address}/{ .Cells(6, col).Address},0)"
+                        .Cells(row, col).NumberFormat = PercentageFormatS
+                        If col <> 2 Then
+                            .Cells(row + 1, col).Formula = $"=IFERROR({ .Cells(6, col).Address}*{ .Cells(row, col - 2).Address},0)"
+                            .Cells(row + 1, col).NumberFormat = NumericFormat
+                        End If
+                        .Cells(row + 2, col).Formula = $"=IFERROR({ .Cells(row - 2, col).Address}-{ .Cells(row + 1, col).Address},0)"
+                        .Cells(row + 2, col).NumberFormat = NumericFormat
+
+                        If cntloop = 1 Then
+                            rowT = (row + 2)
+                        End If
+
+                        col += 2
+                    Next
+                    .Cells(row, col).Formula = $"=IFERROR({ .Cells(row, col - 2).Address}-{ .Cells(row, col - 4).Address},0)"
+                    .Cells(row, col).NumberFormat = PercentageFormatS
+
+                    row += 4
+                    col = baseCol
+
+                Next
+
+                .Cells(row, 1).Value = "Total Increase(Decrease) in Labor & MOH"
+                For Each HdrMnth In HeaderMonths
+                    .Cells(row, col).Formula = $"=IFERROR({ .Cells(rowT, col).Address}+{ .Cells(row - 2, col).Address},0)"
+                    .Cells(row, col).NumberFormat = NumericFormat
+                    col += 2
+                Next
+
+                For c As Integer = 0 To (HeaderMonths.Count + 1) * 2
+                    .Cells(row, 1 + c).Font.Size = 9
+                    .Cells(row, 1 + c).Font.Bold = True
+                    .Cells(row, 1 + c).Borders(Excel.XlBordersIndex.xlEdgeBottom).LineStyle = Excel.XlLineStyle.xlDouble
+                    .Cells(row, 1 + c).Borders(Excel.XlBordersIndex.xlEdgeBottom).Weight = Excel.XlBorderWeight.xlThick
+                Next
+
+
+
+                'Final Format
+                .Activate()
+                .Range("B7").Select()
+                .Application.ActiveWindow.FreezePanes = True
+                .UsedRange.Font.Name = "Book Antiqua"
+                .UsedRange.Columns.AutoFit()
+
+                .Columns("B:C").Hidden = True
+
+            End With
+
+
+        Catch ex As Exception
+            MessageBox.Show("An error occurred while generating Manufacturing Cost Report: " & ex.Message,
+                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+
+    End Sub
+
+    Private Sub MOHDifferenceFormula(ByVal ws As Excel.Worksheet, ByRef row As Integer, ByRef col As Integer)
+        ' Difference Formula
+        ws.Cells(row, col).Formula = $"=IFERROR({ws.Cells(row, col - 2).Address}-{ws.Cells(row, col - 4).Address},0)"
+        ws.Cells(row, col).NumberFormat = NumericFormat
+
+        ' Percentage Formula
+        ws.Cells(row, col + 1).Formula = $"=IFERROR({ws.Cells(row, col).Address}/{ws.Cells(row, col - 4).Address},0)"
+        ws.Cells(row, col + 1).NumberFormat = PercentageFormatS
+
+    End Sub
 
 #End Region
 
