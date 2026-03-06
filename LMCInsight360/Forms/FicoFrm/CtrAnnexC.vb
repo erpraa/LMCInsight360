@@ -257,6 +257,8 @@ Public Class CtrAnnexC
             Dim baseCol As Integer = 2
             Dim baseRow As Integer = 6
 
+            Dim cntmnth As Integer = 0
+
             With wsheet
 
                 Dim reportDate = New Date(CInt(EfiscalYear), EfiscalMonth, Date.DaysInMonth(CInt(EfiscalYear), EfiscalMonth))
@@ -327,6 +329,8 @@ Public Class CtrAnnexC
 
                     ' Monthly sections
                     For Each m In months
+                        cntmnth += 1
+
                         Dim monthYear As String = m("MonthNameYear").ToString()
                         Dim parts() As String = monthYear.Split(" "c)
 
@@ -379,30 +383,48 @@ Public Class CtrAnnexC
 
                     row += 1
 
-                    .Cells(row, 1) = "Increase (Decrease) in Sales"
+                    .Cells(row, 1) = "Increase (Decrease) in Sales Value"
                     .Cells(row, col).Value = $"={GetExcelColName(col)}{row - 5}-{GetExcelColName(col)}{row - 10}"
                     .Cells(row, lastCol).Value = $"={GetExcelColName(lastCol)}{row - 5}-{GetExcelColName(lastCol)}{row - 10}"
 
-                    SetBorderStyle(wsheet, row, 1, "D", "B")
-                    SetBorderStyle(wsheet, row, col, "D", "B")
-                    SetBorderStyle(wsheet, row, lastCol, "D", "B")
+                    row += 1
+
+                    .Cells(row, 1) = "Increase (Decrease) in Sales Percentage"
+                    .Cells(row, col).Value = $"={GetExcelColName(col)}{row - 1}/{GetExcelColName(col)}{row - 11}"
+                    .Cells(row, lastCol).Value = $"={GetExcelColName(lastCol)}{row - 1}/{GetExcelColName(lastCol)}{row - 11}"
+                    .Cells(row, col).NumberFormat = PercentageFormat
+                    .Cells(row, lastCol).NumberFormat = PercentageFormat
+
+                    SetBorderStyle(wsheet, row, 1, "S", "B")
+                    SetBorderStyle(wsheet, row, col, "S", "B")
+                    SetBorderStyle(wsheet, row, lastCol, "S", "B")
 
                     row += 2
 
-                    .Cells(row, 1) = "Difference In COGS/Sales Ratio On Prior Mo."
-                    .Cells(row, col).Value = $"={GetExcelColName(col)}{row - 4}-{GetExcelColName(col)}{row - 9}"
+                    .Cells(row, 1) = "Difference in COGS/Sales Ratio"
+                    .Cells(row, col).Value = $"={GetExcelColName(col)}{row - 5}-{GetExcelColName(col)}{row - 10}"
+                    .Cells(row, lastCol).Value = $"={GetExcelColName(lastCol)}{row - 5}-{GetExcelColName(lastCol)}{row - 10}"
                     .Cells(row, col).NumberFormat = PercentageFormat
-
-                    .Cells(row, lastCol).Value = $"={GetExcelColName(lastCol)}{row - 4}-{GetExcelColName(lastCol)}{row - 9}"
                     .Cells(row, lastCol).NumberFormat = PercentageFormat
 
                     row += 1
 
-                    .Cells(row, 1) = "Increase (Decrease) in Manufacturing Cost"
-                    .Cells(row, col).Value = $"={GetExcelColName(col)}{row - 13}*{GetExcelColName(col)}{row - 1}"
+                    .Cells(row, 1) = "Increase (Decrease) in Cost of Sales Value"
+                    .Cells(row, col).Value = $"={GetExcelColName(col)}{row - 8}-{GetExcelColName(col)}{row - 13}"
+                    .Cells(row, lastCol).Value = $"={GetExcelColName(lastCol)}{row - 8}-{GetExcelColName(lastCol)}{row - 13}"
                     .Cells(row, col).NumberFormat = NumericFormat
 
-                    .Cells(row, lastCol).Value = $"={GetExcelColName(lastCol)}{row - 13}*{GetExcelColName(lastCol)}{row - 1}"
+                    SetBorderStyle(wsheet, row, 1, "S", "B")
+                    SetBorderStyle(wsheet, row, col, "S", "B")
+                    SetBorderStyle(wsheet, row, lastCol, "S", "B")
+
+                    row += 2
+
+                    .Cells(row, 1) = "Difference in COGS/Sales Ratio Using Prior Month's Sales Value"
+                    .Cells(row, col).Value = $"={GetExcelColName(col)}{row - 16}*{GetExcelColName(col)}{row - 3}"
+                    .Cells(row, col).NumberFormat = NumericFormat
+
+                    .Cells(row, lastCol).Value = $"={GetExcelColName(lastCol)}{row - 16}*{GetExcelColName(lastCol)}{row - 3}"
                     .Cells(row, lastCol).NumberFormat = NumericFormat
 
                     row += 1
@@ -418,22 +440,25 @@ Public Class CtrAnnexC
                     .Cells(row + 5, col).Formula = $"=SUM({GetExcelColName(col)}{row + 2}:{GetExcelColName(col)}{row + 4})"
                     .Cells(row + 5, lastCol).Formula = $"=SUM({GetExcelColName(lastCol)}{row + 2}:{GetExcelColName(lastCol)}{row + 4})"
                     .Cells(row + 5, col).NumberFormat = NumericFormat
+                    SetBorderStyle(wsheet, row + 4, col, "S", "B")
+                    SetBorderStyle(wsheet, row + 4, lastCol, "S", "B")
 
-                    .Cells(row + 6, col).Formula = $"={GetExcelColName(col)}{row - 1}-{GetExcelColName(col)}{row + 5}"
-                    .Cells(row + 6, lastCol).Formula = $"={GetExcelColName(lastCol)}{row - 1}-{GetExcelColName(lastCol)}{row + 5}"
-
+                    .Cells(row + 6, col).Formula = $"={GetExcelColName(col)}{row - 3}-{GetExcelColName(col)}{row + 5}"
+                    .Cells(row + 6, lastCol).Formula = $"={GetExcelColName(lastCol)}{row - 3}-{GetExcelColName(lastCol)}{row + 5}"
 
                     SetBorderStyle(wsheet, row + 5, 1, "D", "B")
                     SetBorderStyle(wsheet, row + 5, col, "D", "B")
                     SetBorderStyle(wsheet, row + 5, lastCol, "D", "B")
 
-                    .Cells(row + 2, col).Formula = $"='Mfg Cost - {br("HDESC1")}'!E25"
-                    .Cells(row + 3, col).Formula = $"='Mfg Cost - {br("HDESC1")}'!E26"
-                    .Cells(row + 4, col).Formula = $"='Mfg Cost - {br("HDESC1")}'!E27"
+                    If ChkBusUnit.Checked = True Then
+                        .Cells(row + 2, col).Formula = $"='Mfg Cost - {br("HDESC1")}'!{GetExcelColName(cntmnth + 3)}25"
+                        .Cells(row + 3, col).Formula = $"='Mfg Cost - {br("HDESC1")}'!{GetExcelColName(cntmnth + 3)}26"
+                        .Cells(row + 4, col).Formula = $"='Mfg Cost - {br("HDESC1")}'!{GetExcelColName(cntmnth + 3)}27"
 
-                    .Cells(row + 2, col).NumberFormat = NumericFormat
-                    .Cells(row + 3, col).NumberFormat = NumericFormat
-                    .Cells(row + 4, col).NumberFormat = NumericFormat
+                        .Cells(row + 2, col).NumberFormat = NumericFormat
+                        .Cells(row + 3, col).NumberFormat = NumericFormat
+                        .Cells(row + 4, col).NumberFormat = NumericFormat
+                    End If
 
                     .Cells(row + 2, lastCol).Formula = $"=SUM(B{row + 2}:{GetExcelColName(lastCol - 1)}{row + 2})"
                     .Cells(row + 3, lastCol).Formula = $"=SUM(B{row + 3}:{GetExcelColName(lastCol - 1)}{row + 3})"
@@ -445,7 +470,7 @@ Public Class CtrAnnexC
 
                     col += 1
                     row = baseRow
-
+                    cntmnth = 0
                 Next
 
                 'Final Format
@@ -1076,5 +1101,54 @@ Public Class CtrAnnexC
             cell.RowHeight = CDbl(rowHeightValue)
         End If
     End Sub
+
+
+#Region "Last Load Data"
+
+    Sub LastDateLoad()
+
+        ResetLabels()
+
+        If CbxEndMonth.EditValue = "" Or TxtEndYear.EditValue = "" Then Exit Sub
+
+        Dim result = GetPeriodStatus(CbxEndMonth.EditValue.ToString(), TxtEndYear.EditValue.ToString())
+
+        If Not result.HasData Then
+            LblLoadDate.Text = "No data found. Please reload the data first in Data Management."
+            LblLoadDate.ForeColor = Color.Red
+            LblStatus.Text = Nothing
+            Exit Sub
+        End If
+
+        ' Status
+        If result.IsClosed.Value Then
+            LblStatus.Text = "  Closed Period"
+            LblStatus.ForeColor = Color.Green
+        Else
+            LblStatus.Text = "  Open Period"
+            LblStatus.ForeColor = Color.Red
+        End If
+
+        ' Load Date
+        LblLoadDate.Text = "This data was last updated on: " & result.LastLoadDate
+
+    End Sub
+
+    Private Sub ResetLabels()
+        LblLoadDate.Text = Nothing
+        LblStatus.Text = Nothing
+        LblLoadDate.ForeColor = Color.FromArgb(64, 64, 64)
+    End Sub
+
+    Private Sub CbxEndMonth_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CbxEndMonth.SelectedIndexChanged
+        LastDateLoad()
+    End Sub
+
+    Private Sub TxtEndYear_EditValueChanged(sender As Object, e As EventArgs) Handles TxtEndYear.EditValueChanged
+        LastDateLoad()
+    End Sub
+
+#End Region
+
 
 End Class

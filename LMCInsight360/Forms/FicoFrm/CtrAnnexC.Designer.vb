@@ -31,6 +31,9 @@ Partial Class CtrAnnexC
         Me.CbxStrMonth = New DevExpress.XtraEditors.ComboBoxEdit()
         Me.ChkBusUnit = New DevExpress.XtraEditors.CheckEdit()
         Me.BtnGenerate = New LMCInsight360.RoundedButton()
+        Me.PnlFooter = New System.Windows.Forms.Panel()
+        Me.LblStatus = New DevExpress.XtraEditors.LabelControl()
+        Me.LblLoadDate = New DevExpress.XtraEditors.LabelControl()
         CType(Me.TxtEndYear.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.CbxEndMonth.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.CbxBusinessType.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -38,6 +41,7 @@ Partial Class CtrAnnexC
         CType(Me.CbxSapSource.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.CbxStrMonth.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ChkBusUnit.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.PnlFooter.SuspendLayout()
         Me.SuspendLayout()
         '
         'LblCompPrd
@@ -204,7 +208,7 @@ Partial Class CtrAnnexC
         '
         'ChkBusUnit
         '
-        Me.ChkBusUnit.Location = New System.Drawing.Point(405, 82)
+        Me.ChkBusUnit.Location = New System.Drawing.Point(410, 82)
         Me.ChkBusUnit.Name = "ChkBusUnit"
         Me.ChkBusUnit.Properties.Appearance.Font = New System.Drawing.Font("Segoe UI", 10.2!)
         Me.ChkBusUnit.Properties.Appearance.Options.UseFont = True
@@ -225,12 +229,51 @@ Partial Class CtrAnnexC
         Me.BtnGenerate.Text = "📥 Generate Report"
         Me.BtnGenerate.UseVisualStyleBackColor = False
         '
+        'PnlFooter
+        '
+        Me.PnlFooter.Controls.Add(Me.LblStatus)
+        Me.PnlFooter.Controls.Add(Me.LblLoadDate)
+        Me.PnlFooter.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.PnlFooter.Location = New System.Drawing.Point(0, 608)
+        Me.PnlFooter.Name = "PnlFooter"
+        Me.PnlFooter.Size = New System.Drawing.Size(1199, 36)
+        Me.PnlFooter.TabIndex = 73
+        '
+        'LblStatus
+        '
+        Me.LblStatus.Appearance.Font = New System.Drawing.Font("Segoe UI Semibold", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LblStatus.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.LblStatus.Appearance.Options.UseFont = True
+        Me.LblStatus.Appearance.Options.UseForeColor = True
+        Me.LblStatus.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.Horizontal
+        Me.LblStatus.Dock = System.Windows.Forms.DockStyle.Left
+        Me.LblStatus.Location = New System.Drawing.Point(112, 0)
+        Me.LblStatus.Name = "LblStatus"
+        Me.LblStatus.Size = New System.Drawing.Size(51, 23)
+        Me.LblStatus.TabIndex = 27
+        Me.LblStatus.Text = "Status:"
+        '
+        'LblLoadDate
+        '
+        Me.LblLoadDate.Appearance.Font = New System.Drawing.Font("Segoe UI Semibold", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LblLoadDate.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.LblLoadDate.Appearance.Options.UseFont = True
+        Me.LblLoadDate.Appearance.Options.UseForeColor = True
+        Me.LblLoadDate.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.Horizontal
+        Me.LblLoadDate.Dock = System.Windows.Forms.DockStyle.Left
+        Me.LblLoadDate.Location = New System.Drawing.Point(0, 0)
+        Me.LblLoadDate.Name = "LblLoadDate"
+        Me.LblLoadDate.Size = New System.Drawing.Size(112, 23)
+        Me.LblLoadDate.TabIndex = 25
+        Me.LblLoadDate.Text = "Date and Time"
+        '
         'CtrAnnexC
         '
         Me.Appearance.BackColor = System.Drawing.Color.FromArgb(CType(CType(234, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(246, Byte), Integer))
         Me.Appearance.Options.UseBackColor = True
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 17.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.PnlFooter)
         Me.Controls.Add(Me.ChkBusUnit)
         Me.Controls.Add(Me.LblCompPrd)
         Me.Controls.Add(Me.TxtEndYear)
@@ -244,7 +287,7 @@ Partial Class CtrAnnexC
         Me.Controls.Add(Me.LabelControl1)
         Me.Controls.Add(Me.CbxStrMonth)
         Me.Name = "CtrAnnexC"
-        Me.Size = New System.Drawing.Size(911, 551)
+        Me.Size = New System.Drawing.Size(1199, 644)
         CType(Me.TxtEndYear.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.CbxEndMonth.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.CbxBusinessType.Properties, System.ComponentModel.ISupportInitialize).EndInit()
@@ -252,6 +295,8 @@ Partial Class CtrAnnexC
         CType(Me.CbxSapSource.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.CbxStrMonth.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.ChkBusUnit.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.PnlFooter.ResumeLayout(False)
+        Me.PnlFooter.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -269,4 +314,7 @@ Partial Class CtrAnnexC
     Friend WithEvents LabelControl1 As DevExpress.XtraEditors.LabelControl
     Friend WithEvents CbxStrMonth As DevExpress.XtraEditors.ComboBoxEdit
     Friend WithEvents ChkBusUnit As DevExpress.XtraEditors.CheckEdit
+    Friend WithEvents PnlFooter As Panel
+    Friend WithEvents LblStatus As DevExpress.XtraEditors.LabelControl
+    Friend WithEvents LblLoadDate As DevExpress.XtraEditors.LabelControl
 End Class

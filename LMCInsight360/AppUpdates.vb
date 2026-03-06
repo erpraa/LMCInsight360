@@ -17,45 +17,44 @@ Module AppUpdates
         New UpdateInfo With {
             .Version = "1.0.0.2",
             .Descriptions = New List(Of String) From {
-                "Applied fixes to improve data initialization stability and accuracy"
+                "Improved data initialization stability and accuracy."
             },
             .ReleaseDate = #12/23/2025#
         },
         New UpdateInfo With {
             .Version = "1.0.0.3",
             .Descriptions = New List(Of String) From {
-                "Updated the database connection settings in the Login Module",
-                "Implemented a new feature for encoding purchase transactions",
-                "The Consolidated Annex B button is now functioning properly",
-                "Fixed the Amount polarity in the Detail Schedule Report in Annex A"
+                "Updated login database settings",
+                "Added a new feature for encoding purchase transactions",
+                "Consolidated Annex B button is now working",
+                "Fixed amount polarity in the Detail Schedule Report (Annex A)"
             },
             .ReleaseDate = #01/16/2026#
         },
                 New UpdateInfo With {
             .Version = "1.0.0.4",
             .Descriptions = New List(Of String) From {
-                "Minor update in Annex B - Unrealize peso amount",
-                "Fixed GUI auto scaling according to user settings",
-                "Implemented a new feature for Reset Password",
-                "Apply data loading lock to prevent other users from loading data"
+                "Minor update on Annex B unrealized peso amounts",
+                "Fixed GUI auto-scaling to fit user settings",
+                "Added a Reset Password feature",
+                "Added a data-loading lock to prevent multi-user conflicts"
             },
             .ReleaseDate = #01/22/2026#
          },
                 New UpdateInfo With {
             .Version = "1.0.0.5",
             .Descriptions = New List(Of String) From {
-                "Implemented a new feature Annex C",
-                 "Cost of Sales Ratio Report",
-                 "Manufacturing Cost Report",
-                 "IBU clearing logic correction in the Balance Sheet (Annex A)"
+                "Implemented Annex C",
+                 "Added Cost of Sales Ratio and Manufacturing Cost reports",
+                 "Fixed IBU clearing logic in the Balance Sheet (Annex A)"
             },
             .ReleaseDate = #02/24/2026#
             },
                 New UpdateInfo With {
             .Version = "1.0.0.6",
             .Descriptions = New List(Of String) From {
-                "Implemented Manufacturing Overhead Report",
-                "Consolidated Annex C Report"
+                "Added Manufacturing Overhead Report",
+                "Consolidated Annex C button is now working"
             },
             .ReleaseDate = #02/27/2026#
         }
