@@ -57,6 +57,13 @@ Module AppUpdates
                 "Consolidated Annex C button is now working"
             },
             .ReleaseDate = #02/27/2026#
+            },
+                New UpdateInfo With {
+            .Version = "1.0.0.7",
+            .Descriptions = New List(Of String) From {
+                "Added a User Access feature"
+            },
+            .ReleaseDate = #03/16/2026#
         }
     }
 

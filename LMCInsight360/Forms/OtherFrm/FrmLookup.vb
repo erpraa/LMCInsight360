@@ -41,16 +41,14 @@ Public Class FrmLookup
             Select Case FormsName
                 Case "ResetPassword"
                     Get_IdNumber = GridView1.GetFocusedDataRow.Item("UserID")
+                Case "CreateAccount"
+                    Get_IdNumber = GridView1.GetFocusedDataRow.Item("DeptID")
             End Select
 
             RaiseEvent Selected(Get_IdNumber)
         End If
 
         Me.Close()
-
-    End Sub
-
-    Private Sub FrmLookup_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
     End Sub
 

@@ -57,13 +57,14 @@ Partial Class FrmMain
         Me.BtnAnnxC_CosRatio = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.BtnAnnxC_MFGCost = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.BtnAnnxC_MOHCost = New DevExpress.XtraBars.Navigation.AccordionControlElement()
+        Me.BtnAnnxC_Gen = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.AccordionControlElement2 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.BtnDataInitializedFI = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.BtnDataInitializedMM = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.SideBarMaintenace = New DevExpress.XtraBars.Navigation.AccordionControl()
         Me.CreateAccount = New DevExpress.XtraBars.Navigation.AccordionControlElement()
+        Me.UserAccess = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.ResetPassword = New DevExpress.XtraBars.Navigation.AccordionControlElement()
-        Me.AccordionControlElement19 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.BtnAbout = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.SideBarSD = New DevExpress.XtraBars.Navigation.AccordionControl()
         Me.AccordionControlElement10 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
@@ -80,7 +81,7 @@ Partial Class FrmMain
         Me.MenuSilde = New System.Windows.Forms.Timer(Me.components)
         Me.DocumentManager1 = New DevExpress.XtraBars.Docking2010.DocumentManager(Me.components)
         Me.TabbedView1 = New DevExpress.XtraBars.Docking2010.Views.Tabbed.TabbedView(Me.components)
-        Me.BtnAnnxC_Gen = New DevExpress.XtraBars.Navigation.AccordionControlElement()
+        Me.UserRefresh = New System.Windows.Forms.Timer(Me.components)
         Me.PnlMiddle.SuspendLayout()
         Me.PnlHeader.SuspendLayout()
         Me.PnlTopHeader.SuspendLayout()
@@ -482,6 +483,12 @@ Partial Class FrmMain
         Me.BtnAnnxC_MOHCost.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item
         Me.BtnAnnxC_MOHCost.Text = "Manufacturing Overhead"
         '
+        'BtnAnnxC_Gen
+        '
+        Me.BtnAnnxC_Gen.Name = "BtnAnnxC_Gen"
+        Me.BtnAnnxC_Gen.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item
+        Me.BtnAnnxC_Gen.Text = "Consolidated Annex C"
+        '
         'AccordionControlElement2
         '
         Me.AccordionControlElement2.Elements.AddRange(New DevExpress.XtraBars.Navigation.AccordionControlElement() {Me.BtnDataInitializedFI, Me.BtnDataInitializedMM})
@@ -507,7 +514,7 @@ Partial Class FrmMain
         Me.SideBarMaintenace.Appearance.AccordionControl.BackColor = System.Drawing.Color.FromArgb(CType(CType(185, Byte), Integer), CType(CType(206, Byte), Integer), CType(CType(223, Byte), Integer))
         Me.SideBarMaintenace.Appearance.AccordionControl.Options.UseBackColor = True
         Me.SideBarMaintenace.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SideBarMaintenace.Elements.AddRange(New DevExpress.XtraBars.Navigation.AccordionControlElement() {Me.CreateAccount, Me.ResetPassword, Me.AccordionControlElement19, Me.BtnAbout})
+        Me.SideBarMaintenace.Elements.AddRange(New DevExpress.XtraBars.Navigation.AccordionControlElement() {Me.CreateAccount, Me.UserAccess, Me.ResetPassword, Me.BtnAbout})
         Me.SideBarMaintenace.Location = New System.Drawing.Point(0, 0)
         Me.SideBarMaintenace.Name = "SideBarMaintenace"
         Me.SideBarMaintenace.OptionsMinimizing.AllowMinimizeMode = DevExpress.Utils.DefaultBoolean.[False]
@@ -523,17 +530,17 @@ Partial Class FrmMain
         Me.CreateAccount.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item
         Me.CreateAccount.Text = "🔐  Create Account"
         '
+        'UserAccess
+        '
+        Me.UserAccess.Name = "UserAccess"
+        Me.UserAccess.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item
+        Me.UserAccess.Text = "👤  User Access"
+        '
         'ResetPassword
         '
         Me.ResetPassword.Name = "ResetPassword"
         Me.ResetPassword.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item
         Me.ResetPassword.Text = "🗘  Reset Password"
-        '
-        'AccordionControlElement19
-        '
-        Me.AccordionControlElement19.Name = "AccordionControlElement19"
-        Me.AccordionControlElement19.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item
-        Me.AccordionControlElement19.Text = "👤  User Access"
         '
         'BtnAbout
         '
@@ -660,11 +667,9 @@ Partial Class FrmMain
         Me.TabbedView1.AppearancePage.Header.Options.UseForeColor = True
         Me.TabbedView1.Style = DevExpress.XtraBars.Docking2010.Views.DockingViewStyle.Light
         '
-        'BtnAnnxC_Gen
+        'UserRefresh
         '
-        Me.BtnAnnxC_Gen.Name = "BtnAnnxC_Gen"
-        Me.BtnAnnxC_Gen.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item
-        Me.BtnAnnxC_Gen.Text = "Consolidated Annex C"
+        Me.UserRefresh.Interval = 1000
         '
         'FrmMain
         '
@@ -737,7 +742,7 @@ Partial Class FrmMain
     Friend WithEvents AccordionControlElement16 As DevExpress.XtraBars.Navigation.AccordionControlElement
     Friend WithEvents AccordionControlElement17 As DevExpress.XtraBars.Navigation.AccordionControlElement
     Friend WithEvents AccordionControlElement18 As DevExpress.XtraBars.Navigation.AccordionControlElement
-    Friend WithEvents AccordionControlElement19 As DevExpress.XtraBars.Navigation.AccordionControlElement
+    Friend WithEvents UserAccess As DevExpress.XtraBars.Navigation.AccordionControlElement
     Friend WithEvents BtnAbout As DevExpress.XtraBars.Navigation.AccordionControlElement
     Friend WithEvents DocumentManager1 As DevExpress.XtraBars.Docking2010.DocumentManager
     Friend WithEvents TabbedView1 As DevExpress.XtraBars.Docking2010.Views.Tabbed.TabbedView
@@ -757,4 +762,5 @@ Partial Class FrmMain
     Friend WithEvents BtnAnnxC_MFGCost As DevExpress.XtraBars.Navigation.AccordionControlElement
     Friend WithEvents BtnAnnxC_MOHCost As DevExpress.XtraBars.Navigation.AccordionControlElement
     Friend WithEvents BtnAnnxC_Gen As DevExpress.XtraBars.Navigation.AccordionControlElement
+    Friend WithEvents UserRefresh As Timer
 End Class

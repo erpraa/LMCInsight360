@@ -11,7 +11,7 @@ Public Class CtrResetPassword
 
 
     Private Sub BtnEdtUserID_ButtonPressed(sender As Object, e As ButtonPressedEventArgs) Handles BtnEdtUserID.ButtonPressed
-        Dim strTripSelect As String = "SELECT UserID,FullName,UserName,CreatedDate,CreatedBy,IsActive,IsLoggedIn,IsResetPass FROM MSTR_USERS"
+        Dim strTripSelect As String = "SELECT UserID,FullName,UserName,ShortDesc,CreatedDate,CreatedBy,IsActive,IsLoggedIn,IsResetPass FROM vw_MT_UserDepartment"
 
         If IsFormOpen(SelectTools) Then
             SelectTools.Close()
@@ -28,11 +28,12 @@ Public Class CtrResetPassword
     End Sub
 
     Sub GetUserData()
-        Dim dataList As List(Of Dictionary(Of String, String)) = GetMultiValues($"SELECT UserID,FullName,UserName,CreatedDate,CreatedBy,IsActive,IsLoggedIn,IsResetPass FROM MSTR_USERS WHERE UserID ='{BtnEdtUserID.EditValue}'")
+        Dim dataList As List(Of Dictionary(Of String, String)) = GetMultiValues($"SELECT UserID,FullName,UserName,ShortDesc,CreatedDate,CreatedBy,IsActive,IsLoggedIn,IsResetPass FROM vw_MT_UserDepartment WHERE UserID ='{BtnEdtUserID.EditValue}'")
 
         For Each row In dataList
             TxtUserName.Text = row("UserName")
             TxtName.Text = row("FullName")
+            TxtDept.Text = row("ShortDesc")
 
 
             If row("IsActive") = True Then
@@ -65,9 +66,14 @@ Public Class CtrResetPassword
     End Sub
 
     Private Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
+        If TxtNewPassword.Text = "" Then
+            MsgBox("Please input New Password!", vbExclamation)
+            Exit Sub
+        End If
+
         If TxtNewPassword.Text <> TxtRePassword.Text Then
             MsgBox("Password Not Match!", vbExclamation)
-            Return
+            Exit Sub
         Else
 
             Dim params As New Dictionary(Of String, Object) From {
@@ -77,7 +83,7 @@ Public Class CtrResetPassword
                 }
 
             Dim qry As String = "Update MSTR_USERS set Password=@Password,IsResetPass=@IsResetPass where UserID=@UserID;
-                                     SELECT @UserID;"
+                                 SELECT @UserID;"
             ExecuteUpdate(qry, params)
 
             MsgBox("Password reset completed", vbInformation)

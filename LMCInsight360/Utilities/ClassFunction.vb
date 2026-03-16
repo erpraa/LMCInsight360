@@ -18,7 +18,6 @@ Public Class ClassFunction
 #End Region
 
 #Region "Get Function"
-
     Public Shared Function GetPublishVersion() As String
         If ApplicationDeployment.IsNetworkDeployed Then
             Dim version As Version = ApplicationDeployment.CurrentDeployment.CurrentVersion

@@ -1,8 +1,10 @@
 ﻿Imports LMCInsight360.ClassFunction
 Imports LMCInsight360.SubQuery
 Imports LMCInsight360.CryptoEngine
+Imports DevExpress.XtraEditors.Controls
 
 Public Class CtrCreateAccount
+    Private WithEvents SelectTools As FrmLookup
 
     Private Sub CtrCreateAccount_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         TxtPass.Properties.UseSystemPasswordChar = True
@@ -22,12 +24,14 @@ Public Class CtrCreateAccount
     Sub ClearText()
         TxtName.Text = String.Empty
         TxtUser.Text = String.Empty
+        BtnEdtDpt.Text = String.Empty
         TxtPass.Text = String.Empty
         TxtRepass.Text = String.Empty
     End Sub
 
     Private Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
         If String.IsNullOrWhiteSpace(TxtUser.Text) OrElse
+         String.IsNullOrWhiteSpace(BtnEdtDpt.Text) OrElse
         String.IsNullOrWhiteSpace(TxtPass.Text) OrElse
         String.IsNullOrWhiteSpace(TxtRepass.Text) OrElse
         String.IsNullOrWhiteSpace(TxtName.Text) Then
@@ -55,6 +59,7 @@ Public Class CtrCreateAccount
 
                 Dim params As New Dictionary(Of String, Object) From {
                               {"@UserID", nxtTrxCount},
+                              {"@DeptID", BtnEdtDpt.EditValue},
                               {"@FullName", TxtName.Text},
                               {"@UserName", TxtUser.Text},
                               {"@Password", DataEncrypt(TxtPass.Text, AppSecurity)},
@@ -62,10 +67,13 @@ Public Class CtrCreateAccount
                               {"@CreatedBy", GstrUselogin}
                 }
 
-                Dim qry As String = "INSERT INTO MSTR_USERS (UserID, FullName, UserName, Password, CreatedDate, CreatedBy) VALUES (@UserID, @FullName, @UserName, @Password, @CreatedDate, @CreatedBy);
+                Dim qry As String = "INSERT INTO MSTR_USERS (UserID, DeptID, FullName, UserName, Password, CreatedDate, CreatedBy) VALUES (@UserID, @DeptID, @FullName, @UserName, @Password, @CreatedDate, @CreatedBy);
                                      SELECT @UserID;"
 
                 Dim newUserID As String = ExecuteInsert(qry, params)
+
+                Dim paramAUC As New Dictionary(Of String, Object) From {{"@ColumnName", nxtTrxCount}}
+                ExecuteProcedure("AddUserColumn", paramAUC)
 
                 MessageBox.Show("User saved! New ID:" & newUserID)
 
@@ -81,4 +89,22 @@ Public Class CtrCreateAccount
     Private Sub TxtName_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TxtName.KeyPress
         e.KeyChar = Char.ToUpper(e.KeyChar)
     End Sub
+
+
+    Private Sub BtnEdtDpt_ButtonPressed(sender As Object, e As ButtonPressedEventArgs) Handles BtnEdtDpt.ButtonPressed
+        Dim strTripSelect As String = "select * from MSTR_DEPARTMENT"
+
+        If IsFormOpen(SelectTools) Then
+            SelectTools.Close()
+        End If
+
+        SelectTools = New FrmLookup(strTripSelect, "CreateAccount")
+        SelectTools.ShowDialog()
+    End Sub
+
+    Private Sub Select_Selected(Get_idNumber As String) Handles SelectTools.Selected
+        BtnEdtDpt.EditValue = Get_idNumber
+    End Sub
+
+
 End Class

@@ -35,12 +35,15 @@ Partial Class CtrResetPassword
         Me.LabelControl7 = New DevExpress.XtraEditors.LabelControl()
         Me.PnlFooter = New DevExpress.XtraEditors.SidePanel()
         Me.BtnSave = New LMCInsight360.RoundedButton()
+        Me.TxtDept = New DevExpress.XtraEditors.TextEdit()
+        Me.LabelControl8 = New DevExpress.XtraEditors.LabelControl()
         CType(Me.BtnEdtUserID.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TxtRePassword.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TxtNewPassword.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TxtUserName.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TxtName.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PnlFooter.SuspendLayout()
+        CType(Me.TxtDept.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'BtnEdtUserID
@@ -70,7 +73,7 @@ Partial Class CtrResetPassword
         '
         'TxtRePassword
         '
-        Me.TxtRePassword.Location = New System.Drawing.Point(170, 208)
+        Me.TxtRePassword.Location = New System.Drawing.Point(169, 237)
         Me.TxtRePassword.Name = "TxtRePassword"
         Me.TxtRePassword.Properties.Appearance.BackColor = System.Drawing.Color.White
         Me.TxtRePassword.Properties.Appearance.BorderColor = System.Drawing.Color.FromArgb(CType(CType(10, Byte), Integer), CType(CType(53, Byte), Integer), CType(CType(121, Byte), Integer))
@@ -89,7 +92,7 @@ Partial Class CtrResetPassword
         '
         'TxtNewPassword
         '
-        Me.TxtNewPassword.Location = New System.Drawing.Point(170, 168)
+        Me.TxtNewPassword.Location = New System.Drawing.Point(169, 197)
         Me.TxtNewPassword.Name = "TxtNewPassword"
         Me.TxtNewPassword.Properties.Appearance.BackColor = System.Drawing.Color.White
         Me.TxtNewPassword.Properties.Appearance.BorderColor = System.Drawing.Color.FromArgb(CType(CType(10, Byte), Integer), CType(CType(53, Byte), Integer), CType(CType(121, Byte), Integer))
@@ -132,7 +135,7 @@ Partial Class CtrResetPassword
         Me.LabelControl4.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.LabelControl4.Appearance.Options.UseFont = True
         Me.LabelControl4.Appearance.Options.UseForeColor = True
-        Me.LabelControl4.Location = New System.Drawing.Point(12, 211)
+        Me.LabelControl4.Location = New System.Drawing.Point(11, 240)
         Me.LabelControl4.Name = "LabelControl4"
         Me.LabelControl4.Size = New System.Drawing.Size(141, 23)
         Me.LabelControl4.TabIndex = 61
@@ -144,7 +147,7 @@ Partial Class CtrResetPassword
         Me.LabelControl3.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.LabelControl3.Appearance.Options.UseFont = True
         Me.LabelControl3.Appearance.Options.UseForeColor = True
-        Me.LabelControl3.Location = New System.Drawing.Point(41, 171)
+        Me.LabelControl3.Location = New System.Drawing.Point(40, 200)
         Me.LabelControl3.Name = "LabelControl3"
         Me.LabelControl3.Size = New System.Drawing.Size(114, 23)
         Me.LabelControl3.TabIndex = 60
@@ -282,12 +285,44 @@ Partial Class CtrResetPassword
         Me.BtnSave.FlatAppearance.BorderSize = 0
         Me.BtnSave.Font = New System.Drawing.Font("Segoe UI Semibold", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BtnSave.ForeColor = System.Drawing.Color.White
-        Me.BtnSave.Location = New System.Drawing.Point(338, 259)
+        Me.BtnSave.Location = New System.Drawing.Point(337, 288)
         Me.BtnSave.Name = "BtnSave"
         Me.BtnSave.Size = New System.Drawing.Size(126, 30)
         Me.BtnSave.TabIndex = 73
         Me.BtnSave.Text = "Save"
         Me.BtnSave.UseVisualStyleBackColor = False
+        '
+        'TxtDept
+        '
+        Me.TxtDept.Location = New System.Drawing.Point(169, 161)
+        Me.TxtDept.Name = "TxtDept"
+        Me.TxtDept.Properties.Appearance.BackColor = System.Drawing.Color.White
+        Me.TxtDept.Properties.Appearance.BorderColor = System.Drawing.Color.FromArgb(CType(CType(10, Byte), Integer), CType(CType(53, Byte), Integer), CType(CType(121, Byte), Integer))
+        Me.TxtDept.Properties.Appearance.Font = New System.Drawing.Font("Segoe UI", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TxtDept.Properties.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.TxtDept.Properties.Appearance.Options.UseBackColor = True
+        Me.TxtDept.Properties.Appearance.Options.UseBorderColor = True
+        Me.TxtDept.Properties.Appearance.Options.UseFont = True
+        Me.TxtDept.Properties.Appearance.Options.UseForeColor = True
+        Me.TxtDept.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple
+        Me.TxtDept.Properties.Mask.EditMask = "\d{0,4}"
+        Me.TxtDept.Properties.Mask.ShowPlaceHolders = False
+        Me.TxtDept.Properties.MaxLength = 50
+        Me.TxtDept.Properties.ReadOnly = True
+        Me.TxtDept.Size = New System.Drawing.Size(294, 30)
+        Me.TxtDept.TabIndex = 75
+        '
+        'LabelControl8
+        '
+        Me.LabelControl8.Appearance.Font = New System.Drawing.Font("Segoe UI", 10.2!)
+        Me.LabelControl8.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.LabelControl8.Appearance.Options.UseFont = True
+        Me.LabelControl8.Appearance.Options.UseForeColor = True
+        Me.LabelControl8.Location = New System.Drawing.Point(58, 164)
+        Me.LabelControl8.Name = "LabelControl8"
+        Me.LabelControl8.Size = New System.Drawing.Size(96, 23)
+        Me.LabelControl8.TabIndex = 74
+        Me.LabelControl8.Text = "Department:"
         '
         'CtrResetPassword
         '
@@ -295,6 +330,8 @@ Partial Class CtrResetPassword
         Me.Appearance.Options.UseBackColor = True
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 17.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.TxtDept)
+        Me.Controls.Add(Me.LabelControl8)
         Me.Controls.Add(Me.BtnSave)
         Me.Controls.Add(Me.PnlFooter)
         Me.Controls.Add(Me.TxtName)
@@ -315,6 +352,7 @@ Partial Class CtrResetPassword
         CType(Me.TxtUserName.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TxtName.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PnlFooter.ResumeLayout(False)
+        CType(Me.TxtDept.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -336,4 +374,6 @@ Partial Class CtrResetPassword
     Friend WithEvents LabelControl7 As DevExpress.XtraEditors.LabelControl
     Friend WithEvents PnlFooter As DevExpress.XtraEditors.SidePanel
     Friend WithEvents BtnSave As RoundedButton
+    Friend WithEvents TxtDept As DevExpress.XtraEditors.TextEdit
+    Friend WithEvents LabelControl8 As DevExpress.XtraEditors.LabelControl
 End Class

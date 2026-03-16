@@ -53,4 +53,9 @@ Module GlobalConnection
         Return ""
     End Function
 
+    Public Function IsUserAuthorized(userID As String, code As String) As Boolean
+        Dim query As String = $"Select {userID} from MSTR_USERACCESS where Code='{code}'"
+        Return GetValue(query)
+    End Function
+
 End Module

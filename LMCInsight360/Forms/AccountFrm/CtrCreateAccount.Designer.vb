@@ -28,11 +28,14 @@ Partial Class CtrCreateAccount
         Me.TxtPass = New DevExpress.XtraEditors.TextEdit()
         Me.TxtRepass = New DevExpress.XtraEditors.TextEdit()
         Me.ChkShowpass = New System.Windows.Forms.CheckBox()
+        Me.LabelControl5 = New DevExpress.XtraEditors.LabelControl()
+        Me.BtnEdtDpt = New DevExpress.XtraEditors.ButtonEdit()
         Me.BtnSave = New LMCInsight360.RoundedButton()
         CType(Me.TxtName.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TxtUser.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TxtPass.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TxtRepass.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.BtnEdtDpt.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'LabelControl4
@@ -41,7 +44,7 @@ Partial Class CtrCreateAccount
         Me.LabelControl4.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.LabelControl4.Appearance.Options.UseFont = True
         Me.LabelControl4.Appearance.Options.UseForeColor = True
-        Me.LabelControl4.Location = New System.Drawing.Point(14, 170)
+        Me.LabelControl4.Location = New System.Drawing.Point(23, 202)
         Me.LabelControl4.Name = "LabelControl4"
         Me.LabelControl4.Size = New System.Drawing.Size(141, 23)
         Me.LabelControl4.TabIndex = 45
@@ -53,7 +56,7 @@ Partial Class CtrCreateAccount
         Me.LabelControl3.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.LabelControl3.Appearance.Options.UseFont = True
         Me.LabelControl3.Appearance.Options.UseForeColor = True
-        Me.LabelControl3.Location = New System.Drawing.Point(80, 130)
+        Me.LabelControl3.Location = New System.Drawing.Point(89, 165)
         Me.LabelControl3.Name = "LabelControl3"
         Me.LabelControl3.Size = New System.Drawing.Size(75, 23)
         Me.LabelControl3.TabIndex = 44
@@ -65,7 +68,7 @@ Partial Class CtrCreateAccount
         Me.LabelControl2.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.LabelControl2.Appearance.Options.UseFont = True
         Me.LabelControl2.Appearance.Options.UseForeColor = True
-        Me.LabelControl2.Location = New System.Drawing.Point(76, 88)
+        Me.LabelControl2.Location = New System.Drawing.Point(83, 88)
         Me.LabelControl2.Name = "LabelControl2"
         Me.LabelControl2.Size = New System.Drawing.Size(81, 23)
         Me.LabelControl2.TabIndex = 43
@@ -77,7 +80,7 @@ Partial Class CtrCreateAccount
         Me.LabelControl1.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.LabelControl1.Appearance.Options.UseFont = True
         Me.LabelControl1.Appearance.Options.UseForeColor = True
-        Me.LabelControl1.Location = New System.Drawing.Point(65, 48)
+        Me.LabelControl1.Location = New System.Drawing.Point(74, 48)
         Me.LabelControl1.Name = "LabelControl1"
         Me.LabelControl1.Size = New System.Drawing.Size(90, 23)
         Me.LabelControl1.TabIndex = 42
@@ -122,7 +125,7 @@ Partial Class CtrCreateAccount
         '
         'TxtPass
         '
-        Me.TxtPass.Location = New System.Drawing.Point(187, 127)
+        Me.TxtPass.Location = New System.Drawing.Point(187, 162)
         Me.TxtPass.Name = "TxtPass"
         Me.TxtPass.Properties.Appearance.BackColor = System.Drawing.Color.White
         Me.TxtPass.Properties.Appearance.BorderColor = System.Drawing.Color.FromArgb(CType(CType(10, Byte), Integer), CType(CType(53, Byte), Integer), CType(CType(121, Byte), Integer))
@@ -140,7 +143,7 @@ Partial Class CtrCreateAccount
         '
         'TxtRepass
         '
-        Me.TxtRepass.Location = New System.Drawing.Point(187, 167)
+        Me.TxtRepass.Location = New System.Drawing.Point(186, 199)
         Me.TxtRepass.Name = "TxtRepass"
         Me.TxtRepass.Properties.Appearance.BackColor = System.Drawing.Color.White
         Me.TxtRepass.Properties.Appearance.BorderColor = System.Drawing.Color.FromArgb(CType(CType(10, Byte), Integer), CType(CType(53, Byte), Integer), CType(CType(121, Byte), Integer))
@@ -161,12 +164,49 @@ Partial Class CtrCreateAccount
         Me.ChkShowpass.AutoSize = True
         Me.ChkShowpass.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ChkShowpass.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.ChkShowpass.Location = New System.Drawing.Point(187, 212)
+        Me.ChkShowpass.Location = New System.Drawing.Point(189, 241)
         Me.ChkShowpass.Name = "ChkShowpass"
         Me.ChkShowpass.Size = New System.Drawing.Size(132, 24)
         Me.ChkShowpass.TabIndex = 58
         Me.ChkShowpass.Text = "Show Password"
         Me.ChkShowpass.UseVisualStyleBackColor = True
+        '
+        'LabelControl5
+        '
+        Me.LabelControl5.Appearance.Font = New System.Drawing.Font("Segoe UI", 10.2!)
+        Me.LabelControl5.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.LabelControl5.Appearance.Options.UseFont = True
+        Me.LabelControl5.Appearance.Options.UseForeColor = True
+        Me.LabelControl5.Location = New System.Drawing.Point(68, 127)
+        Me.LabelControl5.Name = "LabelControl5"
+        Me.LabelControl5.Size = New System.Drawing.Size(96, 23)
+        Me.LabelControl5.TabIndex = 60
+        Me.LabelControl5.Text = "Department:"
+        '
+        'BtnEdtDpt
+        '
+        Me.BtnEdtDpt.Location = New System.Drawing.Point(187, 124)
+        Me.BtnEdtDpt.Margin = New System.Windows.Forms.Padding(2)
+        Me.BtnEdtDpt.Name = "BtnEdtDpt"
+        Me.BtnEdtDpt.Properties.Appearance.BackColor = System.Drawing.Color.White
+        Me.BtnEdtDpt.Properties.Appearance.BorderColor = System.Drawing.Color.FromArgb(CType(CType(10, Byte), Integer), CType(CType(53, Byte), Integer), CType(CType(121, Byte), Integer))
+        Me.BtnEdtDpt.Properties.Appearance.Font = New System.Drawing.Font("Segoe UI", 10.2!)
+        Me.BtnEdtDpt.Properties.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.BtnEdtDpt.Properties.Appearance.Options.UseBackColor = True
+        Me.BtnEdtDpt.Properties.Appearance.Options.UseBorderColor = True
+        Me.BtnEdtDpt.Properties.Appearance.Options.UseFont = True
+        Me.BtnEdtDpt.Properties.Appearance.Options.UseForeColor = True
+        Me.BtnEdtDpt.Properties.AppearanceDisabled.BorderColor = System.Drawing.Color.FromArgb(CType(CType(10, Byte), Integer), CType(CType(53, Byte), Integer), CType(CType(121, Byte), Integer))
+        Me.BtnEdtDpt.Properties.AppearanceDisabled.Options.UseBorderColor = True
+        Me.BtnEdtDpt.Properties.AppearanceFocused.BorderColor = System.Drawing.Color.FromArgb(CType(CType(10, Byte), Integer), CType(CType(53, Byte), Integer), CType(CType(121, Byte), Integer))
+        Me.BtnEdtDpt.Properties.AppearanceFocused.Options.UseBorderColor = True
+        Me.BtnEdtDpt.Properties.AppearanceReadOnly.BorderColor = System.Drawing.Color.FromArgb(CType(CType(10, Byte), Integer), CType(CType(53, Byte), Integer), CType(CType(121, Byte), Integer))
+        Me.BtnEdtDpt.Properties.AppearanceReadOnly.Options.UseBorderColor = True
+        Me.BtnEdtDpt.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple
+        Me.BtnEdtDpt.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton()})
+        Me.BtnEdtDpt.Properties.ReadOnly = True
+        Me.BtnEdtDpt.Size = New System.Drawing.Size(294, 30)
+        Me.BtnEdtDpt.TabIndex = 61
         '
         'BtnSave
         '
@@ -174,7 +214,7 @@ Partial Class CtrCreateAccount
         Me.BtnSave.FlatAppearance.BorderSize = 0
         Me.BtnSave.Font = New System.Drawing.Font("Segoe UI Semibold", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BtnSave.ForeColor = System.Drawing.Color.White
-        Me.BtnSave.Location = New System.Drawing.Point(343, 253)
+        Me.BtnSave.Location = New System.Drawing.Point(330, 271)
         Me.BtnSave.Name = "BtnSave"
         Me.BtnSave.Size = New System.Drawing.Size(150, 29)
         Me.BtnSave.TabIndex = 59
@@ -187,6 +227,8 @@ Partial Class CtrCreateAccount
         Me.Appearance.Options.UseBackColor = True
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 17.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.BtnEdtDpt)
+        Me.Controls.Add(Me.LabelControl5)
         Me.Controls.Add(Me.BtnSave)
         Me.Controls.Add(Me.ChkShowpass)
         Me.Controls.Add(Me.TxtRepass)
@@ -203,6 +245,7 @@ Partial Class CtrCreateAccount
         CType(Me.TxtUser.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TxtPass.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TxtRepass.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.BtnEdtDpt.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -218,4 +261,6 @@ Partial Class CtrCreateAccount
     Friend WithEvents TxtRepass As DevExpress.XtraEditors.TextEdit
     Friend WithEvents ChkShowpass As CheckBox
     Friend WithEvents BtnSave As RoundedButton
+    Friend WithEvents LabelControl5 As DevExpress.XtraEditors.LabelControl
+    Friend WithEvents BtnEdtDpt As DevExpress.XtraEditors.ButtonEdit
 End Class

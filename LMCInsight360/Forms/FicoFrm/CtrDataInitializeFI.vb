@@ -60,8 +60,18 @@ Public Class CtrDataInitializeFI
 
                 LoadDataDetails("L4P", CasConnect, fiscalyear, postingperiod)
                 LoadDataDetails("LRP", ResConnect, fiscalyear, postingperiod)
+
+                If postingperiod = 12 Then
+                    LoadDataDetails("L4P", CasConnect, fiscalyear, 13)
+                    LoadDataDetails("LRP", ResConnect, fiscalyear, 13)
+                End If
+
+                If postingperiod = 1 Then
+                    LoadDataDetails("L4P", CasConnect, fiscalyear, 0)
+                    LoadDataDetails("LRP", ResConnect, fiscalyear, 0)
+                End If
+
                 ExecuteProcedure("INS_FI_TRXDATA", params, False)
-                'ExecuteProcedure("UPD_FI_TRXDATA", params, False)
 
                 Dim upparams As New Dictionary(Of String, Object) From {
                     {"@loaddate", GetServerDate()},
@@ -387,8 +397,14 @@ Public Class CtrDataInitializeFI
             hanaConn.Open()
 
             Dim hanaQuery As String = $"SELECT '' as TRX_ROW,'{trxOrgn}' as TRX_ORIGIN,
-                                        DOCNR,BELNR,DOCLN,RLDNR,TO_VARCHAR(TO_DATE(BUDAT, 'YYYYMMDD'), 'YYYY-MM-DD') AS BUDAT,RYEAR,        
-                                        TRIM(LEADING '0' FROM POPER) AS POPER,RBUKRS,KOKRS,       
+                                        DOCNR,BELNR,DOCLN,RLDNR,TO_VARCHAR(TO_DATE(BUDAT, 'YYYYMMDD'), 'YYYY-MM-DD') AS BUDAT,RYEAR,
+                                        case 
+                                        when POPER=0 then '1'
+                                        when POPER=13 then '12'
+                                        else
+                                        TRIM(LEADING '0' FROM POPER)
+                                        end as POPER,
+                                        RBUKRS,KOKRS,       
                                         TRIM(LEADING '0' FROM RACCT) AS RACCT,PRCTR,HSL,TSL,RTCUR,WSL,RWCUR,KSL,OSL,MSL,   
                                         DRCRK,BSCHL,GJAHR,ACTIV,AWTYP,RVERS,SEGMENT,BUZEI,LINETYPE,XSPLITMOD,RRCTY,RMVCT,RUNIT, 
  	                                    CASE 

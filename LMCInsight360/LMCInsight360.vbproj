@@ -29,8 +29,8 @@
     <ProductName>Lmc Insight360</ProductName>
     <PublisherName>Liwayway Marketing Corporation</PublisherName>
     <SuiteName>ERP Projects</SuiteName>
-    <ApplicationRevision>7</ApplicationRevision>
-    <ApplicationVersion>1.1.0.%2a</ApplicationVersion>
+    <ApplicationRevision>8</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -131,6 +131,12 @@
       <DependentUpon>CtrResetPassword.vb</DependentUpon>
     </Compile>
     <Compile Include="Forms\AccountFrm\CtrResetPassword.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\AccountFrm\CtrUserAccess.Designer.vb">
+      <DependentUpon>CtrUserAccess.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AccountFrm\CtrUserAccess.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Forms\AccountFrm\FrmUpdates.Designer.vb">
@@ -252,6 +258,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Forms\AccountFrm\CtrResetPassword.resx">
       <DependentUpon>CtrResetPassword.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AccountFrm\CtrUserAccess.resx">
+      <DependentUpon>CtrUserAccess.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AccountFrm\FrmUpdates.resx">
       <DependentUpon>FrmUpdates.vb</DependentUpon>

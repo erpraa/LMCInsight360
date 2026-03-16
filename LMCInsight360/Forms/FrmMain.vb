@@ -4,6 +4,8 @@ Imports LMCInsight360.ClassFunction
 Public Class FrmMain
 
     Private Sub FrmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        UserRefresh.Start()
         BtnHome.Hide()
         PnlLeft.Width = 0
 
@@ -36,6 +38,23 @@ Public Class FrmMain
 
     Private Sub MenuButton_Click(sender As Object, e As EventArgs) Handles BtnHome.Click, BtnFico.Click, BtnSD.Click, BtnMaintenance.Click
         Dim clickedBtn As Button = DirectCast(sender, Button)
+
+        If clickedBtn Is BtnSD Then
+            If Not IsUserAuthorized(GstrUseID, "\01") Then
+                MessageBox.Show("You are not authorized to perform this action.", "Unauthorized", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Exit Sub
+            End If
+        ElseIf clickedBtn Is BtnFico Then
+            If Not IsUserAuthorized(GstrUseID, "\02") Then
+                MessageBox.Show("You are not authorized to perform this action.", "Unauthorized", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Exit Sub
+            End If
+        ElseIf clickedBtn Is BtnMaintenance Then
+            If Not IsUserAuthorized(GstrUseID, "\03") Then
+                MessageBox.Show("You are not authorized to perform this action.", "Unauthorized", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Exit Sub
+            End If
+        End If
 
         'Ignore if animation is running
         If isAnimating Then Exit Sub
@@ -75,11 +94,18 @@ Public Class FrmMain
             RedrawButton()
             BtnHome.Show()
         ElseIf clickedBtn Is BtnFico Then
+
+            If Not IsUserAuthorized(GstrUseID, "\02") Then
+                MessageBox.Show("You are not authorized to perform this action.", "Unauthorized", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Exit Sub
+            End If
+
             LblTitle.Text = "Financial Statement"
             activeButton = CType(sender, Button)
             RedrawButton()
             BtnHome.Show()
         ElseIf clickedBtn Is BtnMaintenance Then
+
             LblTitle.Text = "User Maintenance"
             activeButton = CType(sender, Button)
             RedrawButton()
@@ -187,20 +213,41 @@ Public Class FrmMain
 
 #Region "Annex A Button"
     Private Sub BtnAnnxA_IS_Click(sender As Object, e As EventArgs) Handles BtnAnnxA_IS.Click
+
+        If Not IsUserAuthorized(GstrUseID, "\02010101") Then
+            MessageBox.Show("You are not authorized to perform this action.", "Unauthorized", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        End If
+
         Gbl_ReportTag = 1
         TabMenu(Me, New CtrAnnexA, "Income Statement")
     End Sub
     Private Sub BtnAnnxA_BS_Click(sender As Object, e As EventArgs) Handles BtnAnnxA_BS.Click
+        If Not IsUserAuthorized(GstrUseID, "\02010102") Then
+            MessageBox.Show("You are not authorized to perform this action.", "Unauthorized", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        End If
+
         Gbl_ReportTag = 2
         TabMenu(Me, New CtrAnnexA, "Balance Sheet")
     End Sub
 
     Private Sub BtnAnnxA_DS_Click(sender As Object, e As EventArgs) Handles BtnAnnxA_DS.Click
+        If Not IsUserAuthorized(GstrUseID, "\02010103") Then
+            MessageBox.Show("You are not authorized to perform this action.", "Unauthorized", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        End If
+
         Gbl_ReportTag = 3
         TabMenu(Me, New CtrAnnexA, "Details Schedule")
     End Sub
 
     Private Sub BtnAnnxA_Gen_Click(sender As Object, e As EventArgs) Handles BtnAnnxA_Gen.Click
+        If Not IsUserAuthorized(GstrUseID, "\02010104") Then
+            MessageBox.Show("You are not authorized to perform this action.", "Unauthorized", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        End If
+
         Gbl_ReportTag = 4
         TabMenu(Me, New CtrAnnexA, "Generate Annex A")
     End Sub
@@ -208,21 +255,41 @@ Public Class FrmMain
 
 #Region "Annex B Button"
     Private Sub BtnAnnxB_IScomp_Click(sender As Object, e As EventArgs) Handles BtnAnnxB_IScomp.Click
+        If Not IsUserAuthorized(GstrUseID, "\02010201") Then
+            MessageBox.Show("You are not authorized to perform this action.", "Unauthorized", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        End If
+
         Gbl_ReportTag = 1
         TabMenu(Me, New CtrAnnexB, "IS Comparative")
     End Sub
 
     Private Sub BtnAnnxB_SEGAAE_Click(sender As Object, e As EventArgs) Handles BtnAnnxB_SEGAAE.Click
+        If Not IsUserAuthorized(GstrUseID, "\02010202") Then
+            MessageBox.Show("You are not authorized to perform this action.", "Unauthorized", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        End If
+
         Gbl_ReportTag = 2
         TabMenu(Me, New CtrAnnexB, "SE & GAAE")
     End Sub
 
     Private Sub BtnAnnxB_RUGainLoss_Click(sender As Object, e As EventArgs) Handles BtnAnnxB_RUGainLoss.Click
+        If Not IsUserAuthorized(GstrUseID, "\02010203") Then
+            MessageBox.Show("You are not authorized to perform this action.", "Unauthorized", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        End If
+
         Gbl_ReportTag = 3
         TabMenu(Me, New CtrAnnexB, "RealizedFx & UnrealizeFx")
     End Sub
 
     Private Sub BtnAnnxB_Gen_Click(sender As Object, e As EventArgs) Handles BtnAnnxB_Gen.Click
+        If Not IsUserAuthorized(GstrUseID, "\02010204") Then
+            MessageBox.Show("You are not authorized to perform this action.", "Unauthorized", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        End If
+
         Gbl_ReportTag = 4
         TabMenu(Me, New CtrAnnexB, "Generate Annex B")
     End Sub
@@ -230,21 +297,41 @@ Public Class FrmMain
 
 #Region "Annex C Button"
     Private Sub BtnAnnxC_CosRatio_Click(sender As Object, e As EventArgs) Handles BtnAnnxC_CosRatio.Click
+        If Not IsUserAuthorized(GstrUseID, "\02010301") Then
+            MessageBox.Show("You are not authorized to perform this action.", "Unauthorized", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        End If
+
         Gbl_ReportTag = 1
         TabMenu(Me, New CtrAnnexC, "Cost of Sales Ratio")
     End Sub
 
     Private Sub BtnAnnxC_MFGCost_Click(sender As Object, e As EventArgs) Handles BtnAnnxC_MFGCost.Click
+        If Not IsUserAuthorized(GstrUseID, "\02010302") Then
+            MessageBox.Show("You are not authorized to perform this action.", "Unauthorized", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        End If
+
         Gbl_ReportTag = 2
         TabMenu(Me, New CtrAnnexC, "Manufacturing Cost")
     End Sub
 
     Private Sub BtnAnnxC_MOHCost_Click(sender As Object, e As EventArgs) Handles BtnAnnxC_MOHCost.Click
+        If Not IsUserAuthorized(GstrUseID, "\02010303") Then
+            MessageBox.Show("You are not authorized to perform this action.", "Unauthorized", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        End If
+
         Gbl_ReportTag = 3
         TabMenu(Me, New CtrAnnexC, "Manufacturing Overhead")
     End Sub
 
     Private Sub BtnAnnxC_Gen_Click(sender As Object, e As EventArgs) Handles BtnAnnxC_Gen.Click
+        If Not IsUserAuthorized(GstrUseID, "\02010304") Then
+            MessageBox.Show("You are not authorized to perform this action.", "Unauthorized", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        End If
+
         Gbl_ReportTag = 4
         TabMenu(Me, New CtrAnnexC, "Generate Annex C")
     End Sub
@@ -253,9 +340,19 @@ Public Class FrmMain
 
 #Region "Data Management Button"
     Private Sub BtnDataInitializedFI_Click(sender As Object, e As EventArgs) Handles BtnDataInitializedFI.Click
+        If Not IsUserAuthorized(GstrUseID, "\020201") Then
+            MessageBox.Show("You are not authorized to perform this action.", "Unauthorized", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        End If
+
         TabMenu(Me, New CtrDataInitializeFI, "Data Initialization-FI")
     End Sub
     Private Sub BtnDataInitializedMM_Click(sender As Object, e As EventArgs) Handles BtnDataInitializedMM.Click
+        If Not IsUserAuthorized(GstrUseID, "\020202") Then
+            MessageBox.Show("You are not authorized to perform this action.", "Unauthorized", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        End If
+
         TabMenu(Me, New CtrDataInitializeMM, "Data Initialization-MM")
     End Sub
 #End Region
@@ -265,10 +362,30 @@ Public Class FrmMain
 #Region "Maintenance Module"
 
     Private Sub CreateAccount_Click(sender As Object, e As EventArgs) Handles CreateAccount.Click
+        If Not IsUserAuthorized(GstrUseID, "\0301") Then
+            MessageBox.Show("You are not authorized to perform this action.", "Unauthorized", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        End If
+
         TabMenu(Me, New CtrCreateAccount, "Create Account")
     End Sub
 
+    Private Sub UserAccess_Click(sender As Object, e As EventArgs) Handles UserAccess.Click
+
+        If Not IsUserAuthorized(GstrUseID, "\0302") Then
+            MessageBox.Show("You are not authorized to perform this action.", "Unauthorized", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        End If
+
+        TabMenu(Me, New CtrUserAccess, "User Access")
+    End Sub
+
     Private Sub ResetPassword_Click(sender As Object, e As EventArgs) Handles ResetPassword.Click
+        If Not IsUserAuthorized(GstrUseID, "\0303") Then
+            MessageBox.Show("You are not authorized to perform this action.", "Unauthorized", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        End If
+
         TabMenu(Me, New CtrResetPassword, "Reset Password")
     End Sub
 
@@ -298,28 +415,6 @@ Public Class FrmMain
     End Sub
 
 #End Region
-
-    Private Sub FrmMain_Disposed(sender As Object, e As EventArgs) Handles Me.Disposed
-        UpdateLoginStatus(GstrUseID, False)
-        FrmLogin.Close()
-    End Sub
-
-    Private Sub FrmMain_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-
-        Dim result = MessageBox.Show("Are you sure you want to exit?", "Confirm Exit",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question
-            )
-
-        If result = DialogResult.No Then
-            e.Cancel = True
-        End If
-    End Sub
-
-
-    Private Sub AccordionControlElement19_Click(sender As Object, e As EventArgs) Handles AccordionControlElement19.Click
-        ShowMaintenance()
-    End Sub
 
     Private Sub AccordionControlElement10_Click(sender As Object, e As EventArgs) Handles AccordionControlElement10.Click
         ShowMaintenance()
@@ -353,4 +448,32 @@ Public Class FrmMain
         ShowMaintenance()
     End Sub
 
+
+    Private Sub FrmMain_Disposed(sender As Object, e As EventArgs) Handles Me.Disposed
+        UpdateLoginStatus(GstrUseID, False)
+        FrmLogin.Close()
+    End Sub
+
+    Private Sub UserRefresh_Tick(sender As Object, e As EventArgs) Handles UserRefresh.Tick
+        Dim Isloggged As String = GetValue($"Select IsLoggedIn from MSTR_USERS where UserID='{GstrUseID}'")
+
+        If Isloggged = False Then
+            Me.Dispose()
+            Me.Close()
+            FrmLogin.Close()
+            FrmLogin.Dispose()
+        End If
+    End Sub
+
+    Private Sub FrmMain_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+
+        Dim result = MessageBox.Show("Are you sure you want to exit?", "Confirm Exit",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            )
+
+        If result = DialogResult.No Then
+            e.Cancel = True
+        End If
+    End Sub
 End Class
